@@ -7,13 +7,14 @@ public class CollisionChecker {
         _entities = entities;
     }
 
-    public boolean hasCollisionWith(Entity entity, Position nextPos){
+    public ArrayList<Entity> hasCollisionsWith(Entity entity, Position nextPos){
+        var entitiesInvolved = new ArrayList<Entity>();
         for(var e : _entities){
             if(Math.abs(nextPos.x - e.getPosition().x) <= (entity.getWidth() + e.getWidth()) / 2 &&
                Math.abs(nextPos.y - e.getPosition().y) <= (entity.getHeight() + e.getHeight()) / 2)
-                return true;
+                entitiesInvolved.add(e);
         }
-        return false;
+        return entitiesInvolved;
     }
 
 }

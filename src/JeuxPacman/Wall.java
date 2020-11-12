@@ -1,26 +1,12 @@
-public class Wall implements Entity{
-    private  Position _position;
-    private int _width;
-    private int _height;
+public class Wall extends Entity{
 
     public Wall(Position pos, int height, int width){
-        _position = pos;
-        _height = height;
-        _width = width;
+        super(pos, height, width);
     }
 
     @Override
-    public Position getPosition() {
-        return _position;
+    public boolean isActive() {
+        return true;
     }
 
-    @Override
-    public int getHeight() {
-        return _height;
-    }
-
-    @Override
-    public int getWidth() {
-        return _width;
-    }
 }
