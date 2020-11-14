@@ -1,20 +1,26 @@
 public class Bonus extends Entity{
-    boolean _isSuperPacGum;
     int _score;
     boolean _isActive;
+    int _duration;
 
-    public Bonus(Position pos, int height, int width, boolean isSuperPacGum, int score) {
+    protected Bonus(Position pos, int height, int width, int duration, int score) {
         super(pos, height, width);
-        _isSuperPacGum = isSuperPacGum;
         _isActive = true;
+        _duration = duration;
         _score = score;
-    }
-    public boolean isSuperPacGum(){
-        return _isSuperPacGum;
     }
 
     public int getScore(){
         return _score;
+    }
+    
+    public void consume(){
+        _isActive = false;
+        _duration--;
+    }
+
+    public boolean isFullyConsumed(){
+        return _duration == 0;
     }
 
     @Override
@@ -22,7 +28,4 @@ public class Bonus extends Entity{
         return _isActive;
     }
 
-    public void eat(){
-        _isActive =false;
-    }
 }

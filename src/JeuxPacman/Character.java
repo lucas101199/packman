@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public abstract class Character extends Entity{
     private int _speed;
     protected ArrayList<Entity> _collisions;
+    protected Direction _direction;
     private static CollisionChecker _collisonChecker;
+
 
     public static void setCollisionChecker(CollisionChecker checker){
         _collisonChecker = checker;
@@ -11,6 +13,7 @@ public abstract class Character extends Entity{
     public Character(Position position, int height, int width, int speed){
         super(position, height, width);
         _speed = speed;
+        _direction = Direction.NORTH;
     }
 
     @Override
@@ -19,19 +22,19 @@ public abstract class Character extends Entity{
     }
 
     public void move(Direction direction){
-        var nextPosition = nextPos(direction);
+        _direction = direction;
+        var nextPosition = nextPos();
         _collisions = _collisonChecker.hasCollisionsWith(this, nextPosition);
         if(_collisions.isEmpty())
             _position = nextPosition;
         else {
-            System.out.println("Can't move !");
             reactAfterCollision();
         }
     }
 
-    public Position nextPos(Direction direction){
+    protected Position nextPos(){
         var nextPos = new Position(_position.x, _position.y);
-        switch(direction){
+        switch(_direction){
             case NORTH:
                 nextPos.y += _speed;
                 break;
