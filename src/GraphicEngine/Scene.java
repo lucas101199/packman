@@ -28,23 +28,47 @@ public class Scene {
         root.setVisible(false);
     }
 
+
+    /**
+     *
+     * @return the name {@code label} of the scene
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * {@code True} if we want the scene to be displayed {@code false} otherwise
+     * Always initialize to false
+     * @param display the value of the display
+     */
     public void setDisplay(boolean display) {
         root.setVisible(display);
         isDisplay = display;
     }
 
+    /**
+     *
+     * @return the value of the boolean {@code isDisplay}
+     */
     public boolean isDisplay() {
         return isDisplay;
     }
 
+    /**
+     *
+     * @return the JavaFx scene associate to this class Scene
+     */
     public javafx.scene.Scene getScene() {
         return scene;
     }
 
+    /**
+     * Add an image to the scene and to the list {@code content} which has all the {@code Node} in the scene
+     * @param imageLabel the name to identified the image
+     * @param imageFile the URL of the file
+     * @throws Exception if an image has already the name {@code imageLabel}
+     */
     public void addImage(String imageLabel, String imageFile) throws Exception {
         for (Node image : content) {
             if (image.getId().equals(imageLabel)) throw new Exception("Image with the same name already exist");
@@ -57,6 +81,13 @@ public class Scene {
         root.getChildren().add(imageView);
     }
 
+    /**
+     * Set the position of the object in the scene
+     * @param imageLabel the name to identified the image
+     * @param height the height of the image
+     * @param width the width of the image
+     * @throws Exception if the object is missing
+     */
     public void setPositionImage(String imageLabel, double height, double width) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node image : content) {
@@ -70,6 +101,13 @@ public class Scene {
         }
     }
 
+    /**
+     * Resize the image with the given value
+     * @param imageLabel the name to identified the image
+     * @param height the height of the image
+     * @param width the width of the image
+     * @throws Exception if the object is missing
+     */
     public void resizeImage(String imageLabel, double height, double width) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
@@ -84,6 +122,12 @@ public class Scene {
         }
     }
 
+    /**
+     * Rotate the object {@code Node} clockwise with the given {@code angle} in degrees
+     * @param imageLabel the name to identified the image
+     * @param angle in degrees
+     * @throws Exception if the object is missing
+     */
     public void rotateImage(String imageLabel, double angle) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
@@ -96,6 +140,11 @@ public class Scene {
         }
     }
 
+    /**
+     *
+     * @param imageLabel the name to identified the image
+     * @throws Exception if the object is missing
+     */
     public void displayImage(String imageLabel) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
@@ -108,6 +157,11 @@ public class Scene {
         }
     }
 
+    /**
+     *
+     * @param imageLabel the name to identified the image
+     * @throws Exception if the object is missing
+     */
     public void hideImage(String imageLabel) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
@@ -120,6 +174,11 @@ public class Scene {
         }
     }
 
+    /**
+     * Delete the image from the list {@code content} and from the Group {@code root}
+     * @param imageLabel the name to identified the image
+     * @throws Exception if the object is missing
+     */
     public void deleteImage(String imageLabel) throws Exception {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
@@ -133,6 +192,12 @@ public class Scene {
         }
     }
 
+    /**
+     *
+     * @param Label the name of the object to be seeking
+     * @return {@code True} if an object with the name {@code Label} is present
+     *  in the scene
+     */
     public boolean isPresent(String Label) {
         for (Node node : content) {
             if (node.getId().equals(Label)) return true;
