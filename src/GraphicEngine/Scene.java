@@ -73,10 +73,10 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void setPositionImage(String imageLabel, double x, double y) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
-            image.setLayoutX(x);
-            image.setLayoutY(y);
+            image.setLayoutX(x - image.getFitWidth());
+            image.setLayoutY(y - image.getFitHeight());
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -88,10 +88,10 @@ public class Scene {
      * @return the image or null if it doesn't exist
      */
 
-    public Node getImage(String imageLabel) {
+    public ImageView getImage(String imageLabel) {
         for (Node image : root.getChildren()) {
             if (image.getId().equals(imageLabel))
-                return image;
+                return (ImageView) image;
         }
         return null;
     }
@@ -104,7 +104,7 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void resizeImage(String imageLabel, double height, double width) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
             ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(image));
             e.setFitHeight(height);
@@ -121,9 +121,9 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void rotateImage(String imageLabel, double angle) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
-            image.setRotate(image.getRotate() + angle);
+            image.setRotate((image.getRotate() + angle) % 360);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -135,7 +135,7 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void displayImage(String imageLabel) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
             image.setVisible(true);
         } else {
@@ -149,7 +149,7 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void hideImage(String imageLabel) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
             image.setVisible(false);
         } else {
@@ -163,7 +163,7 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void deleteImage(String imageLabel) throws Exception {
-        Node image = getImage(imageLabel);
+        ImageView image = getImage(imageLabel);
         if (image != null) {
             root.getChildren().remove(image);
         } else {
