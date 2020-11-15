@@ -17,10 +17,10 @@ public class PacManView extends Group {
     public PacManView() throws FileNotFoundException {
         String curDir = System.getProperty("user.dir");
         
-        PacManUp = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanUp.gif")));
-        PacManDown = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanDown.gif")));
+        PacManUp    = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanUp.gif")));
+        PacManDown  = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanDown.gif")));
         PacManRight = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanRight.gif")));
-        PacManLeft = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanLeft.gif")));
+        PacManLeft  = new ImageView(new Image(new FileInputStream(curDir + "/src/Image/pacmanLeft.gif")));
     }
 
     public ImageView getPacManUp() {
