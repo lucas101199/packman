@@ -21,6 +21,8 @@ public class Main extends Application {
         graphicEngine.addImage("menu", "pacman", "/Users/lucas/IdeaProjects/packman/src/Image/pacmanRight.gif");
         graphicEngine.displayImage("menu", "pacman");
         graphicEngine.setPositionImage("menu", "pacman", 100, 100);
+        graphicEngine.resizeImage("menu", "pacman", 50, 50);
+        graphicEngine.hideImage("menu", "pacman");
     }
 
     public static void main(String[] args) {

@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,7 +74,9 @@ public class Scene {
         if (isPresent(imageLabel)) {
             for (Node node : content) {
                 if (node.getId().equals(imageLabel)) {
-                    node.resize(width, height);
+                    ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(node));
+                    e.setFitHeight(height);
+                    e.setFitWidth(width);
                 }
             }
         } else {
