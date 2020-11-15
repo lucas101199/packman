@@ -27,7 +27,7 @@ public class GraphicEngine {
     }
 
     /**
-     * Add a {@code scene} to this window
+     * Add a {@code scene} to the list of scene
      * @param sceneLabel the name of the scene
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
@@ -35,7 +35,6 @@ public class GraphicEngine {
         if (!isPresent(sceneLabel)) {
             Scene scene = new Scene(sceneLabel);
             sceneList.add(scene);
-            this.window.setScene(scene.getScene());
         } else {
             throw new Exception("Already define a scene with this name");
         }
@@ -50,10 +49,11 @@ public class GraphicEngine {
         if (isPresent(sceneLabel)) {
             for (Scene scene : sceneList) {
                 if (scene.getLabel().equals(sceneLabel)) {
-                    if (!scene.isDisplay()) {
-                        scene.setDisplay(true);
-                    }
+                    scene.setDisplay(true);
+                    this.window.setScene(scene.getScene());
                 }
+                else
+                    scene.setDisplay(false);
             }
             this.window.show();
         } else {
@@ -70,24 +70,12 @@ public class GraphicEngine {
         if (isPresent(sceneLabel)) {
             for (Scene scene : sceneList) {
                 if (scene.getLabel().equals(sceneLabel)) {
-                    scene.setDisplay(false);
+                    if (scene.isDisplay()) {
+                        window.setScene(null);
+                        scene.setDisplay(false);
+                    }
                     sceneList.remove(scene);
                 }
-            }
-        } else {
-            throw new Exception("the scene " + sceneLabel + " does not exist");
-        }
-    }
-
-    /**
-     *
-     * @param sceneLabel the name of the scene
-     * @throws Exception if the scene with the given {@code sceneLabel} is not found
-     */
-    public void hideScene(String sceneLabel) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.setDisplay(false);
             }
         } else {
             throw new Exception("the scene " + sceneLabel + " does not exist");
@@ -102,13 +90,25 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void addImage(String sceneLabel, String imageLabel, String imageFile) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.addImage(imageLabel, imageFile);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.addImage(imageLabel,imageFile);
         } else {
             throw new Exception("no scene with this name is present");
         }
+    }
+
+    /**
+     *
+     * @param sceneLabel the name of the scene
+     * @return the scene or null if it doesn't exist
+     */
+
+    private Scene getScene(String sceneLabel) {
+        for (Scene scene : sceneList) {
+            if (scene.getLabel().equals(sceneLabel)) return scene;
+        }
+        return null;
     }
 
     /**
@@ -120,10 +120,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void setPositionImage(String sceneLabel, String imageLabel, double x, double y) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.setPositionImage(imageLabel, y, x);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.setPositionImage(imageLabel,x,y);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -151,7 +150,7 @@ public class GraphicEngine {
      *
      * @param sceneLabel the name of the scene
      * @param imageLabel the name of the image
-     * @param angle
+     * @param angle how much degre is the rotation
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void rotateImage(String sceneLabel, String imageLabel, double angle) throws Exception {

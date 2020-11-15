@@ -6,24 +6,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Scene {
 
-    private boolean isDisplay;
-    private final String label;
     private final javafx.scene.Scene scene;
     private final Group root;
-    private final List<Node> content;
 
     public Scene(String label) {
-        this.label = label;
-        this.isDisplay = false;
         this.root = new Group();
-        this.scene = new javafx.scene.Scene(root);
-        this.content = new LinkedList<>();
+        this.scene = new javafx.scene.Scene(this.root);
         root.setId(label);
         root.setVisible(false);
     }
@@ -33,9 +24,7 @@ public class Scene {
      *
      * @return the name {@code label} of the scene
      */
-    public String getLabel() {
-        return label;
-    }
+    public String getLabel() { return root.getId(); }
 
     /**
      * {@code True} if we want the scene to be displayed {@code false} otherwise
@@ -44,16 +33,13 @@ public class Scene {
      */
     public void setDisplay(boolean display) {
         root.setVisible(display);
-        isDisplay = display;
     }
 
     /**
      *
      * @return the value of the boolean {@code isDisplay}
      */
-    public boolean isDisplay() {
-        return isDisplay;
-    }
+    public boolean isDisplay() { return root.isVisible(); }
 
     /**
      *
@@ -70,35 +56,44 @@ public class Scene {
      * @throws Exception if an image has already the name {@code imageLabel}
      */
     public void addImage(String imageLabel, String imageFile) throws Exception {
-        for (Node image : content) {
-            if (image.getId().equals(imageLabel)) throw new Exception("Image with the same name already exist");
-        }
+        if (isPresent(imageLabel))
+            throw new Exception("Image with the same name already exist");
         Image image = new Image(new FileInputStream(imageFile));
         ImageView imageView = new ImageView(image);
         imageView.setId(imageLabel);
         imageView.setVisible(false);
-        content.add(imageView);
         root.getChildren().add(imageView);
     }
 
     /**
      * Set the position of the object in the scene
      * @param imageLabel the name to identified the image
-     * @param height the height of the image
-     * @param width the width of the image
+     * @param x the first coordinate of the image
+     * @param y the second coordinate of the image
      * @throws Exception if the object is missing
      */
-    public void setPositionImage(String imageLabel, double height, double width) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node image : content) {
-                if (image.getId().equals(imageLabel)) {
-                    image.setLayoutX(width);
-                    image.setLayoutY(height);
-                }
-            }
+    public void setPositionImage(String imageLabel, double x, double y) throws Exception {
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            image.setLayoutX(x);
+            image.setLayoutY(y);
         } else {
             throw new Exception("no node with the label in this scene");
         }
+    }
+
+    /**
+     *
+     * @param imageLabel the name of the image
+     * @return the image or null if it doesn't exist
+     */
+
+    public Node getImage(String imageLabel) {
+        for (Node image : root.getChildren()) {
+            if (image.getId().equals(imageLabel))
+                return image;
+        }
+        return null;
     }
 
     /**
@@ -109,14 +104,11 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void resizeImage(String imageLabel, double height, double width) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node node : content) {
-                if (node.getId().equals(imageLabel)) {
-                    ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(node));
-                    e.setFitHeight(height);
-                    e.setFitWidth(width);
-                }
-            }
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(image));
+            e.setFitHeight(height);
+            e.setFitWidth(width);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -129,12 +121,9 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void rotateImage(String imageLabel, double angle) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node node : content) {
-                if (node.getId().equals(imageLabel)) {
-                    node.setRotate(angle);
-                }
-            }
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            image.setRotate(image.getRotate() + angle);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -146,12 +135,9 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void displayImage(String imageLabel) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node node : content) {
-                if (node.getId().equals(imageLabel)) {
-                    node.setVisible(true);
-                }
-            }
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            image.setVisible(true);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -163,12 +149,9 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void hideImage(String imageLabel) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node node : content) {
-                if (node.getId().equals(imageLabel)) {
-                    node.setVisible(false);
-                }
-            }
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            image.setVisible(false);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -180,13 +163,9 @@ public class Scene {
      * @throws Exception if the object is missing
      */
     public void deleteImage(String imageLabel) throws Exception {
-        if (isPresent(imageLabel)) {
-            for (Node node : content) {
-                if (node.getId().equals(imageLabel)) {
-                    root.getChildren().remove(node);
-                    content.remove(node);
-                }
-            }
+        Node image = getImage(imageLabel);
+        if (image != null) {
+            root.getChildren().remove(image);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -199,7 +178,7 @@ public class Scene {
      *  in the scene
      */
     public boolean isPresent(String Label) {
-        for (Node node : content) {
+        for (Node node : root.getChildren()) {
             if (node.getId().equals(Label)) return true;
         }
         return false;
