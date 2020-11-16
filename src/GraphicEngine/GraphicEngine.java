@@ -104,7 +104,7 @@ public class GraphicEngine {
      * @return the scene or null if it doesn't exist
      */
 
-    private Scene getScene(String sceneLabel) {
+    public Scene getScene(String sceneLabel) {
         for (Scene scene : sceneList) {
             if (scene.getLabel().equals(sceneLabel)) return scene;
         }
@@ -137,10 +137,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void resizeImage(String sceneLabel, String imageLabel, double height, double width) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.resizeImage(imageLabel, height, width);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.resizeImage(imageLabel, height, width);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -154,10 +153,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void rotateImage(String sceneLabel, String imageLabel, double angle) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.rotateImage(imageLabel, angle);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.rotateImage(imageLabel, angle);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -170,10 +168,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void displayImage(String sceneLabel, String imageLabel) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.displayImage(imageLabel);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.displayImage(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -186,10 +183,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void hideImage(String sceneLabel, String imageLabel) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.hideImage(imageLabel);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.hideImage(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -202,10 +198,9 @@ public class GraphicEngine {
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
     public void deleteImage(String sceneLabel, String imageLabel) throws Exception {
-        if (isPresent(sceneLabel)) {
-            for (Scene scene : sceneList) {
-                if (scene.getLabel().equals(sceneLabel)) scene.deleteImage(imageLabel);
-            }
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.deleteImage(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
