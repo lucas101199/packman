@@ -17,10 +17,9 @@ public class Main extends Application {
         GraphicEngine graphicEngine = new GraphicEngine("Pacman");
         graphicEngine.addScene("menu");
         graphicEngine.displayScene("menu");
-        graphicEngine.addImage("menu", "pacman", "./src/Image/pacmanRight.gif");
+        graphicEngine.addImage("menu", "pacman", "./src/Images/PacMan/pacman_up.gif");
         graphicEngine.displayImage("menu", "pacman");
         graphicEngine.setPositionImage("menu", "pacman", 200, 200);
-        graphicEngine.resizeImage("menu","pacman",400,400);
         graphicEngine.rotateImage("menu","pacman",45);
         graphicEngine.setSizeScene("menu",400,400);
     }

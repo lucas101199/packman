@@ -75,8 +75,8 @@ public class Scene {
     public void setPositionImage(String imageLabel, double x, double y) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
-            image.setX(x - (image.getFitWidth()/2));
-            image.setY(y - (image.getFitHeight()/2));
+            image.setX(x - (image.getImage().getWidth()/2));
+            image.setY(y - (image.getImage().getHeight()/2));
         } else {
             throw new Exception("no node with the label in this scene");
         }

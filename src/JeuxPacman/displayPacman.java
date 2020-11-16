@@ -12,11 +12,11 @@ public class displayPacman {
         this.windows = windows;
         this.scene = nameScene;
 
-        windows.addImage(this.scene, "pacManLeft", curDir + "/src/sample/Images/PacMan/pacman_left.gif");
-        windows.addImage(this.scene, "pacManRight", curDir + "/src/sample/Images/PacMan/pacman_right.gif");
-        windows.addImage(this.scene, "pacManUp", curDir + "/src/sample/Images/PacMan/pacman_up.gif");
-        windows.addImage(this.scene, "pacManDown", curDir + "/src/sample/Images/PacMan/pacman_down.gif");
-        windows.addImage(this.scene, "pacManDeath", curDir + "/src/sample/Images/PacMan/pacman_death.gif");
+        windows.addImage(this.scene, "pacManLeft", curDir + "/src/Images/PacMan/pacman_left.gif");
+        windows.addImage(this.scene, "pacManRight", curDir + "/src/Images/PacMan/pacman_right.gif");
+        windows.addImage(this.scene, "pacManUp", curDir + "/src/Images/PacMan/pacman_up.gif");
+        windows.addImage(this.scene, "pacManDown", curDir + "/src/Images/PacMan/pacman_down.gif");
+        windows.addImage(this.scene, "pacManDeath", curDir + "/src/Images/PacMan/pacman_death.gif");
     }
 
     public void displayPacManRight (int x, int y) throws Exception {
