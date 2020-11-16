@@ -21,12 +21,12 @@ public class Main extends Application {
 
         // Ajout de l'image de la carte
         test.addImage        (nameScene, nameMap, "./src/Images/Map/map.png");
-        test.setPositionImage(nameScene, nameMap, 0,0);
+        test.setPositionImage(nameScene, nameMap, 272,300);
         test.displayImage    (nameScene, nameMap);
 
         displayPacman pacman = new displayPacman(test, nameScene);
 
-        pacman.displayPacManRight(50,10);
+        pacman.displayPacManRight(50,30);
 
         // Affichage de la scene
         test.displayScene(nameScene);
