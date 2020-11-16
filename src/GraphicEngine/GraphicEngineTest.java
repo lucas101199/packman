@@ -7,14 +7,15 @@ import javafx.stage.Stage;
 
 public class GraphicEngineTest extends Application {
 
-    void setWindow() {
+    void setSizeScene() throws Exception {
         GraphicEngine engine = new GraphicEngine("window");
-        engine.setWindow(100,50);
-        if (engine.window.getHeight() != 100) throw new AssertionError("setWindow");
-        if (engine.window.getWidth() != 50) throw new AssertionError("setWindow");
-        engine.setWindow(200,70);
-        if (engine.window.getHeight() != 200) throw new AssertionError("setWindow");
-        if (engine.window.getWidth() != 70) throw new AssertionError("setWindow");
+        engine.addScene("scene");
+        engine.setSizeScene("scene",100,50);
+        if (engine.window.getScene().getWidth() != 100) throw new AssertionError("setSizeScene");
+        if (engine.window.getScene().getHeight() != 50) throw new AssertionError("setSizeScene");
+        engine.setSizeScene("scene",200,70);
+        if (engine.window.getScene().getWidth() != 200) throw new AssertionError("setSizeScene");
+        if (engine.window.getScene().getHeight() != 70) throw new AssertionError("setSizeScene");
     }
 
     void addScene() throws Exception {
@@ -151,7 +152,7 @@ public class GraphicEngineTest extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        setWindow();
+        setSizeScene();
         addScene();
         displayScene();
         hideScene();
