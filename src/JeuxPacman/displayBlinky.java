@@ -1,6 +1,4 @@
-package sample;
-
-import sample.GraphicEngine.GraphicEngine;
+import GraphicEngine.GraphicEngine;
 
 import java.util.Arrays;
 
