@@ -9,8 +9,8 @@ import java.io.FileInputStream;
 
 public class Scene {
 
-    private final javafx.scene.Scene scene;
-    private final Group root;
+    private javafx.scene.Scene scene;
+    private Group root;
 
     public Scene(String label) {
         this.root = new Group();
@@ -185,5 +185,14 @@ public class Scene {
             if (node.getId().equals(Label)) return true;
         }
         return false;
+    }
+
+    public void setSize(double width, double height) {
+        Group newroot = new Group(this.root);
+        javafx.scene.Scene newscene = new javafx.scene.Scene(newroot,width,height);
+        newroot.setId(this.root.getId());
+        newroot.setVisible(this.root.isVisible());
+        this.root = newroot;
+        this.scene = newscene;
     }
 }

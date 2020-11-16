@@ -17,16 +17,6 @@ public class GraphicEngine {
     }
 
     /**
-     * Set the size of the window with the given parameter
-     * @param height the height of the window
-     * @param width the width of the window
-     */
-    public void setWindow(double height, double width) {
-        this.window.setHeight(height);
-        this.window.setWidth(width);
-    }
-
-    /**
      * Add a {@code scene} to the list of scene
      * @param sceneLabel the name of the scene
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
@@ -216,5 +206,24 @@ public class GraphicEngine {
             if (scene.getLabel().equals(sceneLabel)) return true;
         }
         return false;
+    }
+
+    /**
+     * Change the size of the scene
+     * @param sceneLabel the name of the scene to resize
+     * @param width width for the scene
+     * @param height height for the scene
+     * @throws Exception if the scene with the given name is not found
+     */
+
+    public void setSizeScene(String sceneLabel, double width, double height) throws Exception {
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.setSize(width,height);
+            if (scene.isDisplay())
+                this.window.setScene(scene.getScene());
+        } else {
+            throw new Exception("no scene with this name is present");
+        }
     }
 }

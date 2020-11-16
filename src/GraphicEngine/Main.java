@@ -16,12 +16,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         GraphicEngine graphicEngine = new GraphicEngine("Pacman");
         graphicEngine.addScene("menu");
-        graphicEngine.setWindow(400,400);
         graphicEngine.displayScene("menu");
         graphicEngine.addImage("menu", "pacman", "./src/Image/pacmanRight.gif");
         graphicEngine.displayImage("menu", "pacman");
         graphicEngine.setPositionImage("menu", "pacman", 200, 200);
-        graphicEngine.resizeImage("menu","pacman",100,100);
+        graphicEngine.resizeImage("menu","pacman",400,400);
+        graphicEngine.rotateImage("menu","pacman",45);
+        graphicEngine.setSizeScene("menu",400,400);
     }
 
     public static void main(String[] args) {
