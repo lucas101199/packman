@@ -1,12 +1,16 @@
-package JeuxPacman;
+package sample;
 
-import GraphicEngine.GraphicEngine;
+import sample.GraphicEngine.GraphicEngine;
+
+import java.util.Arrays;
 
 public class displayPacman {
 
     private final String scene;
     private final GraphicEngine windows;
     private final String[] imageLabels = {"PacMan_left","PacMan_right","PacMan_up","PacMan_down","PacMan_death"};
+
+    private String imageCurrent= "";
 
 
     public displayPacman(GraphicEngine windows, String nameScene) throws Exception {
@@ -21,49 +25,30 @@ public class displayPacman {
     }
 
     // Display Pac-Man
-    public void displayPacManLeft (int x, int y) throws Exception {
-        windows.setPositionImage(this.scene, imageLabels[0], x, y);
-        windows.displayImage    (this.scene, imageLabels[0]);
-    }
+    public void displayPacMan(String label, int x, int y) throws Exception {
+        if (Arrays.asList(imageLabels).contains(imageCurrent) && Arrays.asList(imageLabels).contains(label)) {
+            windows.hideImage(this.scene, imageCurrent);
+            windows.setPositionImage(this.scene, label, x, y);
+            windows.displayImage(this.scene, label);
 
-    public void displayPacManRight (int x, int y) throws Exception {
-        windows.setPositionImage(this.scene, imageLabels[1], x, y);
-        windows.displayImage    (this.scene, imageLabels[1]);
-    }
+            imageCurrent = label;
 
-    public void displayPacManUp (int x, int y) throws Exception {
-        windows.setPositionImage(this.scene, imageLabels[2], x, y);
-        windows.displayImage    (this.scene, imageLabels[2]);
-    }
+            return;
+        }
+        if (imageCurrent == "" && Arrays.asList(imageLabels).contains(label)) {
+            windows.setPositionImage(this.scene, label, x, y);
+            windows.displayImage(this.scene, label);
 
-    public void displayPacManDown (int x, int y) throws Exception {
-        windows.setPositionImage(this.scene, imageLabels[3], x, y);
-        windows.displayImage    (this.scene, imageLabels[3]);
-    }
-
-    public void displayPacManDeath (int x, int y) throws Exception {
-        windows.setPositionImage(this.scene, imageLabels[4], x, y);
-        windows.displayImage    (this.scene, imageLabels[4]);
+            imageCurrent = label;
+        } else {
+            System.out.println("Erreur dans le displayPacMan");
+        }
     }
 
     // Hide Pac-Man
-    public void hidePacManLeft () throws Exception {
-        windows.hideImage(this.scene, imageLabels[0]);
+    public void hidePacMan () throws Exception {
+        if (Arrays.asList(imageLabels).contains(imageCurrent))
+            windows.hideImage(this.scene, imageCurrent);
     }
 
-    public void hidePacManRight () throws Exception {
-        windows.hideImage(this.scene, imageLabels[1]);
-    }
-
-    public void hidePacManUp() throws Exception {
-        windows.hideImage(this.scene, imageLabels[2]);
-    }
-
-    public void hidePacManDown() throws Exception {
-        windows.hideImage(this.scene, imageLabels[3]);
-    }
-
-    public void hidePacManDeath() throws Exception {
-        windows.hideImage(this.scene, imageLabels[4]);
-    }
 }

@@ -30,7 +30,7 @@ public class displayBlinky {
 
     // Display Blinky
     public void displayBlinky(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(imageCurrent)) {
+        if (Arrays.asList(imageLabels).contains(imageCurrent) && Arrays.asList(imageLabels).contains(label)) {
             windows.hideImage(this.scene, imageCurrent);
             windows.setPositionImage(this.scene, label, x, y);
             windows.displayImage(this.scene, label);
@@ -39,7 +39,7 @@ public class displayBlinky {
 
             return;
         }
-        if (imageCurrent == "") {
+        if (imageCurrent == "" && Arrays.asList(imageLabels).contains(label)) {
             windows.setPositionImage(this.scene, label, x, y);
             windows.displayImage(this.scene, label);
 
