@@ -11,6 +11,7 @@ public class GraphicEngineTest extends Application {
         GraphicEngine engine = new GraphicEngine("window");
         engine.addScene("scene");
         engine.setSizeScene("scene",100,50);
+        engine.displayScene("scene");
         if (engine.window.getScene().getWidth() != 100) throw new AssertionError("setSizeScene");
         if (engine.window.getScene().getHeight() != 50) throw new AssertionError("setSizeScene");
         engine.setSizeScene("scene",200,70);
@@ -69,11 +70,11 @@ public class GraphicEngineTest extends Application {
         engine.addImage("scene","image","./src/Image/pacmanLeft.gif");
         Scene scene = engine.getScene("scene");
         engine.setPositionImage("scene","image",100,50);
-        if (scene.getImage("image").getLayoutX() != 100) throw new AssertionError("setPositionImage");
-        if (scene.getImage("image").getLayoutY() != 50) throw new AssertionError("setPositionImage");
+        if (scene.getImage("image").getX() != 100) throw new AssertionError("setPositionImage");
+        if (scene.getImage("image").getY() != 50) throw new AssertionError("setPositionImage");
         engine.setPositionImage("scene","image",200,70);
-        if (scene.getImage("image").getLayoutX() != 200) throw new AssertionError("setPositionImage");
-        if (scene.getImage("image").getLayoutY() != 70) throw new AssertionError("setPositionImage");
+        if (scene.getImage("image").getX() != 200) throw new AssertionError("setPositionImage");
+        if (scene.getImage("image").getY() != 70) throw new AssertionError("setPositionImage");
     }
 
     void resizeImage() throws Exception {

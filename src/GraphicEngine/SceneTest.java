@@ -34,11 +34,11 @@ public class SceneTest extends Application {
         String imageFile = "./src/Image/blueghost.gif";
         scene.addImage("imageLabel",imageFile);
         scene.setPositionImage("imageLabel",100,50);
-        if (scene.getImage("imageLabel").getLayoutX() != 100) throw new AssertionError("setPositionImage");
-        if (scene.getImage("imageLabel").getLayoutY() != 50) throw new AssertionError("setPositionImage");
+        if (scene.getImage("imageLabel").getX() != 100) throw new AssertionError("setPositionImage");
+        if (scene.getImage("imageLabel").getY() != 50) throw new AssertionError("setPositionImage");
         scene.setPositionImage("imageLabel",200,70);
-        if (scene.getImage("imageLabel").getLayoutX() != 200) throw new AssertionError("setPositionImage");
-        if (scene.getImage("imageLabel").getLayoutY() != 70) throw new AssertionError("setPositionImage");
+        if (scene.getImage("imageLabel").getX() != 200) throw new AssertionError("setPositionImage");
+        if (scene.getImage("imageLabel").getY() != 70) throw new AssertionError("setPositionImage");
     }
 
     void resizeImage() throws Exception {
