@@ -75,8 +75,8 @@ public class Scene {
     public void setPositionImage(String imageLabel, double x, double y) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
-            image.setLayoutX(x - image.getFitWidth());
-            image.setLayoutY(y - image.getFitHeight());
+            image.setX(x - (image.getFitWidth()/2));
+            image.setY(y - (image.getFitHeight()/2));
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -106,9 +106,12 @@ public class Scene {
     public void resizeImage(String imageLabel, double height, double width) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
+            double x = image.getX();
+            double y = image.getY();
             ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(image));
             e.setFitHeight(height);
             e.setFitWidth(width);
+            setPositionImage(imageLabel,x,y);
         } else {
             throw new Exception("no node with the label in this scene");
         }

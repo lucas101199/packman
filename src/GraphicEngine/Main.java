@@ -20,7 +20,8 @@ public class Main extends Application {
         graphicEngine.displayScene("menu");
         graphicEngine.addImage("menu", "pacman", "./src/Image/pacmanRight.gif");
         graphicEngine.displayImage("menu", "pacman");
-        graphicEngine.setPositionImage("menu", "pacman", 100, 100);
+        graphicEngine.setPositionImage("menu", "pacman", 200, 200);
+        graphicEngine.resizeImage("menu","pacman",100,100);
     }
 
     public static void main(String[] args) {
