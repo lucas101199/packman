@@ -6,34 +6,32 @@ import java.util.Arrays;
 
 public class DisplayPacman {
 
-    private final String scene;
-    private final GraphicEngine windows;
-    private final String[] imageLabels = {"Pacman_left","Pacman_right","Pacman_up","Pacman_down","Pacman_death"};
+    private final String _sceneLabel;
+    private final GraphicEngine _graphic;
+    private final String[] imageLabels = {"Pacman_up","Pacman_right","Pacman_down","Pacman_left","Pacman_death"};
 
     private String imageCurrent= "";
 
 
-    public DisplayPacman(GraphicEngine windows, String nameScene) throws Exception {
-        this.windows = windows;
-        this.scene   = nameScene;
+    public DisplayPacman(GraphicEngine graphic, String sceneLabel) throws Exception {
+        _graphic = graphic;
+        _sceneLabel = sceneLabel;
 
-        windows.addImage(this.scene, imageLabels[0], "./src/Images/PacMan/pacman_left.gif");
-        windows.addImage(this.scene, imageLabels[1], "./src/Images/PacMan/pacman_right.gif");
-        windows.addImage(this.scene, imageLabels[2], "./src/Images/PacMan/pacman_up.gif");
-        windows.addImage(this.scene, imageLabels[3], "./src/Images/PacMan/pacman_down.gif");
-        windows.addImage(this.scene, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
+        _graphic.addImage(_sceneLabel, imageLabels[3], "./src/Images/PacMan/pacman_left.gif");
+        _graphic.addImage(_sceneLabel, imageLabels[1], "./src/Images/PacMan/pacman_right.gif");
+        _graphic.addImage(_sceneLabel, imageLabels[0], "./src/Images/PacMan/pacman_up.gif");
+        _graphic.addImage(_sceneLabel, imageLabels[2], "./src/Images/PacMan/pacman_down.gif");
+        _graphic.addImage(_sceneLabel, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
     }
 
     // Display Pac-Man
-    public void displayPacMan(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(label) || label == "") {
+    public void displayPacMan(String label, Position pos) throws Exception {
+        if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
 
-            if (Arrays.asList(imageLabels).contains(imageCurrent)) {
-                windows.hideImage(this.scene, imageCurrent);
-            }
+            hidePacMan();
 
-            windows.setPositionImage(this.scene, label, x, y);
-            windows.displayImage(this.scene, label);
+            _graphic.setPositionImage(_sceneLabel, label, pos.x, pos.y);
+            _graphic.displayImage(_sceneLabel, label);
 
             imageCurrent = label;
         }
@@ -45,7 +43,7 @@ public class DisplayPacman {
     // Hide Pac-Man
     public void hidePacMan () throws Exception {
         if (Arrays.asList(imageLabels).contains(imageCurrent))
-            windows.hideImage(this.scene, imageCurrent);
+            _graphic.hideImage(_sceneLabel, imageCurrent);
     }
 
 }

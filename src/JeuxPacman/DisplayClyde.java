@@ -16,26 +16,24 @@ public class DisplayClyde {
         this.windows = windows;
         this.scene   = nameScene;
 
-        windows.addImage(this.scene, imageLabels[0], "./src/sample/Images/Ghosts/orange/ghost_orange_left.gif");
-        windows.addImage(this.scene, imageLabels[1], "./src/sample/Images/Ghosts/orange/ghost_orange_right.gif");
-        windows.addImage(this.scene, imageLabels[2], "./src/sample/Images/Ghosts/orange/ghost_orange_up.gif");
-        windows.addImage(this.scene, imageLabels[3], "./src/sample/Images/Ghosts/orange/ghost_orange_down.gif");
+        windows.addImage(this.scene, imageLabels[0], "./src/Images/Ghosts/orange/ghost_orange_left.gif");
+        windows.addImage(this.scene, imageLabels[1], "./src/Images/Ghosts/orange/ghost_orange_right.gif");
+        windows.addImage(this.scene, imageLabels[2], "./src/Images/Ghosts/orange/ghost_orange_up.gif");
+        windows.addImage(this.scene, imageLabels[3], "./src/Images/Ghosts/orange/ghost_orange_down.gif");
 
-        windows.addImage(this.scene, imageLabels[4], "./src/sample/Images/Ghosts/edible/ghost_edible.gif");
+        //windows.addImage(this.scene, imageLabels[4], "./srcImages/Ghosts/edible/ghost_edible.gif");
 
-        windows.addImage(this.scene, imageLabels[5], "./src/sample/Images/Ghosts/eyes/eyes_left.png");
-        windows.addImage(this.scene, imageLabels[6], "./src/sample/Images/Ghosts/eyes/eyes_right.png");
-        windows.addImage(this.scene, imageLabels[7], "./src/sample/Images/Ghosts/eyes/eyes_up.png");
-        windows.addImage(this.scene, imageLabels[8], "./src/sample/Images/Ghosts/eyes/eyes_down.png");
+        //windows.addImage(this.scene, imageLabels[5], "./src/Images/Ghosts/eyes/eyes_left.png");
+        //windows.addImage(this.scene, imageLabels[6], "./src/Images/Ghosts/eyes/eyes_right.png");
+        //windows.addImage(this.scene, imageLabels[7], "./src/Images/Ghosts/eyes/eyes_up.png");
+        //windows.addImage(this.scene, imageLabels[8], "./src/Images/Ghosts/eyes/eyes_down.png");
     }
 
     // Display Clyde
     public void displayClyde(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(label) || label == "") {
+        if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
 
-            if (Arrays.asList(imageLabels).contains(imageCurrent)) {
-                windows.hideImage(this.scene, imageCurrent);
-            }
+            hideClyde();
 
             windows.setPositionImage(this.scene, label, x, y);
             windows.displayImage(this.scene, label);
