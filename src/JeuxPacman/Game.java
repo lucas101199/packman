@@ -1,78 +1,52 @@
 package JeuxPacman;
 
+import GraphicEngine.GraphicEngine;
+
 import java.util.ArrayList;
 
 public class Game {
-    private ArrayList<Entity> _entities;
+
+    private ArrayList<Entity> _items;
     private ArrayList<Ghost> _ennemies;
     private  Pacman _pc;
+    private DisplayPacman _pcDisplay;
     private  int _score;
-    private final int _gameSpeed;
+    private final int _gameSpeed = 10;
+    private final GraphicEngine _graphic = new GraphicEngine("PacMan");
 
-    public Game(int gameSpeed){
-        _gameSpeed = gameSpeed;
-    }
-
-    public void start(){
-        _entities = new ArrayList<>();
+    public void init() throws Exception {
+        _graphic.addScene("maze");
+        _graphic.setSizeScene("maze",544,600);
+        _graphic.displayScene("maze");
+        _graphic.addImage("maze","map","./src/Images/Map/map.png");
+        _graphic.resizeImage("maze","map",600,544);
+        _graphic.setPositionImage("maze","map",272,300);
+        _graphic.displayImage("maze","map");
+        _items = new ArrayList<>();
         _ennemies = new ArrayList<>();
-        var c = new CollisionChecker(_entities);
-        Character.setCollisionChecker(c);
-        _entities.add(new Ghost(new Position(50,60), 20,20,0));
-        _entities.add(new Wall(new Position(80,10), 20,20));
-        _entities.add(new ScoringBonus(new Position(0,10), 20,20, 1,50));
-        var ghost = new Ghost(new Position(-50,10), 20,20,10);
-        _entities.add(ghost);
-        _ennemies.add(ghost);
-        //  _entities.add(new SuperPacGum(new Position(-40,10), 20,20, 2));
-
-        _pc= new Pacman(new Position(50,10), 20,20,10, 3);
-        _entities.add(new SuperPacGum(new Position(50,10), 20,20,20));
-        _entities.add(_pc);
-        _pc.move(Direction.WEST);
-        var status = new GameStatus(_pc, _ennemies);
+        _pc = new Pacman(new Position(272,454), 31,27,10);
+        _pcDisplay = new DisplayPacman(_graphic,"maze");
         _score = 0;
-        while(true){
-           if(status.getStatus() == Status.WON){
-               System.out.println("Vous avez gagné !");
-               break;
-           }
-           else if(status.getStatus() == Status.LOST)
-           {
-               System.out.println("Vous avez perdu !");
-               break;
-           }
-            if(_pc.lastEatenItem() != null && !_pc.lastEatenItem().isFullyConsumed()) {
-                _score += _pc.lastEatenItem().getScore();
-                _pc.lastEatenItem().consume();
-            }
-            else if(_pc.lastEatenItem() != null && _pc.canEatGhost())
-                _pc.cancelSpPacGumEffect();
-            updateWorld();
-            showPacmanStatus();
-            System.out.println("Ghost pos : " + ghost.getPosition().x + ";" + ghost.getPosition().y);
-            if(ghost.isActive())
-                ghost.move(Direction.EAST);
-
-            waitFewMoment();
-        }
     }
 
-    public void showPacmanStatus(){
-        System.out.println(_pc.getPosition().x + ";" + _pc.getPosition().y);
-        System.out.println("Score :" + _score + " | " + "Vie :" + _pc.getRemainingLife());
-        System.out.println("Est super PC :" + _pc.canEatGhost());
-        System.out.println("");
-    }
-
-    public void updateWorld(){
-        _entities.removeIf(entity -> !entity.isActive());
+    public void start() throws Exception {
+        _pcDisplay.displayPacMan("Pacman_left",_pc.getPosition());
     }
 
     public void waitFewMoment(){
         try{
-            Thread.sleep(_gameSpeed);;
+            Thread.sleep(_gameSpeed);
         }
         catch(InterruptedException e){e.printStackTrace();}
     }
+
+    public void show() {
+        _graphic.window.show();
+    }
+
+    public void update() throws Exception {
+        _pc.move();
+        _pcDisplay.displayPacMan("Pacman_left",_pc.getPosition());
+    }
+
 }

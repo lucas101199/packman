@@ -1,9 +1,10 @@
 package JeuxPacman;
 
 public abstract class Entity {
+
     protected Position _position;
     private final Position _initialPosition;
-    private final int  _height;
+    private final int _height;
     private final int _width;
 
     public Entity(Position pos, int height, int width){

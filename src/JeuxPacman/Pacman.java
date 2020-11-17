@@ -1,18 +1,13 @@
 package JeuxPacman;
 
 public class Pacman extends Character{
-    private int _nbOfLife;
+
     private Bonus _lastEatenItem;
     private  boolean _canEatGhost;
 
-    public Pacman(Position position, int height, int width, int speed, int nbOfLife){
+    public Pacman(Position position, int height, int width, int speed){
         super(position, height, width, speed);
-        _nbOfLife = nbOfLife;
         _canEatGhost = false;
-    }
-
-    public int getRemainingLife(){
-        return _nbOfLife;
     }
 
     public Bonus lastEatenItem(){
@@ -20,19 +15,19 @@ public class Pacman extends Character{
     }
 
     public boolean isActive(){
-        return _nbOfLife != 0;
+        return true;
     }
 
     public boolean canEatGhost(){
         return _canEatGhost;
     }
 
-    public void receiveDamage(){
-        _nbOfLife--;
-    }
-
     public void cancelSpPacGumEffect(){
         _canEatGhost = false;
+    }
+
+    public void move() {
+        _position = new Position(_position.x + 1, _position.y);
     }
 
     @Override
@@ -45,7 +40,6 @@ public class Pacman extends Character{
                     _position = nextPos();
                 }
                 else{
-                    _nbOfLife--;
                     respawn();
                 }
             }
