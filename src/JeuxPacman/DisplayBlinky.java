@@ -4,14 +4,14 @@ import GraphicEngine.GraphicEngine;
 
 import java.util.Arrays;
 
-public class displayBlinky {
+public class DisplayBlinky {
     private final String scene;
     private final GraphicEngine windows;
-    private final String[] imageLabels = {"Blinky_left","Blinky_right","Blinky_up","Blinky_down","Blinky_edible",
-                                          "Blinky_eyes_left","Blinky_eyes_right","Blinky_eyes_up","Blinky_eyes_down"};
+    private final String[] imageLabels = {"blinky_left","blinky_right","blinky_up","blinky_down","blinky_edible",
+            "eyes_left","eyes_right","eyes_up","eyes_down"};
     private String imageCurrent= "";
 
-    public displayBlinky(GraphicEngine windows, String nameScene) throws Exception {
+    public DisplayBlinky(GraphicEngine windows, String nameScene) throws Exception {
         this.windows = windows;
         this.scene   = nameScene;
 
@@ -30,22 +30,19 @@ public class displayBlinky {
 
     // Display Blinky
     public void displayBlinky(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(imageCurrent) && Arrays.asList(imageLabels).contains(label)) {
-            windows.hideImage(this.scene, imageCurrent);
+        if (Arrays.asList(imageLabels).contains(label) || label == "") {
+
+            if (Arrays.asList(imageLabels).contains(imageCurrent)) {
+                windows.hideImage(this.scene, imageCurrent);
+            }
+
             windows.setPositionImage(this.scene, label, x, y);
             windows.displayImage(this.scene, label);
 
             imageCurrent = label;
-
-            return;
         }
-        if (imageCurrent == "" && Arrays.asList(imageLabels).contains(label)) {
-            windows.setPositionImage(this.scene, label, x, y);
-            windows.displayImage(this.scene, label);
-
-            imageCurrent = label;
-        } else {
-            System.out.println("Erreur dans le displayBlink");
+        else {
+            System.out.println("Mauvais label dans DisplayOrange");
         }
     }
 

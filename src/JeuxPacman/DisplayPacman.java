@@ -4,16 +4,16 @@ import GraphicEngine.GraphicEngine;
 
 import java.util.Arrays;
 
-public class displayPacman {
+public class DisplayPacman {
 
     private final String scene;
     private final GraphicEngine windows;
-    private final String[] imageLabels = {"PacMan_left","PacMan_right","PacMan_up","PacMan_down","PacMan_death"};
+    private final String[] imageLabels = {"Pacman_left","Pacman_right","Pacman_up","Pacman_down","Pacman_death"};
 
     private String imageCurrent= "";
 
 
-    public displayPacman(GraphicEngine windows, String nameScene) throws Exception {
+    public DisplayPacman(GraphicEngine windows, String nameScene) throws Exception {
         this.windows = windows;
         this.scene   = nameScene;
 
@@ -26,22 +26,19 @@ public class displayPacman {
 
     // Display Pac-Man
     public void displayPacMan(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(imageCurrent) && Arrays.asList(imageLabels).contains(label)) {
-            windows.hideImage(this.scene, imageCurrent);
+        if (Arrays.asList(imageLabels).contains(label) || label == "") {
+
+            if (Arrays.asList(imageLabels).contains(imageCurrent)) {
+                windows.hideImage(this.scene, imageCurrent);
+            }
+
             windows.setPositionImage(this.scene, label, x, y);
             windows.displayImage(this.scene, label);
 
             imageCurrent = label;
-
-            return;
         }
-        if (imageCurrent == "" && Arrays.asList(imageLabels).contains(label)) {
-            windows.setPositionImage(this.scene, label, x, y);
-            windows.displayImage(this.scene, label);
-
-            imageCurrent = label;
-        } else {
-            System.out.println("Erreur dans le displayPacMan");
+        else {
+            System.out.println("Mauvais label dans DisplayPacman");
         }
     }
 
