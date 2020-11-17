@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 import GraphicEngine.GraphicEngine;
 
 import java.util.Arrays;
