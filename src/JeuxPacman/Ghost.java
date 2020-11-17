@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 public class Ghost extends Character{
     private boolean _isDead;
 

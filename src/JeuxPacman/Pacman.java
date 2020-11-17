@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 public class Pacman extends Character{
     private int _nbOfLife;
     private Bonus _lastEatenItem;

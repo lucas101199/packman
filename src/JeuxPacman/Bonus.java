@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 public class Bonus extends Entity{
     int _score;
     boolean _isActive;

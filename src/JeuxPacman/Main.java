@@ -24,9 +24,9 @@ public class Main extends Application {
         test.setPositionImage(nameScene, nameMap, 272,300);
         test.displayImage    (nameScene, nameMap);
 
-        displayPacman pacman = new displayPacman(test, nameScene);
+        //displayPacman pacman = new displayPacman(test, nameScene);
 
-        pacman.displayPacManRight(50,30);
+        //pacman.displayPacManRight(50,30);
 
         // Affichage de la scene
         test.displayScene(nameScene);

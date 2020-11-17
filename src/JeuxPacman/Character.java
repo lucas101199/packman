@@ -1,7 +1,9 @@
+package JeuxPacman;
+
 import java.util.ArrayList;
 
 public abstract class Character extends Entity{
-    private int _speed;
+    private final int _speed;
     protected ArrayList<Entity> _collisions;
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;

@@ -17,11 +17,11 @@ public class DisplayPacman {
         this.windows = windows;
         this.scene   = nameScene;
 
-        windows.addImage(this.scene, imageLabels[0], "./src/sample/Images/PacMan/pacman_left.gif");
-        windows.addImage(this.scene, imageLabels[1], "./src/sample/Images/PacMan/pacman_right.gif");
-        windows.addImage(this.scene, imageLabels[2], "./src/sample/Images/PacMan/pacman_up.gif");
-        windows.addImage(this.scene, imageLabels[3], "./src/sample/Images/PacMan/pacman_down.gif");
-        windows.addImage(this.scene, imageLabels[4], "./src/sample/Images/PacMan/pacman_death.gif");
+        windows.addImage(this.scene, imageLabels[0], "./src/Images/PacMan/pacman_left.gif");
+        windows.addImage(this.scene, imageLabels[1], "./src/Images/PacMan/pacman_right.gif");
+        windows.addImage(this.scene, imageLabels[2], "./src/Images/PacMan/pacman_up.gif");
+        windows.addImage(this.scene, imageLabels[3], "./src/Images/PacMan/pacman_down.gif");
+        windows.addImage(this.scene, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
     }
 
     // Display Pac-Man

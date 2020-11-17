@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 import java.util.ArrayList;
 
 public class GameStatus {
