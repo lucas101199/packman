@@ -1,10 +1,11 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
+import Outils.Position;
 
 import java.util.ArrayList;
 
-public class Game implements Interfaces.Game {
+public class Game implements Outils.Game {
 
     private ArrayList<Entity> _items;
     private ArrayList<Ghost> _ennemies;

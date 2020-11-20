@@ -1,4 +1,4 @@
-package JeuxPacman;
+package Outils;
 
 public class Position {
     public Position(int xP, int yP){

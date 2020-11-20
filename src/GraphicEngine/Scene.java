@@ -82,6 +82,24 @@ public class Scene {
         }
     }
 
+    public double getImageX(String imageLabel) throws Exception {
+        ImageView image = getImage(imageLabel);
+        if (image != null) {
+            return image.getX() + (image.getImage().getWidth()/2);
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
+    public double getImageY(String imageLabel) throws Exception {
+        ImageView image = getImage(imageLabel);
+        if (image != null) {
+            return image.getY() + (image.getImage().getHeight()/2);
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
     /**
      *
      * @param imageLabel the name of the image

@@ -1,5 +1,7 @@
 package JeuxPacman;
 
+import Outils.Position;
+
 public abstract class Entity {
 
     protected Position _position;
@@ -22,14 +24,14 @@ public abstract class Entity {
 
     public Position getPosition(){
         return _position;
-    };
+    }
 
     int getHeight(){
         return _height;
-    };
+    }
 
     int getWidth(){
         return _width;
-    };
+    }
 }
 

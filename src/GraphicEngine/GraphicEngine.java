@@ -1,6 +1,6 @@
 package GraphicEngine;
 
-import Interfaces.Game;
+import Outils.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -12,7 +12,8 @@ import java.util.List;
 
 public class GraphicEngine extends Application {
 
-    public static Game game;
+    private static Game game;
+    private static String gameName;
 
     public List<Scene> sceneList;
     public Stage window;
@@ -238,7 +239,7 @@ public class GraphicEngine extends Application {
     @Override
     public void start(Stage stage) {
 
-        this.construct("Pacman");
+        this.construct(gameName);
 
         game.set_graphic(this);
 
@@ -250,4 +251,11 @@ public class GraphicEngine extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
+    public static void launcher(Game game, String gameName){
+        GraphicEngine.game = game;
+        GraphicEngine.gameName = gameName;
+        Application.launch(GraphicEngine.class);
+    }
+
 }

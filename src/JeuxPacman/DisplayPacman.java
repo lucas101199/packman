@@ -1,6 +1,7 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
+import Outils.Position;
 
 import java.util.Arrays;
 

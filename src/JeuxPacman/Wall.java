@@ -1,5 +1,7 @@
 package JeuxPacman;
 
+import Outils.Position;
+
 public class Wall extends Entity {
 
     public Wall(Position pos, int height, int width){

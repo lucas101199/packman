@@ -1,5 +1,7 @@
 package JeuxPacman;
 
+import Outils.Position;
+
 import java.util.ArrayList;
 
 public abstract class Character extends Entity{

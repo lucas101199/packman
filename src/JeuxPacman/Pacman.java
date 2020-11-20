@@ -1,5 +1,7 @@
 package JeuxPacman;
 
+import Outils.Position;
+
 public class Pacman extends Character{
 
     private Bonus _lastEatenItem;
