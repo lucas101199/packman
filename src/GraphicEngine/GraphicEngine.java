@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GraphicEngine {
+
     public List<Scene> sceneList;
     public Stage window;
 
@@ -226,4 +227,5 @@ public class GraphicEngine {
             throw new Exception("no scene with this name is present");
         }
     }
+
 }
