@@ -1,4 +1,4 @@
-package GraphicEngine;
+/*package GraphicEngine;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
    it doesn't work and display just a white screen instead
 */
 
-
+/*
 public class Main extends Application {
 
     @Override
@@ -28,3 +28,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+*/

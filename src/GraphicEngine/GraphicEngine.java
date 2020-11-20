@@ -1,16 +1,23 @@
 package GraphicEngine;
 
+import Interfaces.Game;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class GraphicEngine {
+public class GraphicEngine extends Application {
+
+    public static Game game;
 
     public List<Scene> sceneList;
     public Stage window;
 
-    public GraphicEngine(String windowLabel) {
+    public void construct(String windowLabel) {
         this.sceneList = new LinkedList<>();
         this.window = new Stage();
         this.window.setTitle(windowLabel);
@@ -228,4 +235,19 @@ public class GraphicEngine {
         }
     }
 
+    @Override
+    public void start(Stage stage) {
+
+        this.construct("Pacman");
+
+        game.set_graphic(this);
+
+        game.init();
+        game.start();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20),
+                actionEvent -> game.update()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 }
