@@ -7,6 +7,8 @@ package GraphicEngine;
 */
 
 
+import Interfaces.GameInterface;
+
 public class Main {
 
     public static void main(String[] args) {

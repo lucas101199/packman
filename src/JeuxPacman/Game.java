@@ -1,7 +1,7 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
-import GraphicEngine.GameInterface;
+import Interfaces.GameInterface;
 
 import java.util.ArrayList;
 import java.util.Scanner;

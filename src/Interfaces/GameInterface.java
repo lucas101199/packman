@@ -1,4 +1,6 @@
-package GraphicEngine;
+package Interfaces;
+
+import GraphicEngine.GraphicEngine;
 
 public interface GameInterface {
 

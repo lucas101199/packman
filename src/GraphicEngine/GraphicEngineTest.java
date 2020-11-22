@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import Interfaces.GameInterface;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
