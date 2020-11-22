@@ -1,7 +1,5 @@
 package GraphicEngine;
 
-import Outils.Game;
-
 /*TODO fix the superposition of 2 scene cause we have a bug when
    we create the first then display it then create a second one
    then display it then if we want to display the first one
@@ -13,12 +11,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Game game = new GameMain();
+        GameInterface game = new GameMain();
         GraphicEngine.launcher(game,"Test");
 
     }
 
-    static class GameMain implements Game {
+    static class GameMain implements GameInterface {
 
         GraphicEngine graphic;
 

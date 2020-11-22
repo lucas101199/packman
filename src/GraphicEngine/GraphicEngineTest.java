@@ -1,17 +1,16 @@
 package GraphicEngine;
 
-import Outils.Game;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 public class GraphicEngineTest {
 
     public static void main(String[] args) {
-        Game test = new TestGame();
+        GameInterface test = new TestGame();
         GraphicEngine.launcher(test,"Test");
     }
 
-    static class TestGame implements Game {
+    static class TestGame implements GameInterface {
 
         static GraphicEngine engine;
 

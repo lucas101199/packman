@@ -1,8 +1,6 @@
-package Outils;
+package GraphicEngine;
 
-import GraphicEngine.GraphicEngine;
-
-public interface Game {
+public interface GameInterface {
 
     void init();
 

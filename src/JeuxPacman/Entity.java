@@ -1,7 +1,5 @@
 package JeuxPacman;
 
-import Outils.Position;
-
 public abstract class Entity {
 
     protected Position _position;

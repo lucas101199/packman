@@ -1,7 +1,5 @@
 package JeuxPacman;
 
-import Outils.Position;
-
 import java.util.ArrayList;
 
 public class CollisionChecker {

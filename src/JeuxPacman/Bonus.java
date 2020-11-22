@@ -1,7 +1,5 @@
 package JeuxPacman;
 
-import Outils.Position;
-
 public class Bonus extends Entity{
     int _score;
     boolean _isActive;

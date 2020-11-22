@@ -8,7 +8,7 @@ public class Main {
 
         Game game = new Game();
 
-        GraphicEngine.launcher(game,"PacMan");
+        GraphicEngine.launcher(game, "PacMan");
 
     }
 

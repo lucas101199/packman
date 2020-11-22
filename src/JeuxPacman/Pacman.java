@@ -1,7 +1,5 @@
 package JeuxPacman;
 
-import Outils.Position;
-
 public class Pacman extends Character{
 
     private Bonus _lastEatenItem;
@@ -10,6 +8,7 @@ public class Pacman extends Character{
     public Pacman(Position position, int height, int width, int speed){
         super(position, height, width, speed);
         _canEatGhost = false;
+        _direction = null;
     }
 
     public Bonus lastEatenItem(){
@@ -29,7 +28,24 @@ public class Pacman extends Character{
     }
 
     public void move() {
-        _position = new Position(_position.x + 1, _position.y);
+        Position newpos;
+        switch (_direction) {
+            case EAST:
+                newpos = new Position(_position.x + 10, _position.y);
+                break;
+            case WEST:
+                newpos = new Position(_position.x - 10, _position.y);
+                break;
+            case NORTH:
+                newpos = new Position(_position.x, _position.y - 10);
+                break;
+            case SOUTH:
+                newpos = new Position(_position.x, _position.y + 10);
+                break;
+            default :
+                newpos = _position;
+        }
+        _position = newpos;
     }
 
     @Override

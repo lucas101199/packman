@@ -1,9 +1,10 @@
 package GraphicEngine;
 
-import Outils.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class GraphicEngine extends Application {
 
-    private static Game game;
+    private static GameInterface game;
     private static String gameName;
 
     public List<Scene> sceneList;
@@ -246,13 +247,12 @@ public class GraphicEngine extends Application {
         game.init();
         game.start();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20),
-                actionEvent -> game.update()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(game.getSpeed()), actionEvent -> game.update()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
-    public static void launcher(Game game, String gameName){
+    public static void launcher(GameInterface game, String gameName){
         GraphicEngine.game = game;
         GraphicEngine.gameName = gameName;
         Application.launch(GraphicEngine.class);

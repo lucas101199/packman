@@ -1,7 +1,5 @@
 package JeuxPacman;
 
-import Outils.Position;
-
 import java.util.ArrayList;
 
 public abstract class Character extends Entity{
@@ -11,6 +9,8 @@ public abstract class Character extends Entity{
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;
 
+
+    public Direction get_direction() {return _direction;}
 
     public static void setCollisionChecker(CollisionChecker checker){
         _collisonChecker = checker;
