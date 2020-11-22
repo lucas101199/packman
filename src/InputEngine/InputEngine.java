@@ -28,12 +28,13 @@ public class InputEngine {
                 //Call the function or interface locate in the gameplay
                 //this function will then call the function getLastKey
                 //to get the last input of the user.
+                events.add(e);
             }
         });
     }
 
     public String getLastKey() {
-        return keys.get(keys.size()-1).getChar();
+        return events.get(keys.size()-1).getCharacter();
     }
 }
 
