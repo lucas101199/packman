@@ -25,10 +25,12 @@ public class InputEngine {
     public void triggerAction() {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.A) {
-                //Call the function or interface locate in the gameplay
-                //this function will then call the function getLastKey
-                //to get the last input of the user.
-                events.add(e);
+                if (keys.contains(e.getCode())) {
+                    //Call the function or interface locate in the gameplay
+                    //this function will then call the function getLastKey
+                    //to get the last input of the user.
+                    events.add(e);
+                }
             }
         });
     }
