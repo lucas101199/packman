@@ -10,7 +10,7 @@ import java.util.List;
 public class InputEngine {
     Scene scene;
     List<KeyEvent> events;
-    List<KeyCode> keys;
+    List<String> keys;
 
     public InputEngine(Scene scene) {
         this.scene = scene;
@@ -18,19 +18,16 @@ public class InputEngine {
         this.keys = new ArrayList<>();
     }
 
-    public void addKey(char key) {
-        keys.add(KeyCode.getKeyCode(String.valueOf(key)));
+    public void addKey(String key) {
+        keys.add(key);
     }
 
     public void triggerAction() {
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.A) {
-                if (keys.contains(e.getCode())) {
-                    //Call the function or interface locate in the gameplay
-                    //this function will then call the function getLastKey
-                    //to get the last input of the user.
-                    events.add(e);
-                }
+            if (keys.contains(e.getCode().getChar())) {
+                System.out.println("rr");
+                events.add(e);
+                //function here
             }
         });
     }
