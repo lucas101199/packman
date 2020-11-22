@@ -68,6 +68,11 @@ public class GraphicEngineTest {
             engine = graphic;
         }
 
+        @Override
+        public void handleKey(String key) {
+
+        }
+
         static void setSizeScene() throws Exception {
             engine.addScene("scene");
             engine.setSizeScene("scene",100,50);

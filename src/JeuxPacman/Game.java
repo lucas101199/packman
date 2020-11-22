@@ -1,6 +1,7 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
+import InputEngine.InputEngine;
 import Interfaces.GameInterface;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Game implements GameInterface {
     private int _score;
     private final double speed = 10;
     private GraphicEngine _graphic;
-    private Scanner keyboard = new Scanner(System.in);
+    private InputEngine _input;
 
     public void init() {
         try {
@@ -41,42 +42,20 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        _input = new InputEngine(_graphic.getScene("maze").getScene(),this);
+        _input.addKey('z');
+        _input.addKey('q');
+        _input.addKey('s');
+        _input.addKey('d');
+        _input.triggerAction();
     }
 
     public void update() {
-        if (_pc.get_direction() == null) {
-            try {
-                char c = keyboard.next(".").charAt(0);
-                switch (c) {
-                    case 'z':
-                        _pc._direction = Direction.NORTH;
-                        _pcDisplay.displayPacMan(Direction.NORTH, _pc.getPosition());
-                        break;
-                    case 'd':
-                        _pc._direction = Direction.EAST;
-                        _pcDisplay.displayPacMan(Direction.EAST, _pc.getPosition());
-                        break;
-                    case 's':
-                        _pc._direction = Direction.SOUTH;
-                        _pcDisplay.displayPacMan(Direction.SOUTH, _pc.getPosition());
-                        break;
-                    case 'q':
-                        _pc._direction = Direction.WEST;
-                        _pcDisplay.displayPacMan(Direction.WEST, _pc.getPosition());
-                        break;
-                    default:
-                        break;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            _pc.move();
-            try {
-                _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        _pc.move();
+        try {
+            _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -87,5 +66,34 @@ public class Game implements GameInterface {
 
     public void set_graphic(GraphicEngine _graphic) {
         this._graphic = _graphic;
+    }
+
+    @Override
+    public void handleKey(String key) {
+        System.out.println("handleKey");
+        try {
+            switch (key) {
+                case "z":
+                    _pc._direction = Direction.NORTH;
+                    _pcDisplay.displayPacMan(Direction.NORTH, _pc.getPosition());
+                    break;
+                case "d":
+                    _pc._direction = Direction.EAST;
+                    _pcDisplay.displayPacMan(Direction.EAST, _pc.getPosition());
+                    break;
+                case "s":
+                    _pc._direction = Direction.SOUTH;
+                    _pcDisplay.displayPacMan(Direction.SOUTH, _pc.getPosition());
+                    break;
+                case "q":
+                    _pc._direction = Direction.WEST;
+                    _pcDisplay.displayPacMan(Direction.WEST, _pc.getPosition());
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

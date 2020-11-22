@@ -54,6 +54,11 @@ public class Main {
         public void set_graphic(GraphicEngine graphic) {
             this.graphic = graphic;
         }
+
+        @Override
+        public void handleKey(String key) {
+
+        }
     }
 
 }

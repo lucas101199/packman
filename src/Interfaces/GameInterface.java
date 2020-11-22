@@ -14,4 +14,6 @@ public interface GameInterface {
 
     void set_graphic(GraphicEngine graphic);
 
+    void handleKey(String key);
+
 }
