@@ -43,10 +43,10 @@ public class Game implements GameInterface {
             e.printStackTrace();
         }
         _input = new InputEngine(_graphic.getScene("maze").getScene(),this);
-        _input.addKey('z');
-        _input.addKey('q');
-        _input.addKey('s');
-        _input.addKey('d');
+        _input.addKey("Z");
+        _input.addKey("Q");
+        _input.addKey("S");
+        _input.addKey("D");
         _input.triggerAction();
     }
 
@@ -70,22 +70,21 @@ public class Game implements GameInterface {
 
     @Override
     public void handleKey(String key) {
-        System.out.println("handleKey");
         try {
             switch (key) {
-                case "z":
+                case "Z":
                     _pc._direction = Direction.NORTH;
                     _pcDisplay.displayPacMan(Direction.NORTH, _pc.getPosition());
                     break;
-                case "d":
+                case "D":
                     _pc._direction = Direction.EAST;
                     _pcDisplay.displayPacMan(Direction.EAST, _pc.getPosition());
                     break;
-                case "s":
+                case "S":
                     _pc._direction = Direction.SOUTH;
                     _pcDisplay.displayPacMan(Direction.SOUTH, _pc.getPosition());
                     break;
-                case "q":
+                case "Q":
                     _pc._direction = Direction.WEST;
                     _pcDisplay.displayPacMan(Direction.WEST, _pc.getPosition());
                     break;
