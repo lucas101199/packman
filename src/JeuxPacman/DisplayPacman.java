@@ -28,6 +28,8 @@ public class DisplayPacman {
     // Display Pac-Man
     public void displayPacMan(Direction dir, Position pos) throws Exception {
         String label;
+        if (dir == null)
+            return;
         switch (dir) {
             case EAST:
                 label = imageLabels[1];

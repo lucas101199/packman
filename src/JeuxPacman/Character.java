@@ -41,13 +41,13 @@ public abstract class Character extends Entity{
         var nextPos = new Position(_position.x, _position.y);
         switch(_direction){
             case NORTH:
-                nextPos.y += _speed;
+                nextPos.y -= _speed;
                 break;
             case EAST:
                 nextPos.x += _speed;
                 break;
             case SOUTH:
-                nextPos.y -= _speed;
+                nextPos.y += _speed;
                 break;
             default:
                 nextPos.x -= _speed;
