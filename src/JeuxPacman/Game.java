@@ -18,6 +18,7 @@ public class Game implements GameInterface {
     private GraphicEngine _graphic;
     private InputEngine _input;
     private CollisionChecker checker;
+    private DisplayClyde _clydeDisplay;
 
     public void init() {
         try {
@@ -32,6 +33,9 @@ public class Game implements GameInterface {
             _items = new ArrayList<>();
             _pc = new Pacman(new Position(272,454), 31,27,1);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
+            _ennemies.add(new Ghost(new Position(272,225),27,31,2));
+            _ennemies.get(0)._direction = Direction.SOUTH;
+            _clydeDisplay = new DisplayClyde(_graphic,"maze");
             _score = 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,6 +45,7 @@ public class Game implements GameInterface {
     public void start() {
         try {
             _pcDisplay.displayPacmanStart(_pc.getPosition());
+            _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,14 +94,37 @@ public class Game implements GameInterface {
         _items.add(new Wall(new Position(467,425),16,60));  //BottomRight L part1
         _items.add(new Wall(new Position(448,455),72,22));  //BottomRight L part2
         _items.add(new Wall(new Position(138,541),14,174)); //BottomLeft InverseT part1
-        _items.add(new Wall(new Position(158,512),74,22));  //BottomLeft InverseT part2
+        _items.add(new Wall(new Position(158,511),72,22));  //BottomLeft InverseT part2
         _items.add(new Wall(new Position(408,541),14,174)); //BottomRight InverseT part1
-        _items.add(new Wall(new Position(388,512),74,22));  //BottomRight InverseT part2
-        checker = new CollisionChecker(_items);
+        _items.add(new Wall(new Position(388,511),72,22));  //BottomRight InverseT part2
+        ArrayList<Entity> entities = new ArrayList<>(_items);
+        entities.addAll(_ennemies);
+        checker = new CollisionChecker(entities);
         _pc.setChecker(checker);
     }
 
     public void update() {
+        if (_pc.isDead) {
+            try {
+                _pcDisplay.displayPacManDeath(_pc.getPosition());
+                _pc.isDead = false;
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (_pc.needRespawn) {
+            try {
+                if (System.currentTimeMillis() - _pc.deathDate < 3900)
+                    return;
+                _pc.needRespawn = false;
+                _pc.respawn();
+                _pcDisplay.displayPacmanStart(_pc.getPosition());
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         _pc.move();
         _pc.checkPosition();
         try {

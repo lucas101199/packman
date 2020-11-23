@@ -30,12 +30,31 @@ public class DisplayClyde {
     }
 
     // Display Clyde
-    public void displayClyde(String label, int x, int y) throws Exception {
+    public void displayClyde(Direction dir, Position pos) throws Exception {
+        String label;
+        if (dir == null)
+            return;
+        switch (dir) {
+            case EAST:
+                label = imageLabels[1];
+                break;
+            case WEST:
+                label = imageLabels[0];
+                break;
+            case NORTH:
+                label = imageLabels[2];
+                break;
+            case SOUTH:
+                label = imageLabels[3];
+                break;
+            default :
+                label = "";
+        }
         if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
 
             hideClyde();
 
-            windows.setPositionImage(this.scene, label, x, y);
+            windows.setPositionImage(this.scene, label, pos.x, pos.y);
             windows.displayImage(this.scene, label);
 
             imageCurrent = label;

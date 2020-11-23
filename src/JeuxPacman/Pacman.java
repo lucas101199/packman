@@ -1,14 +1,13 @@
 package JeuxPacman;
 
-import javafx.geometry.Pos;
-
-import java.util.ArrayList;
-
 public class Pacman extends Character{
 
     private Bonus _lastEatenItem;
     private  boolean _canEatGhost;
     CollisionChecker checker;
+    public boolean isDead;
+    public boolean needRespawn;
+    public long deathDate;
 
     public void setChecker(CollisionChecker checker) {
         this.checker = checker;
@@ -43,10 +42,6 @@ public class Pacman extends Character{
         reactAfterCollision();
     }
 
-    public void nextPosDir(Direction dir) {
-
-    }
-
     public void checkPosition() {
         if (_position.x < -14)
             _position.x = _position.x + 572;
@@ -55,18 +50,25 @@ public class Pacman extends Character{
     }
 
     @Override
+    public void respawn() {
+        super.respawn();
+        _direction = null;
+    }
+
+    @Override
     protected void reactAfterCollision() {
         if (_collisions.size() == 0)
             _position = nextPos();
         for(var e : _collisions) {
             if (e instanceof Ghost) {
-                System.out.println("Oh a Ghost !");
                 if(_canEatGhost) {
                     ((Ghost) e).die();
                     _position = nextPos();
                 }
                 else{
-                    respawn();
+                    isDead = true;
+                    needRespawn = true;
+                    deathDate = System.currentTimeMillis();
                 }
             }
             else if (e instanceof Wall)
