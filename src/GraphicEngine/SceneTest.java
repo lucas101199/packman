@@ -57,42 +57,42 @@ public class SceneTest extends Application {
     void rotateImage() throws Exception {
         Scene scene = new Scene("scene");
         scene.addImage("image","./src/Image/blueghost.gif");
-        scene.rotateImage("image",90);
+        scene.rotateNode("image",90);
         ImageView imv = scene.getImage("image");
-        if (imv.getRotate() != 90) throw new AssertionError("rotateImage");
-        scene.rotateImage("image",90);
+        if (imv.getRotate() != 90) throw new AssertionError("rotateNode");
+        scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 180) throw new AssertionError("rotateImage");
-        scene.rotateImage("image",90);
+        if (imv.getRotate() != 180) throw new AssertionError("rotateNode");
+        scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 270) throw new AssertionError("rotateImage");
-        scene.rotateImage("image",90);
+        if (imv.getRotate() != 270) throw new AssertionError("rotateNode");
+        scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 0) throw new AssertionError("rotateImage");
+        if (imv.getRotate() != 0) throw new AssertionError("rotateNode");
     }
 
     void displayImage() throws Exception {
         Scene scene = new Scene("scene");
         scene.addImage("image","./src/Image/blueghost.gif");
-        scene.displayImage("image");
+        scene.displayNode("image");
         ImageView imv = scene.getImage("image");
-        if (!imv.isVisible()) throw new AssertionError("displayImage");
+        if (!imv.isVisible()) throw new AssertionError("displayNode");
     }
 
     void hideImage() throws Exception {
         Scene scene = new Scene("scene");
         scene.addImage("image","./src/Image/blueghost.gif");
-        scene.displayImage("image");
-        scene.hideImage("image");
+        scene.displayNode("image");
+        scene.hideNode("image");
         ImageView imv = scene.getImage("image");
-        if (imv.isVisible()) throw new AssertionError("hideImage");
+        if (imv.isVisible()) throw new AssertionError("hideNode");
     }
 
     void deleteImage() throws Exception {
         Scene scene = new Scene("scene");
         scene.addImage("image","./src/Image/blueghost.gif");
-        scene.deleteImage("image");
-        if (scene.getImage("image") != null) throw new AssertionError("deleteImage");
+        scene.deleteNode("image");
+        if (scene.getImage("image") != null) throw new AssertionError("deleteNode");
     }
 
     void isPresent() throws Exception {

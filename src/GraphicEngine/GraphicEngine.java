@@ -154,7 +154,7 @@ public class GraphicEngine extends Application {
     public void rotateImage(String sceneLabel, String imageLabel, double angle) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.rotateImage(imageLabel, angle);
+            scene.rotateNode(imageLabel, angle);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -169,7 +169,7 @@ public class GraphicEngine extends Application {
     public void displayImage(String sceneLabel, String imageLabel) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.displayImage(imageLabel);
+            scene.displayNode(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -184,7 +184,7 @@ public class GraphicEngine extends Application {
     public void hideImage(String sceneLabel, String imageLabel) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.hideImage(imageLabel);
+            scene.hideNode(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -199,7 +199,7 @@ public class GraphicEngine extends Application {
     public void deleteImage(String sceneLabel, String imageLabel) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.deleteImage(imageLabel);
+            scene.deleteNode(imageLabel);
         } else {
             throw new Exception("no scene with this name is present");
         }
@@ -231,6 +231,15 @@ public class GraphicEngine extends Application {
             scene.setSize(width,height);
             if (scene.isDisplay())
                 this.window.setScene(scene.getScene());
+        } else {
+            throw new Exception("no scene with this name is present");
+        }
+    }
+
+    public void addTextButton(String sceneLabel,String buttonLabel, String text) throws Exception {
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.addTextButton(buttonLabel,text);
         } else {
             throw new Exception("no scene with this name is present");
         }

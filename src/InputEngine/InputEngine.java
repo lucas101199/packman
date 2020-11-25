@@ -28,7 +28,7 @@ public class InputEngine {
 
     public void triggerAction() {
         scene.setOnKeyPressed(e -> {
-            if (keys.contains(e.getCode().getChar())) {
+            if (keys.contains(e.getCode().getName())) {
                 events.add(e);
                 game.handleKey(getLastKey());
             }
@@ -36,7 +36,7 @@ public class InputEngine {
     }
 
     public String getLastKey() {
-        return events.get(events.size()-1).getCode().getChar();
+        return events.get(events.size()-1).getCode().getName();
     }
 }
 

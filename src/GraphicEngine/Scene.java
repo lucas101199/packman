@@ -2,6 +2,7 @@ package GraphicEngine;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -82,6 +83,16 @@ public class Scene {
         }
     }
 
+    public void setPositionButton(String buttonLabel, double x, double y) throws Exception {
+        Button button = getButton(buttonLabel);
+        if (button != null) {
+            button.setLayoutX(x - (button.getWidth()/2));
+            button.setLayoutY(y - (button.getHeight()/2));
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
     public double getImageX(String imageLabel) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
@@ -91,10 +102,28 @@ public class Scene {
         }
     }
 
+    public double getButtonX(String buttonLabel) throws Exception {
+        Button button = getButton(buttonLabel);
+        if (button != null) {
+            return button.getLayoutX() + (button.getWidth()/2);
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
     public double getImageY(String imageLabel) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
             return image.getY() + (image.getImage().getHeight()/2);
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
+    public double getButtonY(String buttonLabel) throws Exception {
+        Button button = getButton(buttonLabel);
+        if (button != null) {
+            return button.getLayoutY() + (button.getHeight()/2);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -114,6 +143,22 @@ public class Scene {
         return null;
     }
 
+    public Button getButton(String buttonLabel) {
+        for (Node button : root.getChildren()) {
+            if (button.getId().equals(buttonLabel))
+                return (Button) button;
+        }
+        return null;
+    }
+
+    public Node getNode(String label) {
+        for (Node node : root.getChildren()) {
+            if (node.getId().equals(label))
+                return node;
+        }
+        return null;
+    }
+
     /**
      * Resize the image with the given value
      * @param imageLabel the name to identified the image
@@ -124,9 +169,18 @@ public class Scene {
     public void resizeImage(String imageLabel, double height, double width) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
-            ImageView e = (ImageView) root.getChildren().get(root.getChildren().indexOf(image));
-            e.setFitHeight(height);
-            e.setFitWidth(width);
+            image.setFitHeight(height);
+            image.setFitWidth(width);
+        } else {
+            throw new Exception("no node with the label in this scene");
+        }
+    }
+
+    public void resizeButton(String buttonLabel, double height, double width) throws Exception {
+        Button button = getButton(buttonLabel);
+        if (button != null) {
+            button.setPrefHeight(height);
+            button.setPrefWidth(width);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -134,14 +188,14 @@ public class Scene {
 
     /**
      * Rotate the object {@code Node} clockwise with the given {@code angle} in degrees
-     * @param imageLabel the name to identified the image
+     * @param nodeLabel the name to identified the image
      * @param angle in degrees
      * @throws Exception if the object is missing
      */
-    public void rotateImage(String imageLabel, double angle) throws Exception {
-        ImageView image = getImage(imageLabel);
-        if (image != null) {
-            image.setRotate((image.getRotate() + angle) % 360);
+    public void rotateNode(String nodeLabel, double angle) throws Exception {
+        Node node = getNode(nodeLabel);
+        if (node != null) {
+            node.setRotate((node.getRotate() + angle) % 360);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -149,13 +203,13 @@ public class Scene {
 
     /**
      *
-     * @param imageLabel the name to identified the image
+     * @param nodeLabel the name to identified the image
      * @throws Exception if the object is missing
      */
-    public void displayImage(String imageLabel) throws Exception {
-        ImageView image = getImage(imageLabel);
-        if (image != null) {
-            image.setVisible(true);
+    public void displayNode(String nodeLabel) throws Exception {
+        Node node = getNode(nodeLabel);
+        if (node != null) {
+            node.setVisible(true);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -163,13 +217,13 @@ public class Scene {
 
     /**
      *
-     * @param imageLabel the name to identified the image
+     * @param nodeLabel the name to identified the image
      * @throws Exception if the object is missing
      */
-    public void hideImage(String imageLabel) throws Exception {
-        ImageView image = getImage(imageLabel);
-        if (image != null) {
-            image.setVisible(false);
+    public void hideNode(String nodeLabel) throws Exception {
+        Node node = getNode(nodeLabel);
+        if (node != null) {
+            node.setVisible(false);
         } else {
             throw new Exception("no node with the label in this scene");
         }
@@ -180,7 +234,7 @@ public class Scene {
      * @param imageLabel the name to identified the image
      * @throws Exception if the object is missing
      */
-    public void deleteImage(String imageLabel) throws Exception {
+    public void deleteNode(String imageLabel) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
             root.getChildren().remove(image);
@@ -210,4 +264,25 @@ public class Scene {
         this.root = newroot;
         this.scene = newscene;
     }
+    
+    public void addTextButton(String buttonLabel, String text) throws Exception {
+        if (isPresent(buttonLabel))
+            throw new Exception("Button with the same name already exist");
+        Button button = new Button(text);
+        button.setId(buttonLabel);
+        button.setVisible(false);
+        root.getChildren().add(button);
+    }
+
+    public void addImageButton(String buttonLabel, String text, String imageFile) throws Exception {
+        if (isPresent(buttonLabel))
+            throw new Exception("Button with the same name already exist");
+        Image image = new Image(new FileInputStream(imageFile));
+        ImageView imageView = new ImageView(image);
+        Button button = new Button(text,imageView);
+        button.setId(buttonLabel);
+        button.setVisible(false);
+        root.getChildren().add(button);
+    }
+
 }

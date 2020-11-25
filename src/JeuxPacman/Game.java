@@ -31,7 +31,7 @@ public class Game implements GameInterface {
             _graphic.displayImage("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
-            _pc = new Pacman(new Position(272,454), 31,27,1);
+            _pc = new Pacman(new Position(272,454), 27,31,1);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
             _ennemies.add(new Ghost(new Position(272,225),27,31,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
@@ -167,7 +167,7 @@ public class Game implements GameInterface {
             collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
             for (Entity e : collideWith) {
                 if (e instanceof Wall) {
-                    _pc._direction = olddir;
+                    //_pc._direction = olddir;
                     break;
                 }
             }

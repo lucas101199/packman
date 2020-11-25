@@ -156,16 +156,16 @@ public class GraphicEngineTest {
             Scene scene = engine.getScene("scene");
             engine.rotateImage("scene","image",90);
             ImageView imv = scene.getImage("image");
-            if (imv.getRotate() != 90) throw new AssertionError("rotateImage");
+            if (imv.getRotate() != 90) throw new AssertionError("rotateNode");
             engine.rotateImage("scene","image",90);
             imv = scene.getImage("image");
-            if (imv.getRotate() != 180) throw new AssertionError("rotateImage");
+            if (imv.getRotate() != 180) throw new AssertionError("rotateNode");
             engine.rotateImage("scene","image",90);
             imv = scene.getImage("image");
-            if (imv.getRotate() != 270) throw new AssertionError("rotateImage");
+            if (imv.getRotate() != 270) throw new AssertionError("rotateNode");
             engine.rotateImage("scene","image",90);
             imv = scene.getImage("image");
-            if (imv.getRotate() != 0) throw new AssertionError("rotateImage");
+            if (imv.getRotate() != 0) throw new AssertionError("rotateNode");
         }
 
         static void displayImage() throws Exception {
@@ -173,7 +173,7 @@ public class GraphicEngineTest {
             engine.addImage("scene","image","./src/Images/PacMan/pacman_left.gif");
             engine.displayImage("scene","image");
             ImageView imv = engine.getScene("scene").getImage("image");
-            if (!imv.isVisible()) throw new AssertionError("displayImage");
+            if (!imv.isVisible()) throw new AssertionError("displayNode");
         }
 
         static void hideImage() throws Exception {
@@ -182,20 +182,20 @@ public class GraphicEngineTest {
             engine.displayImage("scene","image");
             engine.hideImage("scene","image");
             ImageView imv = engine.getScene("scene").getImage("image");
-            if (imv.isVisible()) throw new AssertionError("hideImage");
+            if (imv.isVisible()) throw new AssertionError("hideNode");
             engine.displayScene("scene");
             engine.addScene("scene2");
             engine.displayScene("scene2");
             engine.displayScene("scene");
             imv = engine.getScene("scene").getImage("image");
-            if (imv.isVisible()) throw new AssertionError("hideImage");
+            if (imv.isVisible()) throw new AssertionError("hideNode");
         }
 
         static void deleteImage() throws Exception {
             engine.addScene("scene");
             engine.addImage("scene","image","./src/Images/PacMan/pacman_left.gif");
             engine.deleteImage("scene","image");
-            if (engine.getScene("scene").isPresent("image")) throw new AssertionError("deleteImage");
+            if (engine.getScene("scene").isPresent("image")) throw new AssertionError("deleteNode");
         }
 
         static void isPresent() throws Exception {
