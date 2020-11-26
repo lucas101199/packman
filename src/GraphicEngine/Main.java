@@ -29,13 +29,21 @@ public class Main {
         @Override
         public void start() {
             try {
-                graphic.addScene("menu");
-                graphic.displayScene("menu");
-                graphic.addImage("menu", "pacman", "./src/Images/PacMan/pacman_up.gif");
-                graphic.displayObject("menu", "pacman");
-                graphic.setPositionImage("menu", "pacman", 200, 200);
-                graphic.rotateObject("menu","pacman",45);
-                graphic.setSizeScene("menu",400,400);
+                graphic.addScene("scene");
+                graphic.displayScene("scene");
+                graphic.addImage("scene", "image", "./src/Images/PacMan/pacman_up.gif");
+                graphic.displayObject("scene", "image");
+                graphic.setPositionImage("scene", "image", 200, 200);
+                graphic.setSizeScene("scene", 400, 400);
+                graphic.rotateObject("scene", "image", 45);
+                graphic.addTextButton("scene", "button", "rotate");
+                graphic.displayObject("scene", "button");
+                graphic.setPositionTextButton("scene", "button", 100, 300);
+                graphic.resizeTextButton("scene", "button", 30, 100);
+                graphic.addImageButton("scene", "blue", "./src/Images/Ghosts/blue/ghost_blue_down.gif");
+                graphic.displayObject("scene", "blue");
+                graphic.setPositionImageButton("scene", "blue", 200, 300);
+                graphic.resizeImageButton("scene", "blue", 30, 30);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -43,6 +51,7 @@ public class Main {
 
         @Override
         public void update() {
+            graphic.window.show();
         }
 
         @Override
@@ -57,7 +66,14 @@ public class Main {
 
         @Override
         public void handleKey(String key) {
-
+            try {
+                if (key.equals("button"))
+                    graphic.rotateObject("scene", "image", 45);
+                if (key.equals("blue"))
+                    graphic.rotateObject("scene", "image", -45);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

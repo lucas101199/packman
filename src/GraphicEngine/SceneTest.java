@@ -1,5 +1,6 @@
 package GraphicEngine;
 
+import Interfaces.GameInterface;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
 public class SceneTest extends Application {
 
     void setDisplay() {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.setDisplay(true);
         if ((!scene.isDisplay())) throw new AssertionError("setDisplay");
         scene.setDisplay(false);
@@ -17,7 +18,7 @@ public class SceneTest extends Application {
     }
 
     void addImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         String imageLabel = "imageLabel";
         String imageLabel1 = "imageLabel1";
         String imageFile = "./src/Image/blueghost.gif";
@@ -30,7 +31,7 @@ public class SceneTest extends Application {
     }
 
     void setPositionImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         String imageFile = "./src/Image/blueghost.gif";
         scene.addImage("imageLabel",imageFile);
         scene.setPositionImage("imageLabel",100,50);
@@ -42,7 +43,7 @@ public class SceneTest extends Application {
     }
 
     void resizeImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.resizeImage("image",100,50);
         ImageView imv = scene.getImage("image");
@@ -55,7 +56,7 @@ public class SceneTest extends Application {
     }
 
     void rotateImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.rotateNode("image",90);
         ImageView imv = scene.getImage("image");
@@ -72,7 +73,7 @@ public class SceneTest extends Application {
     }
 
     void displayImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.displayNode("image");
         ImageView imv = scene.getImage("image");
@@ -80,7 +81,7 @@ public class SceneTest extends Application {
     }
 
     void hideImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.displayNode("image");
         scene.hideNode("image");
@@ -89,14 +90,14 @@ public class SceneTest extends Application {
     }
 
     void deleteImage() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.deleteNode("image");
         if (scene.getImage("image") != null) throw new AssertionError("deleteNode");
     }
 
     void isPresent() throws Exception {
-        Scene scene = new Scene("scene");
+        Scene scene = new Scene("scene", new GameTest());
         scene.addImage("image","./src/Image/blueghost.gif");
         if (!scene.isPresent("image")) throw new AssertionError("isPresent");
         if (scene.isPresent("test")) throw new AssertionError("isPresent");
@@ -118,6 +119,39 @@ public class SceneTest extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    static class GameTest implements GameInterface {
+
+        @Override
+        public void init() {
+
+        }
+
+        @Override
+        public void start() {
+
+        }
+
+        @Override
+        public void update() {
+
+        }
+
+        @Override
+        public double getSpeed() {
+            return 0;
+        }
+
+        @Override
+        public void handleKey(String key) {
+
+        }
+
+        @Override
+        public void set_graphic(GraphicEngine graphic) {
+
+        }
     }
 
 }

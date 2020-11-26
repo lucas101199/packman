@@ -1,10 +1,14 @@
 package GraphicEngine;
 
+import Interfaces.GameInterface;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
 
 import java.io.FileInputStream;
 
@@ -13,8 +17,11 @@ public class Scene {
     private javafx.scene.Scene scene;
     private Group root;
 
-    public Scene(String label) {
+    private GameInterface game;
+
+    public Scene(String label, GameInterface game) {
         this.root = new Group();
+        this.game = game;
         this.scene = new javafx.scene.Scene(this.root);
         root.setId(label);
         root.setVisible(false);
@@ -55,7 +62,7 @@ public class Scene {
      * @param height Height for the {@code scene}
      */
     public void setSize(double width, double height) {
-        Group newroot = new Group(this.root);
+        Group newroot = new Group(this.root.getChildren());
         javafx.scene.Scene newscene = new javafx.scene.Scene(newroot,width,height);
         newroot.setId(this.root.getId());
         newroot.setVisible(this.root.isVisible());
@@ -92,24 +99,25 @@ public class Scene {
         button.setId(buttonLabel);
         button.setVisible(false);
         root.getChildren().add(button);
+        button.setOnAction(actionEvent -> game.handleKey(buttonLabel));
     }
 
     /**
      * Add a button to the {@code scene}
      * @param buttonLabel Name of the button
-     * @param text Text display on the button
      * @param imageFile Image in the background of the button
      * @throws Exception if an object has already the name {@code buttonLabel}
      */
-    public void addImageButton(String buttonLabel, String text, String imageFile) throws Exception {
-        if (isPresent(buttonLabel))
-            throw new Exception("Object named "+buttonLabel+" already exists");
-        Image image = new Image(new FileInputStream(imageFile));
-        ImageView imageView = new ImageView(image);
-        Button button = new Button(text,imageView);
-        button.setId(buttonLabel);
-        button.setVisible(false);
-        root.getChildren().add(button);
+    public void addImageButton(String buttonLabel, String imageFile) throws Exception {
+        addImage(buttonLabel,imageFile);
+        ImageView button = getImage(buttonLabel);
+        button.setOnMouseClicked(actionEvent -> game.handleKey(buttonLabel));
+        button.setOnMouseEntered(mouseDragEvent -> {
+            Glow glow = new Glow();
+            glow.setLevel(1);
+            button.setEffect(glow);
+        });
+        button.setOnMouseExited(mouseDragEvent -> button.setEffect(null));
     }
 
     /**
@@ -233,8 +241,8 @@ public class Scene {
     public void resizeButton(String buttonLabel, double height, double width) throws Exception {
         Button button = getButton(buttonLabel);
         if (button != null) {
-            button.setPrefHeight(height);
-            button.setPrefWidth(width);
+            button.setMinSize(width,height);
+            button.setMaxSize(width,height);
         } else {
             throw new Exception("Button named "+buttonLabel+" doesn't exist");
         }
@@ -303,10 +311,9 @@ public class Scene {
      * @return the image or null if it doesn't exist
      */
     public ImageView getImage(String imageLabel) {
-        for (Node image : root.getChildren()) {
-            if (image.getId().equals(imageLabel))
-                return (ImageView) image;
-        }
+        Node node = getNode(imageLabel);
+        if (node != null)
+            return (ImageView) node;
         return null;
     }
 
@@ -316,10 +323,9 @@ public class Scene {
      * @return the button or null if it doesn't exist
      */
     public Button getButton(String buttonLabel) {
-        for (Node button : root.getChildren()) {
-            if (button.getId().equals(buttonLabel))
-                return (Button) button;
-        }
+        Node node = getNode(buttonLabel);
+        if (node != null)
+            return (Button) node;
         return null;
     }
 
