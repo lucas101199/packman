@@ -5,7 +5,6 @@ import InputEngine.InputEngine;
 import Interfaces.GameInterface;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Game implements GameInterface {
 
@@ -28,7 +27,7 @@ public class Game implements GameInterface {
             _graphic.addImage("maze","map","./src/Images/Map/map.png");
             _graphic.resizeImage("maze","map",600,544);
             _graphic.setPositionImage("maze","map",272,300);
-            _graphic.displayImage("maze","map");
+            _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
             _pc = new Pacman(new Position(272,454), 27,31,1);

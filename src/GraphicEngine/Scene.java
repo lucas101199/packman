@@ -51,7 +51,7 @@ public class Scene {
     }
 
     /**
-     * Add an image to the scene and to the list {@code content} which has all the {@code Node} in the scene
+     * Add an image to the scene
      * @param imageLabel the name to identified the image
      * @param imageFile the URL of the file
      * @throws Exception if an image has already the name {@code imageLabel}
@@ -64,6 +64,21 @@ public class Scene {
         imageView.setId(imageLabel);
         imageView.setVisible(false);
         root.getChildren().add(imageView);
+    }
+
+    /**
+     * Add a button to the scene and to the list {@code content} which has all the {@code Node} in the scene
+     * @param buttonLabel
+     * @param text
+     * @throws Exception
+     */
+    public void addTextButton(String buttonLabel, String text) throws Exception {
+        if (isPresent(buttonLabel))
+            throw new Exception("Button with the same name already exist");
+        Button button = new Button(text);
+        button.setId(buttonLabel);
+        button.setVisible(false);
+        root.getChildren().add(button);
     }
 
     /**
@@ -263,15 +278,6 @@ public class Scene {
         newroot.setVisible(this.root.isVisible());
         this.root = newroot;
         this.scene = newscene;
-    }
-    
-    public void addTextButton(String buttonLabel, String text) throws Exception {
-        if (isPresent(buttonLabel))
-            throw new Exception("Button with the same name already exist");
-        Button button = new Button(text);
-        button.setId(buttonLabel);
-        button.setVisible(false);
-        root.getChildren().add(button);
     }
 
     public void addImageButton(String buttonLabel, String text, String imageFile) throws Exception {

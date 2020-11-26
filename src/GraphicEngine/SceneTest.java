@@ -59,16 +59,16 @@ public class SceneTest extends Application {
         scene.addImage("image","./src/Image/blueghost.gif");
         scene.rotateNode("image",90);
         ImageView imv = scene.getImage("image");
-        if (imv.getRotate() != 90) throw new AssertionError("rotateNode");
+        if (imv.getRotate() != 90) throw new AssertionError("rotateObject");
         scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 180) throw new AssertionError("rotateNode");
+        if (imv.getRotate() != 180) throw new AssertionError("rotateObject");
         scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 270) throw new AssertionError("rotateNode");
+        if (imv.getRotate() != 270) throw new AssertionError("rotateObject");
         scene.rotateNode("image",90);
         imv = scene.getImage("image");
-        if (imv.getRotate() != 0) throw new AssertionError("rotateNode");
+        if (imv.getRotate() != 0) throw new AssertionError("rotateObject");
     }
 
     void displayImage() throws Exception {

@@ -35,7 +35,7 @@ public class DisplayBlinky {
             hideBlinky();
 
             windows.setPositionImage(this.scene, label, x, y);
-            windows.displayImage(this.scene, label);
+            windows.displayObject(this.scene, label);
 
             imageCurrent = label;
         }
@@ -47,6 +47,6 @@ public class DisplayBlinky {
     // Hide Blinky
     public void hideBlinky () throws Exception {
         if (Arrays.asList(imageLabels).contains(imageCurrent))
-            windows.hideImage(this.scene, imageCurrent);
+            windows.hideObject(this.scene, imageCurrent);
     }
 }

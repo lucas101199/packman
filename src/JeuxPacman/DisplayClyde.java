@@ -55,7 +55,7 @@ public class DisplayClyde {
             hideClyde();
 
             windows.setPositionImage(this.scene, label, pos.x, pos.y);
-            windows.displayImage(this.scene, label);
+            windows.displayObject(this.scene, label);
 
             imageCurrent = label;
         }
@@ -67,6 +67,6 @@ public class DisplayClyde {
     // Hide Clyde
     public void hideClyde() throws Exception {
         if (Arrays.asList(imageLabels).contains(imageCurrent))
-            windows.hideImage(this.scene, imageCurrent);
+            windows.hideObject(this.scene, imageCurrent);
     }
 }

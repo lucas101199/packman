@@ -50,7 +50,7 @@ public class DisplayPacman {
             hidePacMan();
 
             _graphic.setPositionImage(_sceneLabel, label, pos.x, pos.y);
-            _graphic.displayImage(_sceneLabel, label);
+            _graphic.displayObject(_sceneLabel, label);
 
             imageCurrent = label;
         }
@@ -61,13 +61,13 @@ public class DisplayPacman {
 
     public void displayPacmanStart(Position pos) throws Exception {
         if (_graphic.getScene("maze").isPresent("Pacman_death")) {
-            _graphic.deleteImage("maze", "Pacman_death");
+            _graphic.deleteObject("maze", "Pacman_death");
             if (imageCurrent.equals("Pacman_death"))
                 imageCurrent = "";
         }
         hidePacMan();
         _graphic.setPositionImage(_sceneLabel, "Pacman_start", pos.x, pos.y);
-        _graphic.displayImage(_sceneLabel, "Pacman_start");
+        _graphic.displayObject(_sceneLabel, "Pacman_start");
         imageCurrent = "Pacman_start";
     }
 
@@ -75,14 +75,14 @@ public class DisplayPacman {
         _graphic.addImage(_sceneLabel, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
         hidePacMan();
         _graphic.setPositionImage(_sceneLabel, "Pacman_death", pos.x, pos.y);
-        _graphic.displayImage(_sceneLabel, "Pacman_death");
+        _graphic.displayObject(_sceneLabel, "Pacman_death");
         imageCurrent = "Pacman_death";
     }
 
     // Hide Pac-Man
     public void hidePacMan () throws Exception {
         if (Arrays.asList(imageLabels).contains(imageCurrent))
-            _graphic.hideImage(_sceneLabel, imageCurrent);
+            _graphic.hideObject(_sceneLabel, imageCurrent);
     }
 
 }

@@ -35,11 +35,11 @@ public class DisplayPinky {
         if (Arrays.asList(imageLabels).contains(label) || label == "") {
 
             if (Arrays.asList(imageLabels).contains(imageCurrent)) {
-                windows.hideImage(this.scene, imageCurrent);
+                windows.hideObject(this.scene, imageCurrent);
             }
 
             windows.setPositionImage(this.scene, label, x, y);
-            windows.displayImage(this.scene, label);
+            windows.displayObject(this.scene, label);
 
             imageCurrent = label;
         }
@@ -51,6 +51,6 @@ public class DisplayPinky {
     // Hide Pinky
     public void hidePinky () throws Exception {
         if (Arrays.asList(imageLabels).contains(imageCurrent))
-            windows.hideImage(this.scene, imageCurrent);
+            windows.hideObject(this.scene, imageCurrent);
     }
 }

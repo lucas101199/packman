@@ -32,9 +32,9 @@ public class Main {
                 graphic.addScene("menu");
                 graphic.displayScene("menu");
                 graphic.addImage("menu", "pacman", "./src/Images/PacMan/pacman_up.gif");
-                graphic.displayImage("menu", "pacman");
+                graphic.displayObject("menu", "pacman");
                 graphic.setPositionImage("menu", "pacman", 200, 200);
-                graphic.rotateImage("menu","pacman",45);
+                graphic.rotateObject("menu","pacman",45);
                 graphic.setSizeScene("menu",400,400);
             } catch (Exception e) {
                 e.printStackTrace();
