@@ -1,11 +1,16 @@
+package JeuxPacman;
+
 import java.util.ArrayList;
 
 public abstract class Character extends Entity{
-    private int _speed;
+
+    private final int _speed;
     protected ArrayList<Entity> _collisions;
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;
 
+
+    public Direction get_direction() {return _direction;}
 
     public static void setCollisionChecker(CollisionChecker checker){
         _collisonChecker = checker;
@@ -36,13 +41,13 @@ public abstract class Character extends Entity{
         var nextPos = new Position(_position.x, _position.y);
         switch(_direction){
             case NORTH:
-                nextPos.y += _speed;
+                nextPos.y -= _speed;
                 break;
             case EAST:
                 nextPos.x += _speed;
                 break;
             case SOUTH:
-                nextPos.y -= _speed;
+                nextPos.y += _speed;
                 break;
             default:
                 nextPos.x -= _speed;

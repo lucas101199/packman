@@ -1,3 +1,5 @@
+package JeuxPacman;
+
 public class Ghost extends Character{
     private boolean _isDead;
 
@@ -11,7 +13,6 @@ public class Ghost extends Character{
             if( e instanceof Pacman){
                 var pc = (Pacman)e;
                 if(!pc.canEatGhost() || _direction != getOppositeDir(pc._direction)) {
-                    pc.receiveDamage();
                     _position = nextPos();
                 }
                 else if(_direction == getOppositeDir(pc._direction))

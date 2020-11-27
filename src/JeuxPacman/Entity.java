@@ -1,14 +1,17 @@
+package JeuxPacman;
+
 public abstract class Entity {
+
     protected Position _position;
     private final Position _initialPosition;
-    private final int  _height;
+    private final int _height;
     private final int _width;
 
     public Entity(Position pos, int height, int width){
         _position = pos;
         _initialPosition = new Position(pos.x, pos.y);
         _height = height;
-        _width =width;
+        _width = width;
     }
 
     public abstract boolean isActive();
@@ -19,14 +22,14 @@ public abstract class Entity {
 
     public Position getPosition(){
         return _position;
-    };
+    }
 
     int getHeight(){
         return _height;
-    };
+    }
 
     int getWidth(){
         return _width;
-    };
+    }
 }
 
