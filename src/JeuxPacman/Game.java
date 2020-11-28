@@ -48,12 +48,12 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        _input = new InputEngine(_graphic.getScene("maze").getScene(),this);
+        _input = new InputEngine(this);
+        _input.setScene(_graphic.getScene("maze").getScene());
         _input.addKey("Z");
         _input.addKey("Q");
         _input.addKey("S");
         _input.addKey("D");
-        _input.triggerAction();
         _items.add(new Wall(new Position(272,5),10,544));   //Top Wall
         _items.add(new Wall(new Position(272,595),12,544)); //Bottom Wall
         _items.add(new Wall(new Position(273,43),86,26));   //TopMiddle Wall

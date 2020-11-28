@@ -76,6 +76,7 @@ public class Main {
                 switch (key) {
                     case "button":
                         graphic.rotateObject("scene", "image", 45);
+                        graphic.rotateObject("scene", "button", -90);
                         break;
                     case "blue" :
                         graphic.displayScene("scene2");
