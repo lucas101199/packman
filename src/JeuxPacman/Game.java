@@ -124,7 +124,7 @@ public class Game implements GameInterface {
                 e.printStackTrace();
             }
         }
-        _pc.move();
+        _pc.move(_pc._direction);
         _pc.checkPosition();
         try {
             _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());

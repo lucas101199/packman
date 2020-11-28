@@ -35,10 +35,11 @@ public class Pacman extends Character{
         _canEatGhost = false;
     }
 
-    public void move() {
-        if (_direction == null)
+    @Override
+    public void move(Direction direction) {
+        if (direction == null)
             return;
-        super.move(_direction);
+        super.move(direction);
     }
 
     public void checkPosition() {
