@@ -38,8 +38,7 @@ public class Pacman extends Character{
     public void move() {
         if (_direction == null)
             return;
-        _collisions = checker.hasCollisionsWith(this,nextPos());
-        reactAfterCollision();
+        super.move(_direction);
     }
 
     public void checkPosition() {
@@ -57,8 +56,6 @@ public class Pacman extends Character{
 
     @Override
     protected void reactAfterCollision() {
-        if (_collisions.size() == 0)
-            _position = nextPos();
         for(var e : _collisions) {
             if (e instanceof Ghost) {
                 if(_canEatGhost) {

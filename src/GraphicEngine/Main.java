@@ -38,7 +38,7 @@ public class Main {
                 graphic.rotateObject("scene", "image", 45);
                 graphic.addTextButton("scene", "button", "rotate");
                 graphic.displayObject("scene", "button");
-                graphic.setPositionTextButton("scene", "button", 100, 300);
+                graphic.setPositionTextButton("scene", "button", 200, 350);
                 graphic.resizeTextButton("scene", "button", 30, 100);
                 graphic.addImageButton("scene", "blue", "./src/Images/Ghosts/blue/ghost_blue_down.gif");
                 graphic.displayObject("scene", "blue");
