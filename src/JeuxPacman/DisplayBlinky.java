@@ -34,7 +34,7 @@ public class DisplayBlinky {
 
             hideBlinky();
 
-            windows.setPositionImage(this.scene, label, x, y);
+            windows.setPositionImage(this.scene, label, x, y, true);
             windows.displayObject(this.scene, label);
 
             imageCurrent = label;

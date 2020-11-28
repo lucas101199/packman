@@ -16,6 +16,7 @@ public class InputEngine {
     List<String> keys;
 
     public InputEngine(GameInterface game) {
+        this.scene = null;
         this.events = new ArrayList<>();
         this.keys = new ArrayList<>();
         this.game = game;
@@ -23,6 +24,7 @@ public class InputEngine {
 
     public void setScene(Scene scene){
         this.scene = scene;
+        triggerAction();
     }
 
     public void addKey(String key) {
@@ -31,12 +33,14 @@ public class InputEngine {
     }
 
     public void triggerAction() {
-        scene.setOnKeyPressed(e -> {
-            if (keys.contains(e.getCode().getName())) {
-                events.add(e);
-                game.handleKey(getLastKey());
-            }
-        });
+        if (scene != null) {
+            scene.setOnKeyPressed(e -> {
+                if (keys.contains(e.getCode().getName())) {
+                    events.add(e);
+                    game.handleKey(getLastKey());
+                }
+            });
+        }
     }
 
     public String getLastKey() {

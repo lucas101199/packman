@@ -125,11 +125,16 @@ public class Scene {
      * @param y Second coordinate of the image
      * @throws Exception if the image with the given {@code imageLabel} is not found
      */
-    public void setPositionImage(String imageLabel, double x, double y) throws Exception {
+    public void setPositionImage(String imageLabel, double x, double y, boolean center) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
-            image.setX(x - (image.getImage().getWidth()/2));
-            image.setY(y - (image.getImage().getHeight()/2));
+            if (center) {
+                image.setX(x - (image.getImage().getWidth() / 2));
+                image.setY(y - (image.getImage().getHeight() / 2));
+            } else {
+                image.setX(x);
+                image.setY(y);
+            }
         } else {
             throw new Exception("Image named "+imageLabel+" doesn't exist");
         }

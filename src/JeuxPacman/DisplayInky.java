@@ -31,13 +31,13 @@ public class DisplayInky {
 
     // Display Inky
     public void displayInky(String label, int x, int y) throws Exception {
-        if (Arrays.asList(imageLabels).contains(label) || label == "") {
+        if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
 
             if (Arrays.asList(imageLabels).contains(imageCurrent)) {
                 windows.hideObject(this.scene, imageCurrent);
             }
 
-            windows.setPositionImage(this.scene, label, x, y);
+            windows.setPositionImage(this.scene, label, x, y, true);
             windows.displayObject(this.scene, label);
 
             imageCurrent = label;

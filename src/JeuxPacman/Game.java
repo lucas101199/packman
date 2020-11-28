@@ -26,7 +26,7 @@ public class Game implements GameInterface {
             _graphic.displayScene("maze");
             _graphic.addImage("maze","map","./src/Images/Map/map.png");
             _graphic.resizeImage("maze","map",600,544);
-            _graphic.setPositionImage("maze","map",272,300);
+            _graphic.setPositionImage("maze","map",272,300, true);
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
@@ -49,11 +49,11 @@ public class Game implements GameInterface {
             e.printStackTrace();
         }
         _input = new InputEngine(this);
-        _input.setScene(_graphic.getScene("maze").getScene());
         _input.addKey("Z");
         _input.addKey("Q");
         _input.addKey("S");
         _input.addKey("D");
+        _input.setScene(_graphic.getScene("maze").getScene());
         _items.add(new Wall(new Position(272,5),10,544));   //Top Wall
         _items.add(new Wall(new Position(272,595),12,544)); //Bottom Wall
         _items.add(new Wall(new Position(273,43),86,26));   //TopMiddle Wall

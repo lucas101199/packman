@@ -49,7 +49,7 @@ public class DisplayPacman {
 
             hidePacMan();
 
-            _graphic.setPositionImage(_sceneLabel, label, pos.x, pos.y);
+            _graphic.setPositionImage(_sceneLabel, label, pos.x, pos.y, true);
             _graphic.displayObject(_sceneLabel, label);
 
             imageCurrent = label;
@@ -66,7 +66,7 @@ public class DisplayPacman {
                 imageCurrent = "";
         }
         hidePacMan();
-        _graphic.setPositionImage(_sceneLabel, "Pacman_start", pos.x, pos.y);
+        _graphic.setPositionImage(_sceneLabel, "Pacman_start", pos.x, pos.y, true);
         _graphic.displayObject(_sceneLabel, "Pacman_start");
         imageCurrent = "Pacman_start";
     }
@@ -74,7 +74,7 @@ public class DisplayPacman {
     public void displayPacManDeath(Position pos) throws Exception {
         _graphic.addImage(_sceneLabel, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
         hidePacMan();
-        _graphic.setPositionImage(_sceneLabel, "Pacman_death", pos.x, pos.y);
+        _graphic.setPositionImage(_sceneLabel, "Pacman_death", pos.x, pos.y, true);
         _graphic.displayObject(_sceneLabel, "Pacman_death");
         imageCurrent = "Pacman_death";
     }

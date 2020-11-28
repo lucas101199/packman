@@ -128,10 +128,10 @@ public class GraphicEngineTest {
             engine.addScene("scene");
             engine.addImage("scene","image","./src/Images/PacMan/pacman_left.gif");
             Scene scene = engine.getScene("scene");
-            engine.setPositionImage("scene","image",100,50);
+            engine.setPositionImage("scene","image",100,50, true);
             if (scene.getImageX("image") != 100) throw new AssertionError("setPositionImage");
             if (scene.getImageY("image") != 50) throw new AssertionError("setPositionImage");
-            engine.setPositionImage("scene","image",200,70);
+            engine.setPositionImage("scene","image",200,70,true);
             if (scene.getImageX("image") != 200) throw new AssertionError("setPositionImage");
             if (scene.getImageY("image") != 70) throw new AssertionError("setPositionImage");
         }

@@ -183,10 +183,10 @@ public class GraphicEngine extends Application {
      * @param y the new position of the image's center in the y axis
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
-    public void setPositionImage(String sceneLabel, String imageLabel, double x, double y) throws Exception {
+    public void setPositionImage(String sceneLabel, String imageLabel, double x, double y, boolean center) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.setPositionImage(imageLabel,x,y);
+            scene.setPositionImage(imageLabel,x,y,center);
         } else {
             throw new Exception("Scene "+sceneLabel+" doesn't exist");
         }
@@ -217,8 +217,8 @@ public class GraphicEngine extends Application {
      * @param y the new position of the button's center in the y axis
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
-    public void setPositionImageButton(String sceneLabel, String buttonLabel, double x, double y) throws Exception {
-        setPositionImage(sceneLabel,buttonLabel,x,y);
+    public void setPositionImageButton(String sceneLabel, String buttonLabel, double x, double y, boolean center) throws Exception {
+        setPositionImage(sceneLabel,buttonLabel,x,y,center);
     }
 
     /**

@@ -34,10 +34,10 @@ public class SceneTest extends Application {
         Scene scene = new Scene("scene", new GameTest());
         String imageFile = "./src/Image/blueghost.gif";
         scene.addImage("imageLabel",imageFile);
-        scene.setPositionImage("imageLabel",100,50);
+        scene.setPositionImage("imageLabel",100,50,true);
         if (scene.getImage("imageLabel").getX() != 100) throw new AssertionError("setPositionImage");
         if (scene.getImage("imageLabel").getY() != 50) throw new AssertionError("setPositionImage");
-        scene.setPositionImage("imageLabel",200,70);
+        scene.setPositionImage("imageLabel",200,70,true);
         if (scene.getImage("imageLabel").getX() != 200) throw new AssertionError("setPositionImage");
         if (scene.getImage("imageLabel").getY() != 70) throw new AssertionError("setPositionImage");
     }

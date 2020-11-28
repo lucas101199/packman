@@ -54,7 +54,7 @@ public class DisplayClyde {
 
             hideClyde();
 
-            windows.setPositionImage(this.scene, label, pos.x, pos.y);
+            windows.setPositionImage(this.scene, label, pos.x, pos.y, true);
             windows.displayObject(this.scene, label);
 
             imageCurrent = label;
