@@ -1,3 +1,5 @@
+package PhysicMotor;
+
 public interface GPCollisionResolution {
-    public void resolve(Entity e);
+    void resolve(Entity e);
 }

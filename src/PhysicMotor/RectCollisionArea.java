@@ -1,3 +1,5 @@
+package PhysicMotor;
+
 import java.util.ArrayList;
 
 public class RectCollisionArea extends CollisionArea {

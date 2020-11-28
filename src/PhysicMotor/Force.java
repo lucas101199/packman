@@ -1,3 +1,5 @@
+package PhysicMotor;
+
 public class Force {
     public int _xComponent;
     public int _yComponent;

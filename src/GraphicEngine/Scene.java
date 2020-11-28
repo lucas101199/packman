@@ -1,14 +1,12 @@
 package GraphicEngine;
 
 import Interfaces.GameInterface;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseDragEvent;
 
 import java.io.FileInputStream;
 
@@ -17,7 +15,7 @@ public class Scene {
     private javafx.scene.Scene scene;
     private Group root;
 
-    private GameInterface game;
+    private final GameInterface game;
 
     public Scene(String label, GameInterface game) {
         this.root = new Group();

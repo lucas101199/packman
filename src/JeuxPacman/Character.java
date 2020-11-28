@@ -15,6 +15,7 @@ public abstract class Character extends Entity{
     public static void setCollisionChecker(CollisionChecker checker){
         _collisonChecker = checker;
     }
+
     public Character(Position position, int height, int width, int speed){
         super(position, height, width);
         _speed = speed;

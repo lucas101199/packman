@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+package PhysicMotor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,8 +12,8 @@ public class PhysicMotor {
     private Entity _currentEntity;
 
     public PhysicMotor(){
-        _entities = new ArrayList<Entity>();
-        _moveableEntities = new ArrayList<Entity>();
+        _entities = new ArrayList<>();
+        _moveableEntities = new ArrayList<>();
         _previousEntitiesPos = new HashMap<>();
         _accelerationEntities = new HashMap<>();
         _speedEntities = new HashMap<>();

@@ -1,5 +1,6 @@
+package PhysicMotor;
+
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main {
 
@@ -23,7 +24,7 @@ public class Main {
         System.out.println(pc.getX() + ";" + pc.getY());
         ArrayList<? extends AZA> arr = new ArrayList<>();
         AZAF a = new AZAF();
-        arr.add(a);
+        //arr.add(a);
     }
 
     public static void doS(int ...args){

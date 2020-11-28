@@ -1,3 +1,5 @@
+package PhysicMotor;
+
 public class Point {
     public Point(int xPos, int yPos){
         x = xPos;

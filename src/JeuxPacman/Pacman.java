@@ -4,14 +4,9 @@ public class Pacman extends Character{
 
     private Bonus _lastEatenItem;
     private  boolean _canEatGhost;
-    CollisionChecker checker;
     public boolean isDead;
     public boolean needRespawn;
     public long deathDate;
-
-    public void setChecker(CollisionChecker checker) {
-        this.checker = checker;
-    }
 
     public Pacman(Position position, int height, int width, int speed){
         super(position, height, width, speed);

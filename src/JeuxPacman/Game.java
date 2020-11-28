@@ -99,7 +99,7 @@ public class Game implements GameInterface {
         ArrayList<Entity> entities = new ArrayList<>(_items);
         entities.addAll(_ennemies);
         checker = new CollisionChecker(entities);
-        _pc.setChecker(checker);
+        Character.setCollisionChecker(checker);
     }
 
     public void update() {
