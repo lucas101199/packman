@@ -21,11 +21,6 @@ public abstract class Character extends Entity{
         _direction = Direction.NORTH;
     }
 
-    @Override
-    public Position getPosition() {
-        return _position;
-    }
-
     public void move(Direction direction){
         _direction = direction;
         var nextPosition = nextPos();
