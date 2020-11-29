@@ -177,7 +177,7 @@ public class Game implements GameInterface {
 
     @Override
     public double getSpeed() {
-        return 0;
+        return 10;
     }
 
     public void set_graphic(GraphicEngine _graphic) {
@@ -208,7 +208,7 @@ public class Game implements GameInterface {
             collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
             for (Entity e : collideWith) {
                 if (e instanceof Wall) {
-                    //_pc._direction = olddir;
+                    _pc._direction = olddir;
                     break;
                 }
             }

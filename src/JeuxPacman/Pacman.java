@@ -35,6 +35,7 @@ public class Pacman extends Character{
         if (direction == null)
             return;
         super.move(direction);
+        checkPosition();
     }
 
     public void checkPosition() {

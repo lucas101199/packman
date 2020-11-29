@@ -22,11 +22,19 @@ public class InputEngine {
         this.game = game;
     }
 
+    /**
+     * Set the new scene that is currently display by the GraphicEngine
+     * @param scene Scene display
+     */
     public void setScene(Scene scene){
         this.scene = scene;
         triggerAction();
     }
 
+    /**
+     * Add a new key from de keybord to survey
+     * @param key Key from the keybord
+     */
     public void addKey(String key) {
         keys.add(key);
         triggerAction();
