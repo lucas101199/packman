@@ -32,7 +32,7 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
-            _pc = new Pacman(new Position(272,454), 29,29,1);
+            _pc = new Pacman(new Position(272,454), 29,29,2);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
             _ennemies.add(new Ghost(new Position(272,225),30,30,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
@@ -180,7 +180,7 @@ public class Game implements GameInterface {
 
     @Override
     public double getSpeed() {
-        return 10;
+        return 20;
     }
 
     public void set_graphic(GraphicEngine _graphic) {

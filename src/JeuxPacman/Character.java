@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Character extends Entity{
 
-    private final int _speed;
+    private int _speed;
     protected ArrayList<Entity> _collisions;
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;
