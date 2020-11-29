@@ -347,7 +347,7 @@ public class GraphicEngine extends Application {
         game.init();
         game.start();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(game.getSpeed()), actionEvent -> game.update()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000/game.getSpeed()), actionEvent -> game.update()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }

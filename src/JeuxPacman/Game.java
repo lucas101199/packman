@@ -180,7 +180,7 @@ public class Game implements GameInterface {
 
     @Override
     public double getSpeed() {
-        return 20;
+        return 40;
     }
 
     public void set_graphic(GraphicEngine _graphic) {
