@@ -18,6 +18,8 @@ public class Game implements GameInterface {
     private InputEngine _input;
     private CollisionChecker checker;
     private DisplayClyde _clydeDisplay;
+    private String lastKey;
+    private int keyTime;
 
     public void init() {
         try {
@@ -30,9 +32,9 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
-            _pc = new Pacman(new Position(272,454), 25,25,1);
+            _pc = new Pacman(new Position(272,454), 29,29,1);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
-            _ennemies.add(new Ghost(new Position(272,225),27,31,2));
+            _ennemies.add(new Ghost(new Position(272,225),30,30,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
             _clydeDisplay = new DisplayClyde(_graphic,"maze");
             _score = 0;
@@ -166,6 +168,7 @@ public class Game implements GameInterface {
                 e.printStackTrace();
             }
         }
+        handleLastKey();
         _pc.move(_pc._direction);
         _pc.checkPosition();
         try {
@@ -186,35 +189,47 @@ public class Game implements GameInterface {
 
     @Override
     public void handleKey(String key) {
-        Direction olddir = _pc._direction;
-        ArrayList<Entity> collideWith;
-        try {
-            switch (key) {
-                case "Z":
-                    _pc._direction = Direction.NORTH;
-                    break;
-                case "D":
-                    _pc._direction = Direction.EAST;
-                    break;
-                case "S":
-                    _pc._direction = Direction.SOUTH;
-                    break;
-                case "Q":
-                    _pc._direction = Direction.WEST;
-                    break;
-                default:
-                    break;
-            }
-            collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
-            for (Entity e : collideWith) {
-                if (e instanceof Wall) {
-                    _pc._direction = olddir;
-                    break;
+        lastKey = key;
+        keyTime = 50;
+    }
+
+    private void handleLastKey() {
+        if (keyTime > 0) {
+            keyTime--;
+            Direction olddir = _pc._direction;
+            ArrayList<Entity> collideWith;
+            try {
+                switch (this.lastKey) {
+                    case "Z":
+                        _pc._direction = Direction.NORTH;
+                        break;
+                    case "D":
+                        _pc._direction = Direction.EAST;
+                        break;
+                    case "S":
+                        _pc._direction = Direction.SOUTH;
+                        break;
+                    case "Q":
+                        _pc._direction = Direction.WEST;
+                        break;
+                    default:
+                        break;
                 }
+                collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
+                for (Entity e : collideWith) {
+                    if (e instanceof Wall) {
+                        _pc._direction = olddir;
+                        break;
+                    }
+                }
+                if (_pc._direction != olddir) {
+                    _pcDisplay.displayPacMan(_pc._direction, _pc.getPosition());
+                    keyTime = 0;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            _pcDisplay.displayPacMan(_pc._direction, _pc.getPosition());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
+
 }
