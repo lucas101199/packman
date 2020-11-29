@@ -30,7 +30,7 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
-            _pc = new Pacman(new Position(272,454), 27,31,1);
+            _pc = new Pacman(new Position(272,454), 25,25,1);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
             _ennemies.add(new Ghost(new Position(272,225),27,31,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
@@ -54,48 +54,90 @@ public class Game implements GameInterface {
         _input.addKey("S");
         _input.addKey("D");
         _input.setScene(_graphic.getScene("maze").getScene());
-        _items.add(new Wall(new Position(272,5),10,544));   //Top Wall
-        _items.add(new Wall(new Position(272,595),12,544)); //Bottom Wall
-        _items.add(new Wall(new Position(273,43),86,26));   //TopMiddle Wall
-        _items.add(new Wall(new Position(80,68),36,60));    //TopLeft First Bloc
-        _items.add(new Wall(new Position(8,100),200,16));   //LeftTop Wall
-        _items.add(new Wall(new Position(8,482),236,16));   //LeftBottom Wall
-        _items.add(new Wall(new Position(186,68),36,78));   //TopLeft Second Bloc
-        _items.add(new Wall(new Position(360,68),36,78));   //TopRight Second Bloc
-        _items.add(new Wall(new Position(467,68),36,60));   //TopRight First Bloc
-        _items.add(new Wall(new Position(538,100),200,14)); //RightTop Wall
-        _items.add(new Wall(new Position(538,482),200,14)); //RightBottom Wall
-        _items.add(new Wall(new Position(80,136),16,60));   //LeftTop Bloc
-        _items.add(new Wall(new Position(467,136),16,60));  //RightTop Bloc
-        _items.add(new Wall(new Position(273,136),16,136)); //Top T Bloc part1
-        _items.add(new Wall(new Position(273,166),70,26));  //Top T Bloc part2
-        _items.add(new Wall(new Position(158,194),132,22)); //TopLeft T Bloc part1
-        _items.add(new Wall(new Position(186,192),18,78));  //TopLeft T Bloc part2
-        _items.add(new Wall(new Position(388,194),132,22)); //TopRight T Bloc part1
-        _items.add(new Wall(new Position(360,192),18,78));  //TopRight T Bloc part2
-        _items.add(new Wall(new Position(55,222),76,110));  //LeftTop Tunnel
-        _items.add(new Wall(new Position(492,222),76,110)); //RightTop Tunnel
-        _items.add(new Wall(new Position(55,338),76,110));  //LeftBottom Tunnel
-        _items.add(new Wall(new Position(492,338),76,110)); //RightBottom Tunnel
-        _items.add(new Wall(new Position(273,280),76,136)); //Center
-        _items.add(new Wall(new Position(158,338),76,22));  //Left Bloc
-        _items.add(new Wall(new Position(388,338),76,22));  //Right Bloc
-        _items.add(new Wall(new Position(273,368),16,136)); //BottomTop T Bloc part1
-        _items.add(new Wall(new Position(273,398),70,26));  //BottomTop T Bloc part2
-        _items.add(new Wall(new Position(273,483),16,136)); //BottomBottom T Bloc part1
-        _items.add(new Wall(new Position(273,513),70,26));  //BottomBottom T Bloc part2
-        _items.add(new Wall(new Position(26,482),18,52));   //LeftBottomMiddle Wall
-        _items.add(new Wall(new Position(520,482),18,52));  //RightBottomMiddle Wall
-        _items.add(new Wall(new Position(186,425),16,78));  //LeftBottom Bloc
-        _items.add(new Wall(new Position(360,425),16,78));  //RightBottom Bloc
-        _items.add(new Wall(new Position(80,425),16,60));   //BottomLeft L part1
-        _items.add(new Wall(new Position(99,455),72,22));   //BottomLeft L part2
-        _items.add(new Wall(new Position(467,425),16,60));  //BottomRight L part1
-        _items.add(new Wall(new Position(448,455),72,22));  //BottomRight L part2
-        _items.add(new Wall(new Position(138,541),14,174)); //BottomLeft InverseT part1
-        _items.add(new Wall(new Position(158,511),72,22));  //BottomLeft InverseT part2
-        _items.add(new Wall(new Position(408,541),14,174)); //BottomRight InverseT part1
-        _items.add(new Wall(new Position(388,511),72,22));  //BottomRight InverseT part2
+        _items.add(new Wall(new Position(80.5,69.5),45,65));   // Rectangle haut gauche 1
+
+        _items.add(new Wall(new Position(186, 69.5),45,84));   // Rectangle haut gauche 2
+
+        _items.add(new Wall(new Position(360, 69.5),45,84));   	// Rectangle haut droite 1
+
+        _items.add(new Wall(new Position(465.5, 69.5),45,65));  // Rectangle haut droite 2
+
+        _items.add(new Wall(new Position(80.5, 136.5),27,65)); 	// Rectangle long horizontal haut gauche
+
+        _items.add(new Wall(new Position(465.5, 136.5),27,65)); // Rectangle long horizontal haut droite
+
+        _items.add(new Wall(new Position(185.5, 425.5),27,83)); // Rectangle long horizontal bas gauche
+
+        _items.add(new Wall(new Position(360.5, 425.5),27,83)); // Rectangle long horizontal bas droite
+
+
+        _items.add(new Wall(new Position(157.5, 339),84,27));   // Rectangle long vertical gauche
+
+        _items.add(new Wall(new Position(388.5, 339),84,27));   // Rectangle long vertical droite
+
+
+        _items.add(new Wall(new Position(273, 135),24,142));   	// T central 1
+        _items.add(new Wall(new Position(273, 178.5),61,30));   // T central 1
+
+        _items.add(new Wall(new Position(273, 368),26,142));   	// T central 2
+        _items.add(new Wall(new Position(273, 410.5),57,30));   // T central 2
+
+        _items.add(new Wall(new Position(273, 483.5),27,140));  // T central 3
+        _items.add(new Wall(new Position(273, 526),56,30));   	// T central 3
+
+
+        _items.add(new Wall(new Position(157.5, 194.5),143,27));// T haut gauche
+        _items.add(new Wall(new Position(199.5, 193.5),31,55)); // T haut gauche
+
+        _items.add(new Wall(new Position(388.5, 194.5),143,27));// T haut droite
+        _items.add(new Wall(new Position(346.5, 193.5),31,55)); // T haut droite
+
+        _items.add(new Wall(new Position(137, 541),26,180));   	// T bas gauche
+        _items.add(new Wall(new Position(158, 498.5),57,28));   // T bas gauche
+
+        _items.add(new Wall(new Position(409, 541),26,180));   	// T bas droite
+        _items.add(new Wall(new Position(388, 498.5),57,28));   // T bas droite
+
+
+        _items.add(new Wall(new Position(273, 282),84,142));   	// Foyer fantômes
+
+
+        _items.add(new Wall(new Position(57, 223.5),85,112));   	// Grand carre haut gauche
+
+        _items.add(new Wall(new Position(488.5, 223.5),85,112));// Grand carre bas gauche
+
+        _items.add(new Wall(new Position(57, 339),84,112));   	// Grand carre haut droite
+
+        _items.add(new Wall(new Position(488.5, 339),84,111));  // Grand carre bas droite
+
+
+        _items.add(new Wall(new Position(273, 8.5),15,510));   	// Bord haut
+
+        _items.add(new Wall(new Position(273, 592.5),15,512));  // Bord bas
+
+
+        _items.add(new Wall(new Position(9, 90.5),179,16));   	// Bord haut gauche
+
+        _items.add(new Wall(new Position(536.5, 90.5),179,15)); // Bord haut droite
+
+        _items.add(new Wall(new Position(8.5, 491),218,15));   	// Bord bas gauche
+
+        _items.add(new Wall(new Position(537, 491),218,14));   	// Bord bas droite
+
+
+        _items.add(new Wall(new Position(273, 54.5),75,28));   	// Tige haut
+
+
+        _items.add(new Wall(new Position(35.5, 483),28,37));   	// Tige bas gauche
+
+        _items.add(new Wall(new Position(510.5, 483.5),27,37)); // Tige bas droite
+
+
+        _items.add(new Wall(new Position(80, 425),26,66));   	// L inversé gauche
+        _items.add(new Wall(new Position(99, 468),58,28));   	// L inversé gauche
+
+        _items.add(new Wall(new Position(466, 425.5),27,66));   // L inversé droite
+        _items.add(new Wall(new Position(447, 468.5),57,28));   // L inversé droite
         ArrayList<Entity> entities = new ArrayList<>(_items);
         entities.addAll(_ennemies);
         checker = new CollisionChecker(entities);
