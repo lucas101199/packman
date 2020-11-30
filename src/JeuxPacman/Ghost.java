@@ -31,21 +31,21 @@ public class Ghost extends Character{
             }
             else {
                 Random random = new Random();
-                int i = random.nextInt(3);
+                int i = random.nextInt(4);
                 switch (i) {
-                    case 0 :
+                    case 0:
                         _direction = Direction.SOUTH;
                         break;
-                    case 1 :
+                    case 1:
                         _direction = Direction.WEST;
                         break;
-                    case 2 :
+                    case 2:
                         _direction = Direction.EAST;
                         break;
-                    case 3 :
+                    case 3:
                         _direction = Direction.NORTH;
                         break;
-                    default :
+                    default:
                         break;
                 }
             }
@@ -55,7 +55,7 @@ public class Ghost extends Character{
 
     private void changeDirection() {
         Random random = new Random();
-        int i = random.nextInt(3);
+        int i = random.nextInt(4);
         switch (i) {
             case 0 :
                 _direction = Direction.SOUTH;

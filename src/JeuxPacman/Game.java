@@ -35,7 +35,7 @@ public class Game implements GameInterface {
             _items = new ArrayList<>();
             _pc = new Pacman(new Position(272,454), 29,29,2);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
-            _ennemies.add(new Ghost(new Position(272,225),29,29,2));
+            _ennemies.add(new Ghost(new Position(272,224),29,29,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
             _clydeDisplay = new DisplayClyde(_graphic,"maze");
             _score = 0;
@@ -105,13 +105,13 @@ public class Game implements GameInterface {
         _items.add(new Wall(new Position(273, 282),84,142));   	// Foyer fantômes
 
 
-        _items.add(new Wall(new Position(57, 223.5),85,112));   	// Grand carre haut gauche
+        _items.add(new Wall(new Position(54, 223.5),85,115));   	// Grand carre haut gauche
 
-        _items.add(new Wall(new Position(488.5, 223.5),85,112));// Grand carre bas gauche
+        _items.add(new Wall(new Position(490.5, 223.5),85,114));// Grand carre haut droit
 
-        _items.add(new Wall(new Position(57, 339),84,112));   	// Grand carre haut droite
+        _items.add(new Wall(new Position(55, 339),84,114));   	// Grand carre bas gauche
 
-        _items.add(new Wall(new Position(488.5, 339),84,111));  // Grand carre bas droite
+        _items.add(new Wall(new Position(490.5, 339),84,113));  // Grand carre bas droite
 
 
         _items.add(new Wall(new Position(273, 8.5),15,510));   	// Bord haut
@@ -191,7 +191,7 @@ public class Game implements GameInterface {
 
     @Override
     public double getSpeed() {
-        return 40;
+        return 42;
     }
 
     public void set_graphic(GraphicEngine _graphic) {
@@ -201,7 +201,7 @@ public class Game implements GameInterface {
     @Override
     public void handleKey(String key) {
         lastKey = key;
-        keyTime = 50;
+        keyTime = 14;
         gameStart = true;
     }
 
