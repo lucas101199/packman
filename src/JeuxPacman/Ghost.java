@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Ghost extends Character{
     private boolean _isDead;
+    private final Random random = new Random();
 
     public Ghost(Position position, int height, int width, int speed) {
         super(position, height, width, speed);
@@ -30,7 +31,6 @@ public class Ghost extends Character{
                 _position = nextPos();
             }
             else {
-                Random random = new Random();
                 int i = random.nextInt(4);
                 switch (i) {
                     case 0:
@@ -54,7 +54,6 @@ public class Ghost extends Character{
     }
 
     private void changeDirection() {
-        Random random = new Random();
         int i = random.nextInt(4);
         switch (i) {
             case 0 :

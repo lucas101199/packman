@@ -1,6 +1,7 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
+import javafx.geometry.Pos;
 
 import java.util.Arrays;
 
@@ -29,12 +30,31 @@ public class DisplayBlinky {
     }
 
     // Display Blinky
-    public void displayBlinky(String label, int x, int y) throws Exception {
+    public void displayBlinky(Direction dir, Position pos) throws Exception {
+        String label;
+        if (dir == null)
+            return;
+        switch (dir) {
+            case EAST:
+                label = imageLabels[1];
+                break;
+            case WEST:
+                label = imageLabels[0];
+                break;
+            case NORTH:
+                label = imageLabels[2];
+                break;
+            case SOUTH:
+                label = imageLabels[3];
+                break;
+            default :
+                label = "";
+        }
         if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
 
             hideBlinky();
 
-            windows.setPositionImage(this.scene, label, x, y, true);
+            windows.setPositionImage(this.scene, label, pos.x, pos.y, true);
             windows.displayObject(this.scene, label);
 
             imageCurrent = label;

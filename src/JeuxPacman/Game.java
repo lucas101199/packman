@@ -12,15 +12,13 @@ public class Game implements GameInterface {
     private ArrayList<Ghost> _ennemies;
     private  Pacman _pc;
     private DisplayPacman _pcDisplay;
-    private int _score;
-    private final double speed = 10;
     private GraphicEngine _graphic;
-    private InputEngine _input;
     private CollisionChecker checker;
     private DisplayClyde _clydeDisplay;
     private String lastKey;
     private int keyTime;
     private boolean gameStart;
+    private DisplayBlinky _blinkyDisplay;
 
     public void init() {
         try {
@@ -38,7 +36,9 @@ public class Game implements GameInterface {
             _ennemies.add(new Ghost(new Position(272,224),29,29,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
             _clydeDisplay = new DisplayClyde(_graphic,"maze");
-            _score = 0;
+            _ennemies.add(new Ghost(new Position(242,224),29,29,2));
+            _ennemies.get(1)._direction = Direction.SOUTH;
+            _blinkyDisplay = new DisplayBlinky(_graphic,"maze");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,10 +48,11 @@ public class Game implements GameInterface {
         try {
             _pcDisplay.displayPacmanStart(_pc.getPosition());
             _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
+            _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        _input = new InputEngine(this);
+        InputEngine _input = new InputEngine(this);
         _input.addKey("Z");
         _input.addKey("Q");
         _input.addKey("S");
@@ -178,12 +179,19 @@ public class Game implements GameInterface {
         handleLastKey();
         _pc.move(_pc._direction);
         _pc.checkPosition();
+        ArrayList<Position> oldpos = new ArrayList<>();
+        int i = 0;
         for (Ghost g : _ennemies) {
+            oldpos.set(i,g._position);
             g.move(g._direction);
+            i++;
         }
         try {
             _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
-            _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
+            if (oldpos.get(0) != _ennemies.get(0)._position)
+                _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
+            if (oldpos.get(1) != _ennemies.get(1)._position)
+                _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
