@@ -333,6 +333,24 @@ public class GraphicEngine extends Application {
         }
     }
 
+    public void pushNode(String sceneLabel, String nodeLabel) throws Exception {
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.pushNode(nodeLabel);
+        } else {
+            throw new Exception("Scene "+sceneLabel+" doesn't exist");
+        }
+    }
+
+    public void changeImage(String sceneLabel, String imageLabel, String file) throws Exception {
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.changeImage(imageLabel,file);
+        } else {
+            throw new Exception("Scene "+sceneLabel+" doesn't exist");
+        }
+    }
+
     /**
      * Main function which initializes, starts and updates the gameplay
      * @param stage Stage automatically created when the application is launched

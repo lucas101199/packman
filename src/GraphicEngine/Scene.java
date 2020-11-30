@@ -358,4 +358,17 @@ public class Scene {
         return false;
     }
 
+    public void pushNode(String Label) {
+        Node node = getNode(Label);
+        node.toBack();
+    }
+
+    public void changeImage(String imageLabel, String imageFile) throws Exception {
+        if (!isPresent(imageLabel))
+            throw new Exception("Object named "+imageLabel+" doesn't exist");
+        Image image = new Image(new FileInputStream(imageFile));
+        ImageView imageView = getImage(imageLabel);
+        imageView.setImage(image);
+    }
+
 }

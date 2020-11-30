@@ -19,6 +19,7 @@ public class Game implements GameInterface {
     private int keyTime;
     private boolean gameStart;
     private DisplayBlinky _blinkyDisplay;
+    private DisplayPinky _pinkyDisplay;
 
     public void init() {
         try {
@@ -36,9 +37,12 @@ public class Game implements GameInterface {
             _ennemies.add(new Ghost(new Position(272,224),29,29,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
             _clydeDisplay = new DisplayClyde(_graphic,"maze");
-            _ennemies.add(new Ghost(new Position(242,224),29,29,2));
-            _ennemies.get(1)._direction = Direction.SOUTH;
-            _blinkyDisplay = new DisplayBlinky(_graphic,"maze");
+            //_ennemies.add(new Ghost(new Position(240,224),29,29,2));
+            //_ennemies.get(1)._direction = Direction.SOUTH;
+            //_blinkyDisplay = new DisplayBlinky(_graphic,"maze");
+            //_ennemies.add(new Ghost(new Position(304,224),29,29,2));
+            //_ennemies.get(2)._direction = Direction.SOUTH;
+            //_pinkyDisplay = new DisplayPinky(_graphic,"maze");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +52,8 @@ public class Game implements GameInterface {
         try {
             _pcDisplay.displayPacmanStart(_pc.getPosition());
             _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
-            _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
+            //_blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
+            //_pinkyDisplay.displayPinky(_ennemies.get(2)._direction,_ennemies.get(2)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,7 +117,7 @@ public class Game implements GameInterface {
 
         _items.add(new Wall(new Position(55, 339),84,114));   	// Grand carre bas gauche
 
-        _items.add(new Wall(new Position(490.5, 339),84,113));  // Grand carre bas droite
+        _items.add(new Wall(new Position(491, 339),84,114));  // Grand carre bas droite
 
 
         _items.add(new Wall(new Position(273, 8.5),15,510));   	// Bord haut
@@ -167,9 +172,12 @@ public class Game implements GameInterface {
                     return;
                 _pc.needRespawn = false;
                 _pc.respawn();
-                _ennemies.get(0).respawn();
+                for (Ghost g : _ennemies)
+                    g.respawn();
                 _pcDisplay.displayPacmanStart(_pc.getPosition());
                 _clydeDisplay.displayClyde(Direction.SOUTH,_ennemies.get(0)._position);
+                //_pinkyDisplay.displayPinky(Direction.SOUTH,_ennemies.get(2)._position);
+                //_blinkyDisplay.displayBlinky(Direction.SOUTH,_ennemies.get(1)._position);
                 gameStart = false;
                 return;
             } catch (Exception e) {
@@ -180,18 +188,18 @@ public class Game implements GameInterface {
         _pc.move(_pc._direction);
         _pc.checkPosition();
         ArrayList<Position> oldpos = new ArrayList<>();
-        int i = 0;
         for (Ghost g : _ennemies) {
-            oldpos.set(i,g._position);
+            oldpos.add(g._position);
             g.move(g._direction);
-            i++;
         }
         try {
             _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
             if (oldpos.get(0) != _ennemies.get(0)._position)
                 _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
-            if (oldpos.get(1) != _ennemies.get(1)._position)
-                _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
+            //if (oldpos.get(1) != _ennemies.get(1)._position)
+            //    _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
+            //if (oldpos.get(2) != _ennemies.get(2)._position)
+            //    _pinkyDisplay.displayPinky(_ennemies.get(2)._direction,_ennemies.get(2)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -210,7 +218,8 @@ public class Game implements GameInterface {
     public void handleKey(String key) {
         lastKey = key;
         keyTime = 14;
-        gameStart = true;
+        if (!gameStart && (key.equals("D") || key.equals("Q")))
+            gameStart = true;
     }
 
     private void handleLastKey() {
