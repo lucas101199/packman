@@ -63,6 +63,25 @@ public class Pacman extends Character{
                     isDead = true;
                     needRespawn = true;
                     deathDate = System.currentTimeMillis();
+                    Direction olddir = _direction;
+                    switch (_direction) {
+                        case SOUTH:
+                            _direction = Direction.NORTH;
+                            break;
+                        case NORTH:
+                            _direction = Direction.SOUTH;
+                            break;
+                        case WEST:
+                            _direction = Direction.EAST;
+                            break;
+                        case EAST:
+                            _direction = Direction.WEST;
+                            break;
+                        default:
+                            break;
+                    }
+                    nextPos();
+                    _direction = olddir;
                 }
             }
             else if (e instanceof Wall)

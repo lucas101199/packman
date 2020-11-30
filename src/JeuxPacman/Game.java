@@ -20,6 +20,7 @@ public class Game implements GameInterface {
     private DisplayClyde _clydeDisplay;
     private String lastKey;
     private int keyTime;
+    private boolean gameStart;
 
     public void init() {
         try {
@@ -34,7 +35,7 @@ public class Game implements GameInterface {
             _items = new ArrayList<>();
             _pc = new Pacman(new Position(272,454), 29,29,2);
             _pcDisplay = new DisplayPacman(_graphic,"maze");
-            _ennemies.add(new Ghost(new Position(272,225),30,30,2));
+            _ennemies.add(new Ghost(new Position(272,225),29,29,2));
             _ennemies.get(0)._direction = Direction.SOUTH;
             _clydeDisplay = new DisplayClyde(_graphic,"maze");
             _score = 0;
@@ -144,9 +145,12 @@ public class Game implements GameInterface {
         entities.addAll(_ennemies);
         checker = new CollisionChecker(entities);
         Character.setCollisionChecker(checker);
+        gameStart = false;
     }
 
     public void update() {
+        if (_pc._direction == null && !gameStart)
+            return;
         if (_pc.isDead) {
             try {
                 _pcDisplay.displayPacManDeath(_pc.getPosition());
@@ -162,7 +166,10 @@ public class Game implements GameInterface {
                     return;
                 _pc.needRespawn = false;
                 _pc.respawn();
+                _ennemies.get(0).respawn();
                 _pcDisplay.displayPacmanStart(_pc.getPosition());
+                _clydeDisplay.displayClyde(Direction.SOUTH,_ennemies.get(0)._position);
+                gameStart = false;
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -171,8 +178,12 @@ public class Game implements GameInterface {
         handleLastKey();
         _pc.move(_pc._direction);
         _pc.checkPosition();
+        for (Ghost g : _ennemies) {
+            g.move(g._direction);
+        }
         try {
             _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
+            _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,6 +202,7 @@ public class Game implements GameInterface {
     public void handleKey(String key) {
         lastKey = key;
         keyTime = 50;
+        gameStart = true;
     }
 
     private void handleLastKey() {

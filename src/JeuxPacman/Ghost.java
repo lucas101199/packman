@@ -1,10 +1,18 @@
 package JeuxPacman;
 
+import java.util.Random;
+
 public class Ghost extends Character{
     private boolean _isDead;
 
     public Ghost(Position position, int height, int width, int speed) {
         super(position, height, width, speed);
+    }
+
+    @Override
+    public void move(Direction direction) {
+        changeDirection();
+        super.move(direction);
     }
 
     @Override
@@ -17,12 +25,52 @@ public class Ghost extends Character{
                 }
                 else if(_direction == getOppositeDir(pc._direction))
                     die();
-            System.out.println("Pacman Collision");
             }
-            else if(!(e instanceof Wall))
+            else if(!(e instanceof Wall)) {
                 _position = nextPos();
-            else
-                System.out.println("ghost encounter Mur !");
+            }
+            else {
+                Random random = new Random();
+                int i = random.nextInt(3);
+                switch (i) {
+                    case 0 :
+                        _direction = Direction.SOUTH;
+                        break;
+                    case 1 :
+                        _direction = Direction.WEST;
+                        break;
+                    case 2 :
+                        _direction = Direction.EAST;
+                        break;
+                    case 3 :
+                        _direction = Direction.NORTH;
+                        break;
+                    default :
+                        break;
+                }
+            }
+
+        }
+    }
+
+    private void changeDirection() {
+        Random random = new Random();
+        int i = random.nextInt(3);
+        switch (i) {
+            case 0 :
+                _direction = Direction.SOUTH;
+                break;
+            case 1 :
+                _direction = Direction.WEST;
+                break;
+            case 2 :
+                _direction = Direction.EAST;
+                break;
+            case 3 :
+                _direction = Direction.NORTH;
+                break;
+            default :
+                break;
         }
     }
 
