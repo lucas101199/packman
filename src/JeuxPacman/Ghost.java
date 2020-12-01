@@ -43,7 +43,8 @@ public class Ghost extends Character{
                 if (pc.canEatGhost()) {
                     die();
                 } else {
-                    pc.die();
+                    if (!pc.isDead)
+                        pc.die();
                 }
             }
             else if(!(e instanceof Wall)) {

@@ -74,6 +74,7 @@ public class Pacman extends Character{
         nextPos();
         _direction = olddir;
         try {
+            System.out.println("Death");
             display.displayPacManDeath(_position);
         } catch (Exception e) {
             e.printStackTrace();

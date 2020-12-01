@@ -144,21 +144,16 @@ public class Game implements GameInterface {
         if (_pc._direction == null && !gameStart)
             return;
         if (_pc.isDead) {
-            try {
-                if (System.currentTimeMillis() - _pc.deathDate < 3900)
-                    return;
-                _pc.respawn();
-                for (Ghost g : _ennemies)
-                    g.respawn();
-                gameStart = false;
+            if (System.currentTimeMillis() - _pc.deathDate < 3900)
                 return;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            _pc.respawn();
+            for (Ghost g : _ennemies)
+                g.respawn();
+            gameStart = false;
+            return;
         }
         handleLastKey();
         _pc.move(_pc._direction);
-        _pc.checkPosition();
         for (Ghost g : _ennemies)
             g.move(g._direction);
     }
