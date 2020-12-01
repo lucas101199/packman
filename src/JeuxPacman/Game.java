@@ -132,8 +132,12 @@ public class Game implements GameInterface {
             _items.add(new Wall(new Position(447, 468.5), 57, 28));   // L inversé droite
 
 
-            _items.add(new PacGum(new Position(30, 29), 9, 9, 0, 1, new DisplayPacGum(_graphic, "maze", 0)));
-
+            int[][] coords = {{30,29},{51,29},{69,29},{88,29},{107,29}};
+            int id = 0;
+            for (int[] coord : coords) {
+                _items.add(new PacGum(new Position(coord[0], coord[1]), 9, 9, 0, 1, new DisplayPacGum(_graphic, "maze", id)));
+                id++;
+            }
 
             ArrayList<Entity> entities = new ArrayList<>(_items);
             entities.addAll(_ennemies);
