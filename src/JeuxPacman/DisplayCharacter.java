@@ -2,18 +2,17 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-import java.util.Arrays;
-
 public abstract class DisplayCharacter {
     final String scene;
     final GraphicEngine window;
-    String imageCurrent= "";
+    String imageCurrent;
     final String[] imageLabels;
 
     protected DisplayCharacter(GraphicEngine window, String scene, String[] imageLabels) {
         this.scene = scene;
         this.window = window;
         this.imageLabels = imageLabels;
+        this.imageCurrent = "";
     }
 
     public void display(Direction dir, Position pos) throws Exception {
@@ -36,23 +35,18 @@ public abstract class DisplayCharacter {
             default :
                 label = "";
         }
-        if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
+        hide();
+        window.setPositionImage(this.scene, label, pos.x, pos.y, true);
+        window.displayObject(this.scene, label);
 
-            hide();
-
-            window.setPositionImage(this.scene, label, pos.x, pos.y, true);
-            window.displayObject(this.scene, label);
-
-            imageCurrent = label;
-        }
-        else {
-            System.out.println("Mauvais label dans Display");
-        }
+        imageCurrent = label;
     }
 
     public void hide() throws Exception {
-        if (Arrays.asList(imageLabels).contains(imageCurrent))
-            window.hideObject(this.scene, imageCurrent);
+        if (imageCurrent.equals(""))
+            return;
+        window.hideObject(this.scene, imageCurrent);
+        imageCurrent = "";
     }
 
 }

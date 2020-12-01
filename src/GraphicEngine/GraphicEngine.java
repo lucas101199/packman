@@ -333,15 +333,6 @@ public class GraphicEngine extends Application {
         }
     }
 
-    public void pushNode(String sceneLabel, String nodeLabel) throws Exception {
-        Scene scene = getScene(sceneLabel);
-        if (scene != null) {
-            scene.pushNode(nodeLabel);
-        } else {
-            throw new Exception("Scene "+sceneLabel+" doesn't exist");
-        }
-    }
-
     public void changeImage(String sceneLabel, String imageLabel, String file) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {

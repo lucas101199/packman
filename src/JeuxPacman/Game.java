@@ -30,12 +30,9 @@ public class Game implements GameInterface {
             _items = new ArrayList<>();
             _pc = new Pacman(new Position(272,454), 29,29,2,new DisplayPacman(_graphic,"maze"));
             _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayClyde(_graphic,"maze")));
-            //_ennemies.add(new Ghost(new Position(240,224),29,29,2));
-            //_ennemies.get(1)._direction = Direction.SOUTH;
-            //_blinkyDisplay = new DisplayBlinky(_graphic,"maze");
-            //_ennemies.add(new Ghost(new Position(304,224),29,29,2));
-            //_ennemies.get(2)._direction = Direction.SOUTH;
-            //_pinkyDisplay = new DisplayPinky(_graphic,"maze");
+            _ennemies.add(new Ghost(new Position(240,224),29,29,2,new DisplayInky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(304,224),29,29,2,new DisplayBlinky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayPinky(_graphic,"maze")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,7 +152,9 @@ public class Game implements GameInterface {
         handleLastKey();
         _pc.move(_pc._direction);
         for (Ghost g : _ennemies)
-            g.move(g._direction);
+            if (!_pc.isDead)
+                g.move(g._direction);
+
     }
 
     @Override

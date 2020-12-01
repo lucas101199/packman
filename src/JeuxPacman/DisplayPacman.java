@@ -18,23 +18,22 @@ public class DisplayPacman extends DisplayCharacter{
     }
 
     public void displayPacmanStart(Position pos) throws Exception {
-        if (window.getScene("maze").isPresent("Pacman_death")) {
-            window.hideObject("maze", "Pacman_death");
-            if (imageCurrent.equals("Pacman_death"))
-                imageCurrent = "";
-        }
-        hide();
+        if (imageCurrent.equals(imageLabels[4])) {
+            window.hideObject("maze", imageLabels[4]);
+            imageCurrent = "";
+        } else if (!imageCurrent.equals(""))
+            hide();
         window.setPositionImage(scene, imageLabels[5], pos.x, pos.y, true);
         window.displayObject(scene, imageLabels[5]);
-        imageCurrent = "Pacman_start";
+        imageCurrent = imageLabels[5];
     }
 
     public void displayPacManDeath(Position pos) throws Exception {
         window.changeImage(scene, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
         hide();
-        window.setPositionImage(scene, "Pacman_death", pos.x, pos.y, true);
-        window.displayObject(scene, "Pacman_death");
-        imageCurrent = "Pacman_death";
+        window.setPositionImage(scene, imageLabels[4], pos.x, pos.y, true);
+        window.displayObject(scene, imageLabels[4]);
+        imageCurrent = imageLabels[4];
     }
 
 }

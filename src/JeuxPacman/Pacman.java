@@ -38,10 +38,12 @@ public class Pacman extends Character{
     public void move(Direction direction) {
         if (direction == null)
             return;
+        Position oldpos = _position;
         super.move(direction);
         checkPosition();
         try {
-            display.display(_direction,_position);
+            if (!_position.equals(oldpos))
+                display.display(_direction,_position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +76,6 @@ public class Pacman extends Character{
         nextPos();
         _direction = olddir;
         try {
-            System.out.println("Death");
             display.displayPacManDeath(_position);
         } catch (Exception e) {
             e.printStackTrace();

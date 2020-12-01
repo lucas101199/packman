@@ -1,11 +1,8 @@
 package JeuxPacman;
 
-import java.util.Random;
-
 public class Ghost extends Character{
 
     private boolean _isDead;
-    private final Random random = new Random();
 
     public Ghost(Position position, int height, int width, int speed, DisplayCharacter display) throws Exception {
         super(position, height, width, speed, display);
@@ -15,10 +12,11 @@ public class Ghost extends Character{
 
     @Override
     public void move(Direction direction) {
-        changeDirection();
-        super.move(direction);
+        Position oldpos = _position;
+        super.move(_direction);
         try {
-            display.display(_direction,_position);
+            if (!_position.equals(oldpos))
+                display.display(_direction,_position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,6 +35,7 @@ public class Ghost extends Character{
 
     @Override
     public void reactAfterCollision() {
+        boolean wall = false;
         for (var e : _collisions){
             if ( e instanceof Pacman){
                 var pc = (Pacman)e;
@@ -46,50 +45,16 @@ public class Ghost extends Character{
                     if (!pc.isDead)
                         pc.die();
                 }
+                return;
             }
-            else if(!(e instanceof Wall)) {
-                _position = nextPos();
-            }
-            else {
-                int i = random.nextInt(4);
-                switch (i) {
-                    case 0:
-                        _direction = Direction.SOUTH;
-                        break;
-                    case 1:
-                        _direction = Direction.WEST;
-                        break;
-                    case 2:
-                        _direction = Direction.EAST;
-                        break;
-                    case 3:
-                        _direction = Direction.NORTH;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
+            else if (e instanceof Wall)
+                wall = true;
         }
-    }
-
-    private void changeDirection() {
-        int i = random.nextInt(4);
-        switch (i) {
-            case 0 :
-                _direction = Direction.SOUTH;
-                break;
-            case 1 :
-                _direction = Direction.WEST;
-                break;
-            case 2 :
-                _direction = Direction.EAST;
-                break;
-            case 3 :
-                _direction = Direction.NORTH;
-                break;
-            default :
-                break;
+        if (wall) {
+            _direction = getRandomDir();
+        }
+        else {
+            _position = nextPos();
         }
     }
 

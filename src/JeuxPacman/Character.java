@@ -1,6 +1,7 @@
 package JeuxPacman;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Character extends Entity{
 
@@ -9,6 +10,7 @@ public abstract class Character extends Entity{
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;
     protected final DisplayCharacter display;
+    private final Random random = new Random();
 
 
     public Direction get_direction() {return _direction;}
@@ -44,6 +46,19 @@ public abstract class Character extends Entity{
             return Direction.NORTH;
         else
             return Direction.EAST;
+    }
+
+    public Direction getRandomDir() {
+        int i = random.nextInt(4);
+        switch (i) {
+            case 0 :
+                return Direction.SOUTH;
+            case 1 :
+                return Direction.WEST;
+            case 2 :
+                return Direction.EAST;
+        }
+        return Direction.NORTH;
     }
 
     protected Position nextPos(){
