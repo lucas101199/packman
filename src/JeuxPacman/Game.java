@@ -28,6 +28,19 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
+
+            int pgId = 0;
+            int[] Y = {29};
+            int[][] X = {{30,51,69,88,107,127,147,165,185,204,224,244,302,321,339,360,379,399,417,438,457,475,495,516}};
+            int yId = 0;
+            for (int y : Y) {
+                for (int x : X[yId]) {
+                    _items.add(new PacGum(new Position(x, y), 8, 8, 0, 1, new DisplayPacGum(_graphic, "maze", pgId)));
+                    pgId++;
+                }
+                yId++;
+            }
+
             _pc = new Pacman(new Position(272,454), 29,29,2,new DisplayPacman(_graphic,"maze"));
             _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayClyde(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(240,224),29,29,2,new DisplayInky(_graphic,"maze")));
@@ -130,14 +143,6 @@ public class Game implements GameInterface {
 
             _items.add(new Wall(new Position(466, 425.5), 27, 66));   // L inversé droite
             _items.add(new Wall(new Position(447, 468.5), 57, 28));   // L inversé droite
-
-
-            int[][] coords = {{30,29},{51,29},{69,29},{88,29},{107,29}};
-            int id = 0;
-            for (int[] coord : coords) {
-                _items.add(new PacGum(new Position(coord[0], coord[1]), 9, 9, 0, 1, new DisplayPacGum(_graphic, "maze", id)));
-                id++;
-            }
 
             ArrayList<Entity> entities = new ArrayList<>(_items);
             entities.addAll(_ennemies);
