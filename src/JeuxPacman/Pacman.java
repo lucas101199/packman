@@ -5,13 +5,17 @@ public class Pacman extends Character{
     private Bonus _lastEatenItem;
     private  boolean _canEatGhost;
     public boolean isDead;
-    public boolean needRespawn;
     public long deathDate;
 
-    public Pacman(Position position, int height, int width, int speed){
-        super(position, height, width, speed);
+    private final DisplayPacman display;
+
+    public Pacman(Position position, int height, int width, int speed, DisplayPacman display) throws Exception {
+        super(position, height, width, speed, display);
+        this.display = display;
         _canEatGhost = false;
         _direction = null;
+        isDead = false;
+        display.displayPacmanStart(_position);
     }
 
     public Bonus lastEatenItem(){
@@ -36,6 +40,11 @@ public class Pacman extends Character{
             return;
         super.move(direction);
         checkPosition();
+        try {
+            display.display(_direction,_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkPosition() {
@@ -48,7 +57,27 @@ public class Pacman extends Character{
     @Override
     public void respawn() {
         super.respawn();
+        isDead = false;
         _direction = null;
+        try {
+            display.displayPacmanStart(_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void die() {
+        isDead = true;
+        deathDate = System.currentTimeMillis();
+        Direction olddir = _direction;
+        _direction = getOppositeDir(_direction);
+        nextPos();
+        _direction = olddir;
+        try {
+            display.displayPacManDeath(_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -60,34 +89,12 @@ public class Pacman extends Character{
                     _position = nextPos();
                 }
                 else{
-                    isDead = true;
-                    needRespawn = true;
-                    deathDate = System.currentTimeMillis();
-                    Direction olddir = _direction;
-                    switch (_direction) {
-                        case SOUTH:
-                            _direction = Direction.NORTH;
-                            break;
-                        case NORTH:
-                            _direction = Direction.SOUTH;
-                            break;
-                        case WEST:
-                            _direction = Direction.EAST;
-                            break;
-                        case EAST:
-                            _direction = Direction.WEST;
-                            break;
-                        default:
-                            break;
-                    }
-                    nextPos();
-                    _direction = olddir;
+                    die();
                 }
             }
             else if (e instanceof Wall)
                 return;
             else if (e instanceof ScoringBonus) {
-                System.out.println("Oh a PacGum !");
                 _lastEatenItem = (Bonus)e;
                 _position = nextPos();
             }

@@ -1,72 +1,23 @@
 package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
-import javafx.geometry.Pos;
 
-import java.util.Arrays;
+public class DisplayBlinky extends DisplayCharacter{
 
-public class DisplayBlinky {
-    private final String scene;
-    private final GraphicEngine windows;
-    private final String[] imageLabels = {"blinky_left","blinky_right","blinky_up","blinky_down","blinky_edible",
-            "eyes_left","eyes_right","eyes_up","eyes_down"};
-    private String imageCurrent= "";
+    public DisplayBlinky(GraphicEngine window, String nameScene) throws Exception {
+        super(window,nameScene,new String[]{"blinky_left","blinky_right","blinky_up","blinky_down","blinky_edible",
+                "eyes_left","eyes_right","eyes_up","eyes_down"});
 
-    public DisplayBlinky(GraphicEngine windows, String nameScene) throws Exception {
-        this.windows = windows;
-        this.scene   = nameScene;
+        window.addImage(scene, imageLabels[0], "./src/Images/Ghosts/red/ghost_red_left.gif");
+        window.addImage(scene, imageLabels[1], "./src/Images/Ghosts/red/ghost_red_right.gif");
+        window.addImage(scene, imageLabels[2], "./src/Images/Ghosts/red/ghost_red_up.gif");
+        window.addImage(scene, imageLabels[3], "./src/Images/Ghosts/red/ghost_red_down.gif");
 
-        windows.addImage(this.scene, imageLabels[0], "./src/Images/Ghosts/red/ghost_red_left.gif");
-        windows.addImage(this.scene, imageLabels[1], "./src/Images/Ghosts/red/ghost_red_right.gif");
-        windows.addImage(this.scene, imageLabels[2], "./src/Images/Ghosts/red/ghost_red_up.gif");
-        windows.addImage(this.scene, imageLabels[3], "./src/Images/Ghosts/red/ghost_red_down.gif");
-
-        //windows.addImage(this.scene, imageLabels[4], "./src/Images/Ghosts/edible/ghost_edible.gif");
+        window.addImage(this.scene, imageLabels[4], "./src/Images/Ghosts/ghost_edible.gif");
 
         //windows.addImage(this.scene, imageLabels[5], "./src/Images/Ghosts/eyes/eyes_left.png");
         //windows.addImage(this.scene, imageLabels[6], "./src/Images/Ghosts/eyes/eyes_right.png");
         //windows.addImage(this.scene, imageLabels[7], "./src/Images/Ghosts/eyes/eyes_up.png");
         //windows.addImage(this.scene, imageLabels[8], "./src/Images/Ghosts/eyes/eyes_down.png");
-    }
-
-    // Display Blinky
-    public void displayBlinky(Direction dir, Position pos) throws Exception {
-        String label;
-        if (dir == null)
-            return;
-        switch (dir) {
-            case EAST:
-                label = imageLabels[1];
-                break;
-            case WEST:
-                label = imageLabels[0];
-                break;
-            case NORTH:
-                label = imageLabels[2];
-                break;
-            case SOUTH:
-                label = imageLabels[3];
-                break;
-            default :
-                label = "";
-        }
-        if (Arrays.asList(imageLabels).contains(label) || label.equals("")) {
-
-            hideBlinky();
-
-            windows.setPositionImage(this.scene, label, pos.x, pos.y, true);
-            windows.displayObject(this.scene, label);
-
-            imageCurrent = label;
-        }
-        else {
-            System.out.println("Mauvais label dans DisplayOrange");
-        }
-    }
-
-    // Hide Blinky
-    public void hideBlinky () throws Exception {
-        if (Arrays.asList(imageLabels).contains(imageCurrent))
-            windows.hideObject(this.scene, imageCurrent);
     }
 }

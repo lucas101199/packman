@@ -3,29 +3,48 @@ package JeuxPacman;
 import java.util.Random;
 
 public class Ghost extends Character{
+
     private boolean _isDead;
     private final Random random = new Random();
 
-    public Ghost(Position position, int height, int width, int speed) {
-        super(position, height, width, speed);
+    public Ghost(Position position, int height, int width, int speed, DisplayCharacter display) throws Exception {
+        super(position, height, width, speed, display);
+        _direction = Direction.SOUTH;
+        display.display(_direction,_position);
     }
 
     @Override
     public void move(Direction direction) {
         changeDirection();
         super.move(direction);
+        try {
+            display.display(_direction,_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void respawn() {
+        super.respawn();
+        _direction = Direction.SOUTH;
+        try {
+            display.display(_direction,_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void reactAfterCollision() {
-        for(var e : _collisions){
-            if( e instanceof Pacman){
+        for (var e : _collisions){
+            if ( e instanceof Pacman){
                 var pc = (Pacman)e;
-                if(!pc.canEatGhost() || _direction != getOppositeDir(pc._direction)) {
-                    _position = nextPos();
-                }
-                else if(_direction == getOppositeDir(pc._direction))
+                if (pc.canEatGhost()) {
                     die();
+                } else {
+                    pc.die();
+                }
             }
             else if(!(e instanceof Wall)) {
                 _position = nextPos();
@@ -71,17 +90,6 @@ public class Ghost extends Character{
             default :
                 break;
         }
-    }
-
-    private Direction getOppositeDir(Direction dir){
-        if(dir == Direction.NORTH)
-            return Direction.SOUTH;
-        else if(dir == Direction.EAST)
-            return Direction.WEST;
-        else if(dir == Direction.SOUTH)
-            return Direction.NORTH;
-        else
-            return Direction.EAST;
     }
 
     public void die(){

@@ -8,6 +8,7 @@ public abstract class Character extends Entity{
     protected ArrayList<Entity> _collisions;
     protected Direction _direction;
     private static CollisionChecker _collisonChecker;
+    protected final DisplayCharacter display;
 
 
     public Direction get_direction() {return _direction;}
@@ -16,9 +17,10 @@ public abstract class Character extends Entity{
         _collisonChecker = checker;
     }
 
-    public Character(Position position, int height, int width, int speed){
+    public Character(Position position, int height, int width, int speed, DisplayCharacter display){
         super(position, height, width);
         _speed = speed;
+        this.display = display;
         _direction = Direction.NORTH;
     }
 
@@ -31,6 +33,17 @@ public abstract class Character extends Entity{
         else {
             reactAfterCollision();
         }
+    }
+
+    public static Direction getOppositeDir(Direction dir){
+        if(dir == Direction.NORTH)
+            return Direction.SOUTH;
+        else if(dir == Direction.EAST)
+            return Direction.WEST;
+        else if(dir == Direction.SOUTH)
+            return Direction.NORTH;
+        else
+            return Direction.EAST;
     }
 
     protected Position nextPos(){

@@ -10,16 +10,12 @@ public class Game implements GameInterface {
 
     private ArrayList<Entity> _items;
     private ArrayList<Ghost> _ennemies;
-    private  Pacman _pc;
-    private DisplayPacman _pcDisplay;
+    private Pacman _pc;
     private GraphicEngine _graphic;
     private CollisionChecker checker;
-    private DisplayClyde _clydeDisplay;
     private String lastKey;
     private int keyTime;
     private boolean gameStart;
-    private DisplayBlinky _blinkyDisplay;
-    private DisplayPinky _pinkyDisplay;
 
     public void init() {
         try {
@@ -32,11 +28,8 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
-            _pc = new Pacman(new Position(272,454), 29,29,2);
-            _pcDisplay = new DisplayPacman(_graphic,"maze");
-            _ennemies.add(new Ghost(new Position(272,224),29,29,2));
-            _ennemies.get(0)._direction = Direction.SOUTH;
-            _clydeDisplay = new DisplayClyde(_graphic,"maze");
+            _pc = new Pacman(new Position(272,454), 29,29,2,new DisplayPacman(_graphic,"maze"));
+            _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayClyde(_graphic,"maze")));
             //_ennemies.add(new Ghost(new Position(240,224),29,29,2));
             //_ennemies.get(1)._direction = Direction.SOUTH;
             //_blinkyDisplay = new DisplayBlinky(_graphic,"maze");
@@ -49,14 +42,6 @@ public class Game implements GameInterface {
     }
 
     public void start() {
-        try {
-            _pcDisplay.displayPacmanStart(_pc.getPosition());
-            _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
-            //_blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
-            //_pinkyDisplay.displayPinky(_ennemies.get(2)._direction,_ennemies.get(2)._position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         InputEngine _input = new InputEngine(this);
         _input.addKey("Z");
         _input.addKey("Q");
@@ -149,6 +134,7 @@ public class Game implements GameInterface {
         _items.add(new Wall(new Position(447, 468.5),57,28));   // L inversé droite
         ArrayList<Entity> entities = new ArrayList<>(_items);
         entities.addAll(_ennemies);
+        entities.add(_pc);
         checker = new CollisionChecker(entities);
         Character.setCollisionChecker(checker);
         gameStart = false;
@@ -159,25 +145,11 @@ public class Game implements GameInterface {
             return;
         if (_pc.isDead) {
             try {
-                _pcDisplay.displayPacManDeath(_pc.getPosition());
-                _pc.isDead = false;
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if (_pc.needRespawn) {
-            try {
                 if (System.currentTimeMillis() - _pc.deathDate < 3900)
                     return;
-                _pc.needRespawn = false;
                 _pc.respawn();
                 for (Ghost g : _ennemies)
                     g.respawn();
-                _pcDisplay.displayPacmanStart(_pc.getPosition());
-                _clydeDisplay.displayClyde(Direction.SOUTH,_ennemies.get(0)._position);
-                //_pinkyDisplay.displayPinky(Direction.SOUTH,_ennemies.get(2)._position);
-                //_blinkyDisplay.displayBlinky(Direction.SOUTH,_ennemies.get(1)._position);
                 gameStart = false;
                 return;
             } catch (Exception e) {
@@ -187,22 +159,8 @@ public class Game implements GameInterface {
         handleLastKey();
         _pc.move(_pc._direction);
         _pc.checkPosition();
-        ArrayList<Position> oldpos = new ArrayList<>();
-        for (Ghost g : _ennemies) {
-            oldpos.add(g._position);
+        for (Ghost g : _ennemies)
             g.move(g._direction);
-        }
-        try {
-            _pcDisplay.displayPacMan(_pc.get_direction(), _pc.getPosition());
-            if (oldpos.get(0) != _ennemies.get(0)._position)
-                _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
-            //if (oldpos.get(1) != _ennemies.get(1)._position)
-            //    _blinkyDisplay.displayBlinky(_ennemies.get(1)._direction,_ennemies.get(1)._position);
-            //if (oldpos.get(2) != _ennemies.get(2)._position)
-            //    _pinkyDisplay.displayPinky(_ennemies.get(2)._direction,_ennemies.get(2)._position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -227,37 +185,31 @@ public class Game implements GameInterface {
             keyTime--;
             Direction olddir = _pc._direction;
             ArrayList<Entity> collideWith;
-            try {
-                switch (this.lastKey) {
-                    case "Z":
-                        _pc._direction = Direction.NORTH;
-                        break;
-                    case "D":
-                        _pc._direction = Direction.EAST;
-                        break;
-                    case "S":
-                        _pc._direction = Direction.SOUTH;
-                        break;
-                    case "Q":
-                        _pc._direction = Direction.WEST;
-                        break;
-                    default:
-                        break;
-                }
-                collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
-                for (Entity e : collideWith) {
-                    if (e instanceof Wall) {
-                        _pc._direction = olddir;
-                        break;
-                    }
-                }
-                if (_pc._direction != olddir) {
-                    _pcDisplay.displayPacMan(_pc._direction, _pc.getPosition());
-                    keyTime = 0;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            switch (lastKey) {
+                case "Z":
+                    _pc._direction = Direction.NORTH;
+                    break;
+                case "D":
+                    _pc._direction = Direction.EAST;
+                    break;
+                case "S":
+                    _pc._direction = Direction.SOUTH;
+                    break;
+                case "Q":
+                    _pc._direction = Direction.WEST;
+                    break;
+                default:
+                    break;
             }
+            collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
+            for (Entity e : collideWith) {
+                if (e instanceof Wall) {
+                    _pc._direction = olddir;
+                    break;
+                }
+            }
+            if (_pc._direction != olddir)
+                keyTime = 0;
         }
     }
 
