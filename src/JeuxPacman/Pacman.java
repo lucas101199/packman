@@ -6,6 +6,7 @@ public class Pacman extends Character{
     private  boolean _canEatGhost;
     public boolean isDead;
     public long deathDate;
+    public int score;
 
     private final DisplayPacman display;
 
@@ -15,6 +16,7 @@ public class Pacman extends Character{
         _canEatGhost = false;
         _direction = null;
         isDead = false;
+        score = 0;
         display.displayPacmanStart(_position);
     }
 
@@ -88,25 +90,32 @@ public class Pacman extends Character{
             if (e instanceof Ghost) {
                 if(_canEatGhost) {
                     ((Ghost) e).die();
-                    _position = nextPos();
                 }
                 else{
                     die();
+                    return;
                 }
             }
             else if (e instanceof Wall)
                 return;
-            else if (e instanceof ScoringBonus) {
-                _lastEatenItem = (Bonus)e;
-                _position = nextPos();
+            else if (e instanceof PacGum) {
+                if (((PacGum) e)._isActive) {
+                    _lastEatenItem = (Bonus) e;
+                    score += ((PacGum) e)._score;
+                    try {
+                        lastEatenItem().consume();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
             else if(e instanceof SuperPacGum){
                 System.out.println("Oh a super PacGum");
                 _canEatGhost = true;
                 _lastEatenItem = (Bonus)e;
-                _position = nextPos();
             }
         }
+        _position = nextPos();
     }
 
 }
