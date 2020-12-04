@@ -277,7 +277,7 @@ public class Game implements GameInterface {
             return;
         if (gamePaused)
             return;
-        if (_pc._direction == null && !gameStart)
+        if (_pc._direction == Direction.NONE && !gameStart)
             return;
         if (_pc.isDead) {
             if (System.currentTimeMillis() - _pc.deathDate < 3900)

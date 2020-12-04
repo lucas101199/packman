@@ -38,7 +38,7 @@ public class Pacman extends Character{
 
     @Override
     public void move(Direction direction) {
-        if (direction == null)
+        if (direction == Direction.NONE)
             return;
         Position oldpos = _position;
         super.move(direction);
@@ -62,7 +62,7 @@ public class Pacman extends Character{
     public void respawn() {
         super.respawn();
         isDead = false;
-        _direction = null;
+        _direction = Direction.NONE;
         try {
             display.displayPacmanStart(_position);
         } catch (Exception e) {
