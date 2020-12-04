@@ -1,8 +1,10 @@
 package PhysicMotor;
 
+import JeuxPacman.Position;
+
 import java.util.ArrayList;
 
-public class Entity {
+public abstract class Entity {
     protected int _x, _y;
     protected  CollisionArea _collisionArea;
     protected PhysicReaction _physic;
@@ -44,16 +46,13 @@ public class Entity {
         return _physic;
     }
 
-    public int getX(){
-        return _x;
-    }
+    public abstract int getX();
 
-    public int getY(){
-        return _y;
-    }
+    public abstract int getY();
 
-    public void setPosition(int x, int y){
-        _x = x;
-        _y = y;
-    }
+    public abstract boolean isActive();
+
+    public abstract Position getNextPosition();
+
+    public abstract void setPosition(int x, int y);
 }

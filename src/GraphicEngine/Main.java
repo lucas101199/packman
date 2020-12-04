@@ -1,5 +1,12 @@
 package GraphicEngine;
 
+/*TODO fix the superposition of 2 scene cause we have a bug when
+   we create the first then display it then create a second one
+   then display it then if we want to display the first one
+   it doesn't work and display just a white screen instead
+*/
+
+
 import Interfaces.GameInterface;
 
 public class Main {
@@ -26,23 +33,17 @@ public class Main {
                 graphic.displayScene("scene");
                 graphic.addImage("scene", "image", "./src/Images/PacMan/pacman_up.gif");
                 graphic.displayObject("scene", "image");
-                graphic.setPositionImage("scene", "image", 200, 200,true);
+                graphic.setPositionImage("scene", "image", 200, 200);
                 graphic.setSizeScene("scene", 400, 400);
                 graphic.rotateObject("scene", "image", 45);
                 graphic.addTextButton("scene", "button", "rotate");
                 graphic.displayObject("scene", "button");
-                graphic.setPositionTextButton("scene", "button", 200, 350);
+                graphic.setPositionTextButton("scene", "button", 100, 300);
                 graphic.resizeTextButton("scene", "button", 30, 100);
                 graphic.addImageButton("scene", "blue", "./src/Images/Ghosts/blue/ghost_blue_down.gif");
                 graphic.displayObject("scene", "blue");
-                graphic.setPositionImageButton("scene", "blue", 200, 300,true);
+                graphic.setPositionImageButton("scene", "blue", 200, 300);
                 graphic.resizeImageButton("scene", "blue", 30, 30);
-                graphic.addScene("scene2");
-                graphic.setSizeScene("scene2",200,200);
-                graphic.addImageButton("scene2", "blue2", "./src/Images/Ghosts/blue/ghost_blue_down.gif");
-                graphic.displayObject("scene2", "blue2");
-                graphic.setPositionImageButton("scene2", "blue2", 0, 0,false);
-                graphic.resizeImageButton("scene2", "blue2", 30, 30);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -66,20 +67,10 @@ public class Main {
         @Override
         public void handleKey(String key) {
             try {
-                switch (key) {
-                    case "button":
-                        graphic.rotateObject("scene", "image", 45);
-                        graphic.rotateObject("scene", "button", -90);
-                        break;
-                    case "blue" :
-                        graphic.displayScene("scene2");
-                        break;
-                    case "blue2" :
-                        graphic.displayScene("scene");
-                        break;
-                    default :
-                        break;
-                }
+                if (key.equals("button"))
+                    graphic.rotateObject("scene", "image", 45);
+                if (key.equals("blue"))
+                    graphic.rotateObject("scene", "image", -45);
             } catch (Exception e) {
                 e.printStackTrace();
             }

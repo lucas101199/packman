@@ -1,30 +1,27 @@
 package JeuxPacman;
+import  PhysicMotor.Entity;
+import PhysicMotor.*;
 
 public class Bonus extends Entity{
-
     int _score;
     boolean _isActive;
-    final int _initialDuration;
     int _duration;
-    final DisplayBonus display;
+    int _x, _y;
 
-    protected Bonus(Position pos, int height, int width, int duration, int score, DisplayBonus display) throws Exception {
-        super(pos, height, width);
+    protected Bonus(Position pos, int height, int width, int duration, int score) {
+        super(pos.x, pos.y, PhysicReaction.SOLID, null, 5);
+        setCollisionArea(new RectCollisionArea(width, height, this));
+
         _isActive = true;
         _duration = duration;
-        _initialDuration = duration;
         _score = score;
-        this.display = display;
-        display.display(_position);
     }
 
     public int getScore(){
         return _score;
     }
     
-    public void consume() throws Exception {
-        if (_isActive)
-            display.hide();
+    public void consume(){
         _isActive = false;
         _duration--;
     }
@@ -39,15 +36,23 @@ public class Bonus extends Entity{
     }
 
     @Override
-    public void restart(){
-        super.restart();
-        _isActive = true;
-        _duration = _initialDuration;
-        try {
-            display.display(_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Position getNextPosition() {
+        return new Position(_x, _y);
     }
 
+    @Override
+    public int getX() {
+        return _x;
+    }
+
+    @Override
+    public int getY() {
+        return _y;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        _x = x;
+        _y = y;
+    }
 }

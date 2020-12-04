@@ -1,66 +1,31 @@
 package JeuxPacman;
 
+import javafx.geometry.Pos;
+
 public class Ghost extends Character{
-
     private boolean _isDead;
-
-    public Ghost(Position position, int height, int width, int speed, DisplayCharacter display) throws Exception {
-        super(position, height, width, speed, display);
-        _direction = Direction.SOUTH;
-        display.display(_direction,_position);
-    }
-
-    @Override
-    public void move(Direction direction) {
-        Position oldpos = _position;
-        super.move(_direction);
-        try {
-            if (!_position.equals(oldpos))
-                display.display(_direction,_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void restart() {
-        super.restart();
+    private Position _initPos;
+    public Ghost(Position position, int height, int width, int speed, GhostCollisionSolver gCollSolv) {
+        super(position, height, width, speed, gCollSolv);
+        _initPos = new Position(position.x, position.y);
     }
 
     @Override
     public void respawn() {
-        super.respawn();
-        _direction = Direction.SOUTH;
-        try {
-            display.display(_direction,_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setPosition(_initPos.x, _initPos.y);
     }
 
-    @Override
-    public void reactAfterCollision() {
-        boolean wall = false;
-        for (var e : _collisions){
-            if ( e instanceof Pacman){
-                var pc = (Pacman)e;
-                if (pc.canEatGhost()) {
-                    die();
-                } else {
-                    if (!pc.isDead)
-                        pc.die();
-                }
-                return;
-            }
-            else if (e instanceof Wall)
-                wall = true;
-        }
-        if (wall) {
-            _direction = getRandomDir();
-        }
-        else {
-            _position = nextPos();
-        }
+
+
+    Direction getOppositeDir(Direction dir){
+        if(dir == Direction.NORTH)
+            return Direction.SOUTH;
+        else if(dir == Direction.EAST)
+            return Direction.WEST;
+        else if(dir == Direction.SOUTH)
+            return Direction.NORTH;
+        else
+            return Direction.EAST;
     }
 
     public void die(){
@@ -73,3 +38,4 @@ public class Ghost extends Character{
         return !_isDead;
     }
 }
+

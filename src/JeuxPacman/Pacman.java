@@ -1,23 +1,22 @@
 package JeuxPacman;
 
+import javafx.geometry.Pos;
+
 public class Pacman extends Character{
 
     private Bonus _lastEatenItem;
     private  boolean _canEatGhost;
-    public boolean isDead;
-    public long deathDate;
-    public int score;
+    private Position _initPos;
+    public boolean _isDead;
+    public boolean _needRespawn;
+    public long _deathDate;
 
-    private final DisplayPacman display;
 
-    public Pacman(Position position, int height, int width, int speed, DisplayPacman display) throws Exception {
-        super(position, height, width, speed, display);
-        this.display = display;
+    public Pacman(Position position, int height, int width, int speed, PCCollisionSolver pcCollisionSolv){
+        super(position, height, width, speed, pcCollisionSolv);
         _canEatGhost = false;
-        _direction = null;
-        isDead = false;
-        score = 0;
-        display.displayPacmanStart(_position);
+        //_direction = nu;
+        _initPos = new Position(position.x, position.y);
     }
 
     public Bonus lastEatenItem(){
@@ -27,29 +26,51 @@ public class Pacman extends Character{
     public boolean isActive(){
         return true;
     }
-
     public boolean canEatGhost(){
         return _canEatGhost;
     }
+
+    public void setEatGhost(boolean canEat){
+        _canEatGhost = canEat;
+    }
+
+    public boolean isDead(){
+        return _isDead;
+    }
+
+    public void setIsDead(boolean isDead){
+        _isDead = isDead;
+    }
+
+    public boolean needRespawn(){
+        return _needRespawn;
+    }
+    public void setNeedRespawn(boolean needRespawn){
+        _needRespawn = needRespawn;
+    }
+
+    public long getDeathDate(){
+        return _deathDate;
+    }
+
+    public void setDeathDate(long deathDate){
+        _deathDate = deathDate;
+    }
+
 
     public void cancelSpPacGumEffect(){
         _canEatGhost = false;
     }
 
-    @Override
-    public void move(Direction direction) {
-        if (direction == null)
-            return;
-        Position oldpos = _position;
-        super.move(direction);
-        checkPosition();
-        try {
-            if (!_position.equals(oldpos))
-                display.display(_direction,_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setLastEatenItem(Bonus b){
+        _lastEatenItem = b;
     }
+
+    public void setCanEatGhost(boolean val){
+        _canEatGhost = true;
+    }
+
+
 
     public void checkPosition() {
         if (_position.x < -14)
@@ -60,69 +81,9 @@ public class Pacman extends Character{
 
     @Override
     public void respawn() {
-        super.respawn();
-        isDead = false;
-        _direction = null;
-        try {
-            display.displayPacmanStart(_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setPosition(_initPos.x, _initPos.y);
+        _direction = Direction.NONE;
     }
 
-    @Override
-    public void restart() {
-        super.restart();
-        _canEatGhost = false;
-        score = 0;
-    }
-
-    public void die() {
-        isDead = true;
-        deathDate = System.currentTimeMillis();
-        Direction olddir = _direction;
-        _direction = getOppositeDir(_direction);
-        nextPos();
-        _direction = olddir;
-        try {
-            display.displayPacManDeath(_position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void reactAfterCollision() {
-        for(var e : _collisions) {
-            if (e instanceof Ghost) {
-                if(_canEatGhost) {
-                    ((Ghost) e).die();
-                }
-                else{
-                    die();
-                    return;
-                }
-            }
-            else if (e instanceof Wall)
-                return;
-            else if (e instanceof PacGum) {
-                if (((PacGum) e)._isActive) {
-                    _lastEatenItem = (Bonus) e;
-                    score += ((PacGum) e)._score;
-                    try {
-                        lastEatenItem().consume();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
-            }
-            else if(e instanceof SuperPacGum){
-                System.out.println("Oh a super PacGum");
-                _canEatGhost = true;
-                _lastEatenItem = (Bonus)e;
-            }
-        }
-        _position = nextPos();
-    }
 
 }

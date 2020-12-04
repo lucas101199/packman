@@ -1,5 +1,6 @@
 package PhysicMotor;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,8 +13,8 @@ public class PhysicMotor {
     private Entity _currentEntity;
 
     public PhysicMotor(){
-        _entities = new ArrayList<>();
-        _moveableEntities = new ArrayList<>();
+        _entities = new ArrayList<Entity>();
+        _moveableEntities = new ArrayList<Entity>();
         _previousEntitiesPos = new HashMap<>();
         _accelerationEntities = new HashMap<>();
         _speedEntities = new HashMap<>();
@@ -32,9 +33,10 @@ public class PhysicMotor {
     }
 
     public void update(){
-       for(var movable : _moveableEntities){
-           _currentEntity = movable;
-           applyForce();
+       for(var moveable: _moveableEntities){
+           _currentEntity = moveable;
+          // applyForce();
+           System.out.println("Next pos : "+ _currentEntity.getNextPosition().x + ";" + _currentEntity.getNextPosition().y);
            handleCollisions();
            _previousEntitiesPos.put(_currentEntity, new Point(_currentEntity.getX(), _currentEntity.getY()));
        }
@@ -60,23 +62,24 @@ public class PhysicMotor {
     }
 
     private void handleCollisions(){
+        var haveCollision = false;
         for(var e : _entities) {
             if (e != _currentEntity && _currentEntity.getCollisionArea().hasCollision(e)){
-                handlePhysicCollisionResolution(e);
                 if(_currentEntity._gpResolution != null)
                     _currentEntity._gpResolution.resolve(e);
+                haveCollision = true;
             }
+        }
+        if(!haveCollision) {
+            var nextPos = _currentEntity.getNextPosition();
+            _currentEntity.setPosition(nextPos.x, nextPos.y);
         }
     }
 
     private  void handlePhysicCollisionResolution(Entity entityInvolved){
         if(_currentEntity.getPhysic() == PhysicReaction.SOLID && entityInvolved.getPhysic() == PhysicReaction.SOLID) {
             System.out.println("Solid collision !");
-            if (currentEntityIsInMotion()) {
-                var previousPos = _previousEntitiesPos.get(_currentEntity);
-                System.out.println("Return  to pos (" + previousPos.x + ";" + previousPos.y + ")" );
-                _currentEntity.setPosition(previousPos.x, previousPos.y);
-            }
+
         }
     }
 

@@ -1,12 +1,14 @@
 package GraphicEngine;
 
 import Interfaces.GameInterface;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
 
 import java.io.FileInputStream;
 
@@ -15,7 +17,7 @@ public class Scene {
     private javafx.scene.Scene scene;
     private Group root;
 
-    private final GameInterface game;
+    private GameInterface game;
 
     public Scene(String label, GameInterface game) {
         this.root = new Group();
@@ -125,16 +127,11 @@ public class Scene {
      * @param y Second coordinate of the image
      * @throws Exception if the image with the given {@code imageLabel} is not found
      */
-    public void setPositionImage(String imageLabel, double x, double y, boolean center) throws Exception {
+    public void setPositionImage(String imageLabel, double x, double y) throws Exception {
         ImageView image = getImage(imageLabel);
         if (image != null) {
-            if (center) {
-                image.setX(x - (image.getImage().getWidth() / 2));
-                image.setY(y - (image.getImage().getHeight() / 2));
-            } else {
-                image.setX(x);
-                image.setY(y);
-            }
+            image.setX(x - (image.getImage().getWidth()/2));
+            image.setY(y - (image.getImage().getHeight()/2));
         } else {
             throw new Exception("Image named "+imageLabel+" doesn't exist");
         }
@@ -356,14 +353,6 @@ public class Scene {
             if (node.getId().equals(Label)) return true;
         }
         return false;
-    }
-
-    public void changeImage(String imageLabel, String imageFile) throws Exception {
-        if (!isPresent(imageLabel))
-            throw new Exception("Object named "+imageLabel+" doesn't exist");
-        Image image = new Image(new FileInputStream(imageFile));
-        ImageView imageView = getImage(imageLabel);
-        imageView.setImage(image);
     }
 
 }

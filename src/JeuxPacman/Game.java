@@ -3,6 +3,8 @@ package JeuxPacman;
 import GraphicEngine.GraphicEngine;
 import InputEngine.InputEngine;
 import Interfaces.GameInterface;
+import PhysicMotor.Entity;
+import PhysicMotor.PhysicMotor;
 
 import java.util.ArrayList;
 
@@ -10,222 +12,42 @@ public class Game implements GameInterface {
 
     private ArrayList<Entity> _items;
     private ArrayList<Ghost> _ennemies;
-    private Pacman _pc;
+    private  Pacman _pc;
+    private DisplayPacman _pcDisplay;
+    private int _score;
+    private final double speed = 10;
     private GraphicEngine _graphic;
+    private InputEngine _input;
     private CollisionChecker checker;
-    private String lastKey;
-    private int keyTime;
-    private boolean gameStart;
-    private boolean gamePaused;
-
+    private DisplayClyde _clydeDisplay;
+    private PhysicMotor _physicMotor;
     public void init() {
         try {
-
-            //Création du labyrinthe
-
             _graphic.addScene("maze");
             _graphic.setSizeScene("maze",544,600);
             _graphic.displayScene("maze");
             _graphic.addImage("maze","map","./src/Images/Map/map.png");
             _graphic.resizeImage("maze","map",600,544);
-            _graphic.setPositionImage("maze","map",272,300, true);
+            _graphic.setPositionImage("maze","map",272,300);
             _graphic.displayObject("maze","map");
             _ennemies = new ArrayList<>();
             _items = new ArrayList<>();
+            _physicMotor = new PhysicMotor();
+            var collisionS = new PCCollisionSolver();
+            _pc = new Pacman(new Position(272,454), 27,31,1, collisionS);
+            System.out.println(_pc._direction);
+            collisionS.setPacman(_pc);
+            _physicMotor.registerMoveableEntity(_pc);
 
-            int pgId = 0;
-            int[] Y = {
-                    29,48,67,87,106,126,145,164,
-                    184,203,222,242,261,280,300,319,338,358,378,
-                    397,416,435,455,474,493,513,532,551,571};
-            int[][] X = {
-                    {30,51,69,88,107,127,147,165,185,204,224,244,302,321,339,360,379,399,417,438,457,475,495,516},
-                    {30,127,244,302,417,516},
-                    {127,244,302,417},
-                    {30,127,244,302,417,516},
-                    {30,51,69,88,107,127,147,165,185,204,224,263,282,244,302,321,339,360,379,399,417,438,457,475,495,516},
-                    {30,127,185,360,417,516},
-                    {30,127,185,360,417,516},
-                    {30,51,69,88,107,127,185,204,224,244,302,321,339,360,417,438,457,475,495,516},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {127,417},
-                    {30,51,69,88,107,127,147,165,185,204,224,244,302,321,339,360,379,399,417,438,457,475,495,516},
-                    {30,127,244,302,417,516},
-                    {30,127,244,302,417,516},
-                    {51,69,127,147,165,185,204,224,244,302,321,339,360,379,399,417,475,495},
-                    {69,127,185,360,417,475},
-                    {69,127,185,360,417,475},
-                    {30,51,69,88,107,127,185,204,224,244,302,321,339,360,417,438,457,475,495,516},
-                    {30,244,302,516},
-                    {30,244,302,516},
-                    {30,51,69,88,107,127,147,165,185,204,224,263,282,244,302,321,339,360,379,399,417,438,457,475,495,516}
-            };
-            int yId = 0;
-            for (int y : Y) {
-                for (int x : X[yId]) {
-                    _items.add(new PacGum(new Position(x, y), 8, 8, 0, 1, new DisplayPacGum(_graphic, "maze", pgId)));
-                    pgId++;
-                }
-                yId++;
-            }
-
-            _pc = new Pacman(new Position(272,454), 29,29,2,new DisplayPacman(_graphic,"maze"));
-            _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayClyde(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(240,224),29,29,2,new DisplayInky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(304,224),29,29,2,new DisplayBlinky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayPinky(_graphic,"maze")));
-
-            InputEngine _input = new InputEngine(this);
-            _input.addKey("Z");
-            _input.addKey("Q");
-            _input.addKey("S");
-            _input.addKey("D");
-            _input.addKey("P");
-            _input.addKey("Ctrl");
-            _input.addKey("E");
-            _input.setScene(_graphic.getScene("maze").getScene());
-            _items.add(new Wall(new Position(80.5, 69.5), 45, 65));   // Rectangle haut gauche 1
-
-            _items.add(new Wall(new Position(186, 69.5), 45, 84));   // Rectangle haut gauche 2
-
-            _items.add(new Wall(new Position(360, 69.5), 45, 84));    // Rectangle haut droite 1
-
-            _items.add(new Wall(new Position(465.5, 69.5), 45, 65));  // Rectangle haut droite 2
-
-            _items.add(new Wall(new Position(80.5, 136.5), 27, 65));    // Rectangle long horizontal haut gauche
-
-            _items.add(new Wall(new Position(465.5, 136.5), 27, 65)); // Rectangle long horizontal haut droite
-
-            _items.add(new Wall(new Position(185.5, 425.5), 27, 83)); // Rectangle long horizontal bas gauche
-
-            _items.add(new Wall(new Position(360.5, 425.5), 27, 83)); // Rectangle long horizontal bas droite
-
-
-            _items.add(new Wall(new Position(157.5, 339), 84, 27));   // Rectangle long vertical gauche
-
-            _items.add(new Wall(new Position(388.5, 339), 84, 27));   // Rectangle long vertical droite
-
-
-            _items.add(new Wall(new Position(273, 135), 24, 142));    // T central 1
-            _items.add(new Wall(new Position(273, 178.5), 61, 30));   // T central 1
-
-            _items.add(new Wall(new Position(273, 368), 26, 142));    // T central 2
-            _items.add(new Wall(new Position(273, 410.5), 57, 30));   // T central 2
-
-            _items.add(new Wall(new Position(273, 483.5), 27, 140));  // T central 3
-            _items.add(new Wall(new Position(273, 526), 56, 30));    // T central 3
-
-
-            _items.add(new Wall(new Position(157.5, 194.5), 143, 27));// T haut gauche
-            _items.add(new Wall(new Position(199.5, 193.5), 31, 55)); // T haut gauche
-
-            _items.add(new Wall(new Position(388.5, 194.5), 143, 27));// T haut droite
-            _items.add(new Wall(new Position(346.5, 193.5), 31, 55)); // T haut droite
-
-            _items.add(new Wall(new Position(137, 541), 26, 180));    // T bas gauche
-            _items.add(new Wall(new Position(158, 498.5), 57, 28));   // T bas gauche
-
-            _items.add(new Wall(new Position(409, 541), 26, 180));    // T bas droite
-            _items.add(new Wall(new Position(388, 498.5), 57, 28));   // T bas droite
-
-
-            _items.add(new Wall(new Position(273, 282), 84, 142));    // Foyer fantômes
-
-
-            _items.add(new Wall(new Position(54, 223.5), 85, 115));    // Grand carre haut gauche
-
-            _items.add(new Wall(new Position(490.5, 223.5), 85, 114));// Grand carre haut droit
-
-            _items.add(new Wall(new Position(55, 339), 84, 114));    // Grand carre bas gauche
-
-            _items.add(new Wall(new Position(491, 339), 84, 114));  // Grand carre bas droite
-
-
-            _items.add(new Wall(new Position(273, 8.5), 15, 510));    // Bord haut
-
-            _items.add(new Wall(new Position(273, 592.5), 15, 512));  // Bord bas
-
-
-            _items.add(new Wall(new Position(9, 90.5), 179, 16));    // Bord haut gauche
-
-            _items.add(new Wall(new Position(536.5, 90.5), 179, 15)); // Bord haut droite
-
-            _items.add(new Wall(new Position(8.5, 491), 218, 15));    // Bord bas gauche
-
-            _items.add(new Wall(new Position(537, 491), 218, 14));    // Bord bas droite
-
-
-            _items.add(new Wall(new Position(273, 54.5), 75, 28));    // Tige haut
-
-
-            _items.add(new Wall(new Position(35.5, 483), 28, 37));    // Tige bas gauche
-
-            _items.add(new Wall(new Position(510.5, 483.5), 27, 37)); // Tige bas droite
-
-
-            _items.add(new Wall(new Position(80, 425), 26, 66));    // L inversé gauche
-            _items.add(new Wall(new Position(99, 468), 58, 28));    // L inversé gauche
-
-            _items.add(new Wall(new Position(466, 425.5), 27, 66));   // L inversé droite
-            _items.add(new Wall(new Position(447, 468.5), 57, 28));   // L inversé droite
-
-            ArrayList<Entity> entities = new ArrayList<>(_items);
-            entities.addAll(_ennemies);
-            entities.add(_pc);
-            checker = new CollisionChecker(entities);
-            Character.setCollisionChecker(checker);
-            gameStart = false;
-            gamePaused = false;
-
-            // Création du Menu
-
-            _graphic.addScene("menu");
-            _graphic.setSizeScene("menu",544,800);
-
-            _graphic.addImage("menu","background","./src/Images/Menu/menu.png");
-            _graphic.resizeImage("menu","background",800,544);
-            _graphic.setPositionImage("menu","background",0,0,false);
-            _graphic.displayObject("menu","background");
-
-            _graphic.addImageButton("menu","jouer","./src/Images/Menu/bouton_jouer.png");
-            _graphic.resizeImageButton("menu","jouer",60,150);
-            _graphic.setPositionImageButton("menu","jouer",197,280,false);
-            _graphic.displayObject("menu","jouer");
-
-            _graphic.addImageButton("menu","aide","./src/Images/Menu/bouton_aide.png");
-            _graphic.resizeImageButton("menu","aide",60,150);
-            _graphic.setPositionImageButton("menu","aide",197,380,false);
-            _graphic.displayObject("menu","aide");
-
-            _graphic.addImageButton("menu","quitter","./src/Images/Menu/bouton_quitter.png");
-            _graphic.resizeImageButton("menu","quitter",60,150);
-            _graphic.setPositionImageButton("menu","quitter",197,480,false);
-            _graphic.displayObject("menu","quitter");
-
-            // Création da la page d'aide
-
-            _graphic.addScene("help");
-            _graphic.setSizeScene("help",544,800);
-
-            _graphic.addImage("help","background","./src/Images/Aide/aide.png");
-            _graphic.resizeImage("help","background",800,544);
-            _graphic.setPositionImage("help","background",0,0,false);
-            _graphic.displayObject("help","background");
-
-            _graphic.addImageButton("help","retour","./src/Images/Aide/retour.png");
-            _graphic.resizeImageButton("help","retour",60,150);
-            _graphic.setPositionImageButton("help","retour",197,660,false);
-            _graphic.displayObject("help","retour");
-
+            _pcDisplay = new DisplayPacman(_graphic,"maze");
+            var collisionGhos = new GhostCollisionSolver();
+            var ghost = new Ghost(new Position(272,225),27,31,2, collisionGhos);
+            collisionGhos.setGhost( ghost);
+            _ennemies.add(ghost);
+            _physicMotor.registerMoveableEntity(ghost);
+            _ennemies.get(0)._direction = Direction.SOUTH;
+            _clydeDisplay = new DisplayClyde(_graphic,"maze");
+            _score = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,59 +55,102 @@ public class Game implements GameInterface {
 
     public void start() {
         try {
-            _graphic.displayScene("menu");
+            _pcDisplay.displayPacmanStart(new Position(_pc.getX(), _pc.getY()));
+            _clydeDisplay.displayClyde(_ennemies.get(0)._direction,_ennemies.get(0)._position);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+        _input = new InputEngine(_graphic.getScene("maze").getScene(),this);
+        _input.addKey("Z");
+        _input.addKey("Q");
+        _input.addKey("S");
+        _input.addKey("D");
+        _input.triggerAction();
+        _items.add(new Wall(new Position(272,5),10,544));   //Top Wall
+        _items.add(new Wall(new Position(272,595),12,544)); //Bottom Wall
+        _items.add(new Wall(new Position(273,43),86,26));   //TopMiddle Wall
+        _items.add(new Wall(new Position(80,68),36,60));    //TopLeft First Bloc
+        _items.add(new Wall(new Position(8,100),200,16));   //LeftTop Wall
+        _items.add(new Wall(new Position(8,482),236,16));   //LeftBottom Wall
+        _items.add(new Wall(new Position(186,68),36,78));   //TopLeft Second Bloc
+        _items.add(new Wall(new Position(360,68),36,78));   //TopRight Second Bloc
+        _items.add(new Wall(new Position(467,68),36,60));   //TopRight First Bloc
+        _items.add(new Wall(new Position(538,100),200,14)); //RightTop Wall
+        _items.add(new Wall(new Position(538,482),200,14)); //RightBottom Wall
+        _items.add(new Wall(new Position(80,136),16,60));   //LeftTop Bloc
+        _items.add(new Wall(new Position(467,136),16,60));  //RightTop Bloc
+        _items.add(new Wall(new Position(273,136),16,136)); //Top T Bloc part1
+        _items.add(new Wall(new Position(273,166),70,26));  //Top T Bloc part2
+        _items.add(new Wall(new Position(158,194),132,22)); //TopLeft T Bloc part1
+        _items.add(new Wall(new Position(186,192),18,78));  //TopLeft T Bloc part2
+        _items.add(new Wall(new Position(388,194),132,22)); //TopRight T Bloc part1
+        _items.add(new Wall(new Position(360,192),18,78));  //TopRight T Bloc part2
+        _items.add(new Wall(new Position(55,222),76,110));  //LeftTop Tunnel
+        _items.add(new Wall(new Position(492,222),76,110)); //RightTop Tunnel
+        _items.add(new Wall(new Position(55,338),76,110));  //LeftBottom Tunnel
+        _items.add(new Wall(new Position(492,338),76,110)); //RightBottom Tunnel
+        _items.add(new Wall(new Position(273,280),76,136)); //Center
+        _items.add(new Wall(new Position(158,338),76,22));  //Left Bloc
+        _items.add(new Wall(new Position(388,338),76,22));  //Right Bloc
+        _items.add(new Wall(new Position(273,368),16,136)); //BottomTop T Bloc part1
+        _items.add(new Wall(new Position(273,398),70,26));  //BottomTop T Bloc part2
+        _items.add(new Wall(new Position(273,483),16,136)); //BottomBottom T Bloc part1
+        _items.add(new Wall(new Position(273,513),70,26));  //BottomBottom T Bloc part2
+        _items.add(new Wall(new Position(26,482),18,52));   //LeftBottomMiddle Wall
+        _items.add(new Wall(new Position(520,482),18,52));  //RightBottomMiddle Wall
+        _items.add(new Wall(new Position(186,425),16,78));  //LeftBottom Bloc
+        _items.add(new Wall(new Position(360,425),16,78));  //RightBottom Bloc
+        _items.add(new Wall(new Position(80,425),16,60));   //BottomLeft L part1
+        _items.add(new Wall(new Position(99,455),72,22));   //BottomLeft L part2
+        _items.add(new Wall(new Position(467,425),16,60));  //BottomRight L part1
+        _items.add(new Wall(new Position(448,455),72,22));  //BottomRight L part2
+        _items.add(new Wall(new Position(138,541),14,174)); //BottomLeft InverseT part1
+        _items.add(new Wall(new Position(158,511),72,22));  //BottomLeft InverseT part2
+        _items.add(new Wall(new Position(408,541),14,174)); //BottomRight InverseT part1
+        _items.add(new Wall(new Position(388,511),72,22));  //BottomRight InverseT part2
 
-    private void restartMaze() {
-        try {
+        for(int i = 2; i < _items.size(); i++)
+            _physicMotor.registerEntity(_items.get(i));
 
-            for (Entity item : _items) {
-                item.restart();
-            }
-
-            _pc.restart();
-
-            for (Character ghost : _ennemies) {
-                ghost.restart();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void update() {
-        if (_graphic.currentScene().equals("menu"))
-            return;
-        if (_graphic.currentScene().equals("help"))
-            return;
-        if (gamePaused)
-            return;
-        if (_pc._direction == null && !gameStart)
-            return;
-        if (_pc.isDead) {
-            if (System.currentTimeMillis() - _pc.deathDate < 3900)
+        System.out.println("Pc pos : " + _pc.getX() + ";" + _pc.getY());
+        if (_pc.isDead()) {
+            try {
+                _pcDisplay.displayPacManDeath(new Position(_pc.getX(), _pc.getY()));
+                _pc.setIsDead(false);
                 return;
-            _pc.respawn();
-            for (Ghost g : _ennemies)
-                g.respawn();
-            gameStart = false;
-            return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        handleLastKey();
-        _pc.move(_pc._direction);
-        for (Ghost g : _ennemies)
-            if (!_pc.isDead)
-                g.move(g._direction);
-
+        if (_pc.needRespawn()) {
+            try {
+                if (System.currentTimeMillis() - _pc.getDeathDate() < 3900)
+                    return;
+                _pc.setNeedRespawn(false);
+                _pc.respawn();
+                _pcDisplay.displayPacmanStart(new Position(_pc.getX(), _pc.getY()));
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //_pc.move();
+        _pc.checkPosition();
+        try {
+            _pcDisplay.displayPacMan(_pc.get_direction(), new Position(_pc.getX(), _pc.getY()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Direction = " + _pc._direction);
+        _physicMotor.update();
     }
 
     @Override
     public double getSpeed() {
-        return 42;
+        return 0;
     }
 
     public void set_graphic(GraphicEngine _graphic) {
@@ -294,63 +159,10 @@ public class Game implements GameInterface {
 
     @Override
     public void handleKey(String key) {
-        switch (_graphic.currentScene()) {
-            case "menu":
-                switch (key) {
-                    case "jouer":
-                        restartMaze();
-                        try {
-                            _graphic.displayScene("maze");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "aide":
-                        try {
-                            _graphic.displayScene("help");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "quitter":
-                        _graphic.stop();
-                        break;
-                }
-                break;
-            case "help":
-                if (key.equals("retour")) {
-                    try {
-                        _graphic.displayScene("menu");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
-            case "maze":
-                if (key.equals("P")) {
-                    gamePaused = !gamePaused;
-                } else if (key.equals("Ctrl+E")) {
-                    try {
-                        _graphic.displayScene("menu");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    lastKey = key;
-                    keyTime = 14;
-                    if (!gameStart && (key.equals("D") || key.equals("Q")))
-                        gameStart = true;
-                }
-                break;
-        }
-    }
-
-    private void handleLastKey() {
-        if (keyTime > 0) {
-            keyTime--;
-            Direction olddir = _pc._direction;
-            ArrayList<Entity> collideWith;
-            switch (lastKey) {
+        Direction olddir = _pc._direction;
+        ArrayList<Entity> collideWith;
+        try {
+            switch (key) {
                 case "Z":
                     _pc._direction = Direction.NORTH;
                     break;
@@ -366,16 +178,10 @@ public class Game implements GameInterface {
                 default:
                     break;
             }
-            collideWith = checker.hasCollisionsWith(_pc,_pc.nextPos());
-            for (Entity e : collideWith) {
-                if (e instanceof Wall) {
-                    _pc._direction = olddir;
-                    break;
-                }
-            }
-            if (_pc._direction != olddir)
-                keyTime = 0;
+
+            _pcDisplay.displayPacMan(_pc._direction, new Position(_pc.getX(), _pc.getY()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 }

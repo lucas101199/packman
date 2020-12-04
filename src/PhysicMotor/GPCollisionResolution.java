@@ -1,5 +1,6 @@
 package PhysicMotor;
 
 public interface GPCollisionResolution {
-    void resolve(Entity e);
+    public void resolve(Entity e);
+    public void defaultBehavior();
 }

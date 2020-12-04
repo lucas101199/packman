@@ -4,7 +4,6 @@ import Interfaces.GameInterface;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -60,14 +59,6 @@ public class GraphicEngine extends Application {
         } else {
             throw new Exception("Scene "+sceneLabel+" doesn't exist");
         }
-    }
-
-    public String currentScene() {
-        for (Scene scene : sceneList) {
-            if (scene.isDisplay())
-                return scene.getLabel();
-        }
-        return "";
     }
 
     /**
@@ -192,10 +183,10 @@ public class GraphicEngine extends Application {
      * @param y the new position of the image's center in the y axis
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
-    public void setPositionImage(String sceneLabel, String imageLabel, double x, double y, boolean center) throws Exception {
+    public void setPositionImage(String sceneLabel, String imageLabel, double x, double y) throws Exception {
         Scene scene = getScene(sceneLabel);
         if (scene != null) {
-            scene.setPositionImage(imageLabel,x,y,center);
+            scene.setPositionImage(imageLabel,x,y);
         } else {
             throw new Exception("Scene "+sceneLabel+" doesn't exist");
         }
@@ -226,8 +217,8 @@ public class GraphicEngine extends Application {
      * @param y the new position of the button's center in the y axis
      * @throws Exception if the scene with the given {@code sceneLabel} is not found
      */
-    public void setPositionImageButton(String sceneLabel, String buttonLabel, double x, double y, boolean center) throws Exception {
-        setPositionImage(sceneLabel,buttonLabel,x,y,center);
+    public void setPositionImageButton(String sceneLabel, String buttonLabel, double x, double y) throws Exception {
+        setPositionImage(sceneLabel,buttonLabel,x,y);
     }
 
     /**
@@ -342,19 +333,6 @@ public class GraphicEngine extends Application {
         }
     }
 
-    public void changeImage(String sceneLabel, String imageLabel, String file) throws Exception {
-        Scene scene = getScene(sceneLabel);
-        if (scene != null) {
-            scene.changeImage(imageLabel,file);
-        } else {
-            throw new Exception("Scene "+sceneLabel+" doesn't exist");
-        }
-    }
-
-    public void stop() {
-        Platform.exit();
-    }
-
     /**
      * Main function which initializes, starts and updates the gameplay
      * @param stage Stage automatically created when the application is launched
@@ -369,7 +347,7 @@ public class GraphicEngine extends Application {
         game.init();
         game.start();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000/game.getSpeed()), actionEvent -> game.update()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), actionEvent -> game.update()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }

@@ -1,67 +1,47 @@
 package JeuxPacman;
 
+import PhysicMotor.Entity;
+import PhysicMotor.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class Character extends Entity{
 
-    private int _speed;
+    private final int _speed;
     protected ArrayList<Entity> _collisions;
     protected Direction _direction;
-    private static CollisionChecker _collisonChecker;
-    protected final DisplayCharacter display;
-    private final Random random = new Random();
-
+    protected Position _position;
 
     public Direction get_direction() {return _direction;}
 
-    public static void setCollisionChecker(CollisionChecker checker){
-        _collisonChecker = checker;
+    public Character(Position position, int height, int width, int speed, GPCollisionResolution gpCollisionRes){
+        super(position.x, position.y, PhysicReaction.SOLID, gpCollisionRes, 50);
+        setCollisionArea(new RectCollisionArea(width, height, this));
+        _speed = speed;
+        _position = position;
+        _direction = Direction.NONE;
     }
 
-    public Character(Position position, int height, int width, int speed, DisplayCharacter display){
-        super(position, height, width);
-        _speed = speed;
-        this.display = display;
-        _direction = Direction.NORTH;
+    @Override
+    public int getX() {
+        return _position.x;
+    }
+    @Override
+    public int getY(){ return _position.y;}
+
+    public void setPosition(int x, int y){
+        _position = new Position(x, y);
+    }
+
+    public Position getNextPosition(){
+        return  nextPos();
     }
 
     public void move(Direction direction){
         _direction = direction;
-        var nextPosition = nextPos();
-        _collisions = _collisonChecker.hasCollisionsWith(this, nextPosition);
-        if(_collisions.isEmpty())
-            _position = nextPosition;
-        else {
-            reactAfterCollision();
-        }
+
     }
 
-    public static Direction getOppositeDir(Direction dir){
-        if(dir == Direction.NORTH)
-            return Direction.SOUTH;
-        else if(dir == Direction.EAST)
-            return Direction.WEST;
-        else if(dir == Direction.SOUTH)
-            return Direction.NORTH;
-        else
-            return Direction.EAST;
-    }
-
-    public Direction getRandomDir() {
-        int i = random.nextInt(4);
-        switch (i) {
-            case 0 :
-                return Direction.SOUTH;
-            case 1 :
-                return Direction.WEST;
-            case 2 :
-                return Direction.EAST;
-        }
-        return Direction.NORTH;
-    }
-
-    protected Position nextPos(){
+    public Position nextPos(){
         var nextPos = new Position(_position.x, _position.y);
         switch(_direction){
             case NORTH:
@@ -73,12 +53,14 @@ public abstract class Character extends Entity{
             case SOUTH:
                 nextPos.y += _speed;
                 break;
-            default:
+            case WEST:
                 nextPos.x -= _speed;
+                break;
         }
         return nextPos;
     }
 
-    protected abstract void reactAfterCollision();
+    public abstract void respawn();
+
 
 }

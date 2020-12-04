@@ -1,10 +1,10 @@
 package JeuxPacman;
 
 public class Position {
-    public Position(double xP, double yP){
+    public Position(int xP, int yP){
         x = xP;
         y = yP;
     }
-    public double x;
-    public double y;
+    public int x;
+    public int y;
 }

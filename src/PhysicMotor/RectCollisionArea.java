@@ -16,9 +16,10 @@ public class RectCollisionArea extends CollisionArea {
     @Override
     protected ArrayList<Point> getCharacteristicPoints() {
         var characteristicP = new ArrayList<Point>();
-        characteristicP.add(new Point(_entity.getX() + _width/2, _entity.getY() + _height/2));
-        characteristicP.add(new Point(_entity.getX() + _width/2, _entity.getY() - _height/2));
-        characteristicP.add(new Point(_entity.getX() - _width/2, _entity.getY() + _height/2));
+        var nextPos = _entity.getNextPosition();
+        characteristicP.add(new Point(nextPos.x + _width/2, nextPos.y + _height/2));
+        characteristicP.add(new Point(nextPos.x + _width/2, nextPos.y - _height/2));
+        characteristicP.add(new Point(nextPos.x - _width/2, nextPos.y + _height/2));
 
         return characteristicP;
     }
@@ -34,6 +35,7 @@ public class RectCollisionArea extends CollisionArea {
     }
 
     private boolean isInsideRect(Point pt){
-        return Math.abs(pt.x - _entity.getX()) <= _width && Math.abs(pt.y - _entity.getY()) <= _height;
+        var nextPos = _entity.getNextPosition();
+        return Math.abs(pt.x - nextPos.x) <= _width/2 && Math.abs(pt.y - nextPos.y) <= _height/2;
     }
 }
