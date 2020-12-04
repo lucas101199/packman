@@ -26,7 +26,7 @@ public class Game implements GameInterface {
 
             _graphic.addScene("maze");
             _graphic.setSizeScene("maze",544,750);
-            _graphic.addImage("maze","background","./src/Images/Map/background.png");
+            _graphic.addImage("maze","background","./src/Images/Autres/background.png");
             _graphic.resizeImage("maze","background",750,544);
             _graphic.setPositionImage("maze","background",0,0,false);
             _graphic.displayObject("maze","background");
@@ -235,10 +235,34 @@ public class Game implements GameInterface {
 
             _graphic.addScene("lost");
             _graphic.setSizeScene("lost",544,750);
-            _graphic.addImage("lost","background","./src/Images/Map/background.png");
+            _graphic.addImage("lost","background","./src/Images/Autres/background.png");
             _graphic.resizeImage("lost","background",750,544);
             _graphic.setPositionImage("lost","background",0,0,false);
             _graphic.displayObject("lost","background");
+
+            // Création écran abandon
+
+            _graphic.addScene("forfeit");
+            _graphic.setSizeScene("forfeit",544,750);
+            _graphic.addImage("forfeit","background","./src/Images/Autres/background.png");
+            _graphic.resizeImage("forfeit","background",750,544);
+            _graphic.setPositionImage("forfeit","background",0,0,false);
+            _graphic.displayObject("forfeit","background");
+
+            _graphic.addImage("forfeit","question","./src/Images/Autres/question.png");
+            _graphic.resizeImage("forfeit","question",158,439);
+            _graphic.setPositionImage("forfeit","question",52,221,false);
+            _graphic.displayObject("forfeit","question");
+
+            _graphic.addImageButton("forfeit","oui","./src/Images/Autres/reponse_oui.png");
+            _graphic.resizeImageButton("forfeit","oui",20,40);
+            _graphic.setPositionImageButton("forfeit","oui",252,295,false);
+            _graphic.displayObject("forfeit","oui");
+
+            _graphic.addImageButton("forfeit","non","./src/Images/Autres/reponse_non.png");
+            _graphic.resizeImageButton("forfeit","non",20,40);
+            _graphic.setPositionImageButton("forfeit","non",252,325,false);
+            _graphic.displayObject("forfeit","non");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +377,7 @@ public class Game implements GameInterface {
                     gamePaused = !gamePaused;
                 } else if (key.equals("Ctrl+E")) {
                     try {
-                        _graphic.displayScene("menu");
+                        _graphic.displayScene("forfeit");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -364,6 +388,19 @@ public class Game implements GameInterface {
                         gameStart = true;
                 }
                 break;
+            case "forfeit":
+                if (key.equals("oui"))
+                    try {
+                        _graphic.displayScene("menu");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                else if (key.equals("non"))
+                    try {
+                        _graphic.displayScene("maze");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
         }
     }
 
