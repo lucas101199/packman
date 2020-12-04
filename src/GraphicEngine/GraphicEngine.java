@@ -18,6 +18,7 @@ public class GraphicEngine extends Application {
 
     public List<Scene> sceneList;
     public Stage window;
+    private String currentSceneLabel;
 
     /**
      * Initialize the list {@code sceneList} of {@code Scene} and the {@code window}
@@ -28,6 +29,7 @@ public class GraphicEngine extends Application {
         this.window = new Stage();
         this.window.setTitle(windowLabel);
         this.window.show();
+        currentSceneLabel = "";
     }
 
     /**
@@ -62,12 +64,13 @@ public class GraphicEngine extends Application {
         }
     }
 
+
+    /**
+     *
+     * @return The label of the scene currently displayed
+     */
     public String currentScene() {
-        for (Scene scene : sceneList) {
-            if (scene.isDisplay())
-                return scene.getLabel();
-        }
-        return "";
+        return currentSceneLabel;
     }
 
     /**
@@ -81,6 +84,7 @@ public class GraphicEngine extends Application {
                 if (scene.getLabel().equals(sceneLabel)) {
                     scene.setDisplay(true);
                     this.window.setScene(scene.getScene());
+                    currentSceneLabel = sceneLabel;
                 }
                 else
                     scene.setDisplay(false);
@@ -103,6 +107,7 @@ public class GraphicEngine extends Application {
                     if (scene.isDisplay()) {
                         window.setScene(null);
                         scene.setDisplay(false);
+                        currentSceneLabel = "";
                     }
                     sceneList.remove(scene);
                 }
