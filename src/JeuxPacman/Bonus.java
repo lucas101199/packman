@@ -4,6 +4,7 @@ public class Bonus extends Entity{
 
     int _score;
     boolean _isActive;
+    final int _initialDuration;
     int _duration;
     final DisplayBonus display;
 
@@ -11,6 +12,7 @@ public class Bonus extends Entity{
         super(pos, height, width);
         _isActive = true;
         _duration = duration;
+        _initialDuration = duration;
         _score = score;
         this.display = display;
         display.display(_position);
@@ -34,6 +36,18 @@ public class Bonus extends Entity{
     @Override
     public boolean isActive() {
         return _isActive;
+    }
+
+    @Override
+    public void restart(){
+        super.restart();
+        _isActive = true;
+        _duration = _initialDuration;
+        try {
+            display.display(_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

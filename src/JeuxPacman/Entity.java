@@ -31,5 +31,10 @@ public abstract class Entity {
     int getWidth(){
         return _width;
     }
+
+    public void restart(){
+        respawn();
+    }
+
 }
 

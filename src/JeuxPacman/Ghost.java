@@ -23,6 +23,11 @@ public class Ghost extends Character{
     }
 
     @Override
+    public void restart() {
+        super.restart();
+    }
+
+    @Override
     public void respawn() {
         super.respawn();
         _direction = Direction.SOUTH;

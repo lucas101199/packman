@@ -4,6 +4,7 @@ import Interfaces.GameInterface;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -59,6 +60,14 @@ public class GraphicEngine extends Application {
         } else {
             throw new Exception("Scene "+sceneLabel+" doesn't exist");
         }
+    }
+
+    public String currentScene() {
+        for (Scene scene : sceneList) {
+            if (scene.isDisplay())
+                return scene.getLabel();
+        }
+        return "";
     }
 
     /**
@@ -340,6 +349,10 @@ public class GraphicEngine extends Application {
         } else {
             throw new Exception("Scene "+sceneLabel+" doesn't exist");
         }
+    }
+
+    public void stop() {
+        Platform.exit();
     }
 
     /**

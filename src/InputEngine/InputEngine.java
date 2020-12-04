@@ -45,15 +45,31 @@ public class InputEngine {
             scene.setOnKeyPressed(e -> {
                 if (keys.contains(e.getCode().getName())) {
                     events.add(e);
-                    game.handleKey(getLastKey());
+                    String key = "";
+                    String secondLastKey = getSecondLastKey();
+                    if (secondLastKey.equals("Ctrl") || secondLastKey.equals("Alt")) {
+                        key = key.concat(secondLastKey);
+                        key = key.concat("+");
+                    }
+                    key = key.concat(getLastKey());
+                    game.handleKey(key);
                 }
             });
         }
     }
 
     public String getLastKey() {
-        return events.get(events.size()-1).getCode().getName();
+        if (events.size() > 0)
+            return events.get(events.size()-1).getCode().getName();
+        return "";
     }
+
+    public String getSecondLastKey() {
+        if (events.size() > 1)
+            return events.get(events.size()-2).getCode().getName();
+        return "";
+    }
+
 }
 
 /*

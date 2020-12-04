@@ -16,9 +16,13 @@ public class Game implements GameInterface {
     private String lastKey;
     private int keyTime;
     private boolean gameStart;
+    private boolean gamePaused;
 
     public void init() {
         try {
+
+            //Création du labyrinthe
+
             _graphic.addScene("maze");
             _graphic.setSizeScene("maze",544,600);
             _graphic.displayScene("maze");
@@ -79,18 +83,15 @@ public class Game implements GameInterface {
             _ennemies.add(new Ghost(new Position(240,224),29,29,2,new DisplayInky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(304,224),29,29,2,new DisplayBlinky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(272,224),29,29,2,new DisplayPinky(_graphic,"maze")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void start() {
-        try {
             InputEngine _input = new InputEngine(this);
             _input.addKey("Z");
             _input.addKey("Q");
             _input.addKey("S");
             _input.addKey("D");
+            _input.addKey("P");
+            _input.addKey("Ctrl");
+            _input.addKey("E");
             _input.setScene(_graphic.getScene("maze").getScene());
             _items.add(new Wall(new Position(80.5, 69.5), 45, 65));   // Rectangle haut gauche 1
 
@@ -183,12 +184,86 @@ public class Game implements GameInterface {
             checker = new CollisionChecker(entities);
             Character.setCollisionChecker(checker);
             gameStart = false;
+            gamePaused = false;
+
+            // Création du Menu
+
+            _graphic.addScene("menu");
+            _graphic.setSizeScene("menu",544,800);
+
+            _graphic.addImage("menu","background","./src/Images/Menu/menu.png");
+            _graphic.resizeImage("menu","background",800,544);
+            _graphic.setPositionImage("menu","background",0,0,false);
+            _graphic.displayObject("menu","background");
+
+            _graphic.addImageButton("menu","jouer","./src/Images/Menu/bouton_jouer.png");
+            _graphic.resizeImageButton("menu","jouer",60,150);
+            _graphic.setPositionImageButton("menu","jouer",197,280,false);
+            _graphic.displayObject("menu","jouer");
+
+            _graphic.addImageButton("menu","aide","./src/Images/Menu/bouton_aide.png");
+            _graphic.resizeImageButton("menu","aide",60,150);
+            _graphic.setPositionImageButton("menu","aide",197,380,false);
+            _graphic.displayObject("menu","aide");
+
+            _graphic.addImageButton("menu","quitter","./src/Images/Menu/bouton_quitter.png");
+            _graphic.resizeImageButton("menu","quitter",60,150);
+            _graphic.setPositionImageButton("menu","quitter",197,480,false);
+            _graphic.displayObject("menu","quitter");
+
+            // Création da la page d'aide
+
+            _graphic.addScene("help");
+            _graphic.setSizeScene("help",544,800);
+
+            _graphic.addImage("help","background","./src/Images/Aide/aide.png");
+            _graphic.resizeImage("help","background",800,544);
+            _graphic.setPositionImage("help","background",0,0,false);
+            _graphic.displayObject("help","background");
+
+            _graphic.addImageButton("help","retour","./src/Images/Aide/retour.png");
+            _graphic.resizeImageButton("help","retour",60,150);
+            _graphic.setPositionImageButton("help","retour",197,660,false);
+            _graphic.displayObject("help","retour");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        try {
+            _graphic.displayScene("menu");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void restartMaze() {
+        try {
+
+            for (Entity item : _items) {
+                item.restart();
+            }
+
+            _pc.restart();
+
+            for (Character ghost : _ennemies) {
+                ghost.restart();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void update() {
+        if (_graphic.currentScene().equals("menu"))
+            return;
+        if (_graphic.currentScene().equals("help"))
+            return;
+        if (gamePaused)
+            return;
         if (_pc._direction == null && !gameStart)
             return;
         if (_pc.isDead) {
@@ -219,10 +294,55 @@ public class Game implements GameInterface {
 
     @Override
     public void handleKey(String key) {
-        lastKey = key;
-        keyTime = 14;
-        if (!gameStart && (key.equals("D") || key.equals("Q")))
-            gameStart = true;
+        switch (_graphic.currentScene()) {
+            case "menu":
+                switch (key) {
+                    case "jouer":
+                        restartMaze();
+                        try {
+                            _graphic.displayScene("maze");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "aide":
+                        try {
+                            _graphic.displayScene("help");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "quitter":
+                        _graphic.stop();
+                        break;
+                }
+                break;
+            case "help":
+                if (key.equals("retour")) {
+                    try {
+                        _graphic.displayScene("menu");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case "maze":
+                if (key.equals("P")) {
+                    gamePaused = !gamePaused;
+                } else if (key.equals("Ctrl+E")) {
+                    try {
+                        _graphic.displayScene("menu");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    lastKey = key;
+                    keyTime = 14;
+                    if (!gameStart && (key.equals("D") || key.equals("Q")))
+                        gameStart = true;
+                }
+                break;
+        }
     }
 
     private void handleLastKey() {

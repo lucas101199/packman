@@ -70,6 +70,13 @@ public class Pacman extends Character{
         }
     }
 
+    @Override
+    public void restart() {
+        super.restart();
+        _canEatGhost = false;
+        score = 0;
+    }
+
     public void die() {
         isDead = true;
         deathDate = System.currentTimeMillis();
