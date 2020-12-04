@@ -17,6 +17,7 @@ public class Game implements GameInterface {
     private int keyTime;
     private boolean gameStart;
     private boolean gamePaused;
+    private int vie;
 
     public void init() {
         try {
@@ -25,7 +26,6 @@ public class Game implements GameInterface {
 
             _graphic.addScene("maze");
             _graphic.setSizeScene("maze",544,750);
-            _graphic.displayScene("maze");
             _graphic.addImage("maze","background","./src/Images/Map/background.png");
             _graphic.resizeImage("maze","background",750,544);
             _graphic.setPositionImage("maze","background",0,0,false);
@@ -83,8 +83,8 @@ public class Game implements GameInterface {
             }
 
             _pc = new Pacman(new Position(272,504), 29,29,2,new DisplayPacman(_graphic,"maze"));
-            _ennemies.add(new Ghost(new Position(240,334),29,29,2,new DisplayClyde(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(304,334),29,29,2,new DisplayInky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(304,334),29,29,2,new DisplayClyde(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(240,334),29,29,2,new DisplayInky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(272,274),29,29,2,new DisplayBlinky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(272,334),29,29,2,new DisplayPinky(_graphic,"maze")));
 
@@ -189,6 +189,7 @@ public class Game implements GameInterface {
             Character.setCollisionChecker(checker);
             gameStart = false;
             gamePaused = false;
+            vie = 3;
 
             // Création du Menu
 
@@ -230,6 +231,15 @@ public class Game implements GameInterface {
             _graphic.setPositionImageButton("help","retour",197,610,false);
             _graphic.displayObject("help","retour");
 
+            // Création écran perdu
+
+            _graphic.addScene("lost");
+            _graphic.setSizeScene("lost",544,750);
+            _graphic.addImage("lost","background","./src/Images/Map/background.png");
+            _graphic.resizeImage("lost","background",750,544);
+            _graphic.setPositionImage("lost","background",0,0,false);
+            _graphic.displayObject("lost","background");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -251,6 +261,7 @@ public class Game implements GameInterface {
             }
 
             _pc.restart();
+            vie = 3;
 
             for (Character ghost : _ennemies) {
                 ghost.restart();
@@ -262,9 +273,7 @@ public class Game implements GameInterface {
     }
 
     public void update() {
-        if (_graphic.currentScene().equals("menu"))
-            return;
-        if (_graphic.currentScene().equals("help"))
+        if (!_graphic.currentScene().equals("maze"))
             return;
         if (gamePaused)
             return;
@@ -273,11 +282,20 @@ public class Game implements GameInterface {
         if (_pc.isDead) {
             if (System.currentTimeMillis() - _pc.deathDate < 3900)
                 return;
-            _pc.respawn();
-            for (Ghost g : _ennemies)
-                g.respawn();
-            gameStart = false;
-            return;
+            vie--;
+            if (vie == 0) {
+                try {
+                    _graphic.displayScene("lost");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                _pc.respawn();
+                for (Ghost g : _ennemies)
+                    g.respawn();
+                gameStart = false;
+                return;
+            }
         }
         handleLastKey();
         _pc.move(_pc._direction);
