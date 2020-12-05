@@ -45,10 +45,13 @@ public class Pacman extends Character{
         super.move(direction);
         checkPosition();
         if (_lastEatenItem != null) {
-            if (_canEatGhost && _lastEatenItem.isFullyConsumed())
+            if (_canEatGhost && _lastEatenItem.isFullyConsumed()) {
                 cancelSpPacGumEffect();
+                System.out.println("cancel");
+            }
             else if (!_lastEatenItem.isFullyConsumed()) {
                 try {
+                    System.out.println("consume");
                     _lastEatenItem.consume();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -119,10 +122,9 @@ public class Pacman extends Character{
                 return;
             else if (e instanceof PacGum) {
                 if (((PacGum) e)._isActive) {
-                    _lastEatenItem = (Bonus) e;
                     score += ((PacGum) e)._score;
                     try {
-                        lastEatenItem().consume();
+                        ((PacGum)e).consume();
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }

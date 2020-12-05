@@ -30,7 +30,7 @@ public class Bonus extends Entity{
     }
 
     public boolean isFullyConsumed(){
-        return _duration == 0;
+        return _duration <= 0;
     }
 
     @Override

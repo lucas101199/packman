@@ -76,7 +76,7 @@ public class Game implements GameInterface {
             int yId = 0;
             for (int y : Y) {
                 for (int x : X[yId]) {
-                    _items.add(new PacGum(new Position(x, y+50), 8, 8, 0, 1, new DisplayPacGum(_graphic, "maze", pgId)));
+                    _items.add(new PacGum(new Position(x, y+50), 8, 8, 1, 1, new DisplayPacGum(_graphic, "maze", pgId)));
                     pgId++;
                 }
                 yId++;
@@ -85,7 +85,7 @@ public class Game implements GameInterface {
             int[][] spgCoords = {{30,67},{516,67},{30,455},{516,455}};
             int spgId = 0;
             for (int[] coord : spgCoords) {
-                _items.add(new SuperPacGum(new Position(coord[0], coord[1]+50), 8, 8, 10, new DisplaySuperPacGum(_graphic, "maze", spgId)));
+                _items.add(new SuperPacGum(new Position(coord[0], coord[1]+50), 8, 8, 300, new DisplaySuperPacGum(_graphic, "maze", spgId)));
                 spgId++;
             }
 
