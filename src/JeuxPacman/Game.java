@@ -363,11 +363,7 @@ public class Game implements GameInterface {
             _graphic.addImage("maze","score","./src/Images/Autres/score.png");
             _graphic.setPositionImage("maze","score",20,0,false);
             _graphic.resizeImage("maze","score",50,170);
-            _graphic.displayObject("maze","score");
-            _graphic.displayObject("maze","0000");
-            _graphic.displayObject("maze","000");
-            _graphic.displayObject("maze","00");
-            _graphic.displayObject("maze","0");
+            resetScore();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -393,6 +389,7 @@ public class Game implements GameInterface {
             vie = 3;
             scoreLevel = 0;
             gameStart = false;
+            resetScore();
 
             for (Character ghost : _ennemies) {
                 ghost.restart();
@@ -401,6 +398,20 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void resetScore() throws Exception {
+        for (int j = 0; j < 10; j++) {
+            String value = String.valueOf(j);
+            for (int i = 0; i < 4; i++) {
+                _graphic.hideObject("maze",value);
+                value = value.concat("0");
+            }
+        }
+        _graphic.displayObject("maze","0000");
+        _graphic.displayObject("maze","000");
+        _graphic.displayObject("maze","00");
+        _graphic.displayObject("maze","0");
     }
 
     private void updateScore() throws Exception {
@@ -622,6 +633,7 @@ public class Game implements GameInterface {
                         break;
                     case "rejouer":
                         restartMaze();
+                        scoreTotal = 0;
                         try {
                             _graphic.displayScene("maze");
                         } catch (Exception e) {
