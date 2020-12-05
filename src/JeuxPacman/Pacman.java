@@ -21,10 +21,6 @@ public class Pacman extends Character{
         display.displayPacmanStart(_position);
     }
 
-    public Bonus lastEatenItem(){
-        return _lastEatenItem;
-    }
-
     public boolean isActive(){
         return true;
     }
@@ -86,6 +82,7 @@ public class Pacman extends Character{
     @Override
     public void restart() {
         super.restart();
+        _direction = Direction.NONE;
         _canEatGhost = false;
         score = 0;
     }

@@ -19,6 +19,9 @@ public class Game implements GameInterface {
     private boolean gamePaused;
     private int vie;
     private int level = 1;
+    private int scoreLevel;
+    private int scoreTotal;
+    private final int[] positionScoreMaze = {200,230,260,290};
 
     public void init() {
         try {
@@ -196,6 +199,8 @@ public class Game implements GameInterface {
             Character.setCollisionChecker(checker);
             gameStart = false;
             gamePaused = false;
+            scoreLevel= 0;
+            scoreTotal = 0;
             vie = 3;
 
             /* ------ Création Scène MENU ------ */
@@ -343,6 +348,27 @@ public class Game implements GameInterface {
             _graphic.setPositionImageButton("lost","quitter",194,625,false);
             _graphic.displayObject("lost","quitter");
 
+            /* ---- Ajout Score dans le Jeu --- */
+
+            for (int j = 0; j < 10; j++) {
+                String value = String.valueOf(j);
+                for (int i = 0; i < 4; i++) {
+                    _graphic.addImage("maze",value,"./src/Images/Autres/Chiffres/chiffre_"+j+".png");
+                    _graphic.setPositionImage("maze",value,positionScoreMaze[positionScoreMaze.length-1-i], 0,false);
+                    value = value.concat("0");
+                }
+            }
+
+
+            _graphic.addImage("maze","score","./src/Images/Autres/score.png");
+            _graphic.setPositionImage("maze","score",20,0,false);
+            _graphic.resizeImage("maze","score",50,170);
+            _graphic.displayObject("maze","score");
+            _graphic.displayObject("maze","0000");
+            _graphic.displayObject("maze","000");
+            _graphic.displayObject("maze","00");
+            _graphic.displayObject("maze","0");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -365,6 +391,8 @@ public class Game implements GameInterface {
 
             _pc.restart();
             vie = 3;
+            scoreLevel = 0;
+            gameStart = false;
 
             for (Character ghost : _ennemies) {
                 ghost.restart();
@@ -375,6 +403,53 @@ public class Game implements GameInterface {
         }
     }
 
+    private void updateScore() throws Exception {
+        if (_pc.score != scoreLevel) {
+            updateScoreThousand();
+            updateScoreHundred();
+            updateScoreTen();
+            updateScoreOne();
+            scoreTotal -= scoreLevel;
+            scoreLevel = _pc.score;
+            scoreTotal += scoreLevel;
+        }
+    }
+
+    private void updateScoreThousand() throws Exception {
+        String oldValue = String.valueOf(scoreTotal%10000/1000);
+        oldValue = oldValue.concat("000");
+        _graphic.hideObject("maze",oldValue);
+        String newValue = String.valueOf((scoreTotal-scoreLevel+ _pc.score)%10000/1000);
+        newValue = newValue.concat("000");
+        _graphic.displayObject("maze",newValue);
+    }
+
+    private void updateScoreHundred() throws Exception {
+        String oldValue = String.valueOf(scoreTotal%1000/100);
+        oldValue = oldValue.concat("00");
+        _graphic.hideObject("maze",oldValue);
+        String newValue = String.valueOf((scoreTotal-scoreLevel+ _pc.score)%1000/100);
+        newValue = newValue.concat("00");
+        _graphic.displayObject("maze",newValue);
+    }
+
+    private void updateScoreTen() throws Exception {
+        String oldValue = String.valueOf(scoreTotal%100/10);
+        oldValue = oldValue.concat("0");
+        _graphic.hideObject("maze",oldValue);
+        String newValue = String.valueOf((scoreTotal-scoreLevel+ _pc.score)%100/10);
+        newValue = newValue.concat("0");
+        _graphic.displayObject("maze",newValue);
+
+    }
+
+    private void updateScoreOne() throws Exception {
+        String oldValue = String.valueOf(scoreTotal%10);
+        _graphic.hideObject("maze",oldValue);
+        String newValue = String.valueOf((scoreTotal-scoreLevel+ _pc.score)%10);
+        _graphic.displayObject("maze",newValue);
+
+    }
 
     public void update() {
         if (!_graphic.currentScene().equals("maze"))
@@ -383,7 +458,12 @@ public class Game implements GameInterface {
             return;
         if (_pc._direction == Direction.NONE && !gameStart)
             return;
-        if (_pc.score >= 240) {
+        try {
+            updateScore();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (scoreLevel%240 == 0 && scoreLevel != 0) {
             try {
 
                 restartMaze();
