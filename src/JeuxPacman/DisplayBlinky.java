@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayBlinky extends DisplayCharacter{
+public class DisplayBlinky extends DisplayGhost {
 
     public DisplayBlinky(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"blinky_left","blinky_right","blinky_up","blinky_down","blinky_edible",

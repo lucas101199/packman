@@ -85,7 +85,7 @@ public class Game implements GameInterface {
             int[][] spgCoords = {{30,67},{516,67},{30,455},{516,455}};
             int spgId = 0;
             for (int[] coord : spgCoords) {
-                _items.add(new SuperPacGum(new Position(coord[0], coord[1]+50), 8, 8, 50, new DisplaySuperPacGum(_graphic, "maze", spgId)));
+                _items.add(new SuperPacGum(new Position(coord[0], coord[1]+50), 8, 8, 10, new DisplaySuperPacGum(_graphic, "maze", spgId)));
                 spgId++;
             }
 
@@ -406,6 +406,15 @@ public class Game implements GameInterface {
                     g.respawn();
                 gameStart = false;
                 return;
+            }
+        }
+        if (_pc.canEatGhost() && !_ennemies.get(0)._edible) {
+            for (Ghost ghost : _ennemies) {
+                ghost._edible = true;
+            }
+        } else if (!_pc.canEatGhost() && _ennemies.get(0)._edible) {
+            for (Ghost ghost : _ennemies) {
+                ghost._edible = false;
             }
         }
         handleLastKey();

@@ -3,11 +3,13 @@ package JeuxPacman;
 public class Ghost extends Character{
 
     private boolean _isDead;
+    public boolean _edible;
 
-    public Ghost(Position position, int height, int width, int speed, DisplayCharacter display) throws Exception {
+    public Ghost(Position position, int height, int width, int speed, DisplayGhost display) throws Exception {
         super(position, height, width, speed, display);
         _direction = Direction.SOUTH;
-        display.display(_direction,_position);
+        _edible = false;
+        display.display(_direction,_position,false);
     }
 
     @Override
@@ -16,7 +18,7 @@ public class Ghost extends Character{
         super.move(_direction);
         try {
             if (!_position.equals(oldpos))
-                display.display(_direction,_position);
+                ((DisplayGhost)display).display(_direction,_position,_edible);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,7 +34,7 @@ public class Ghost extends Character{
         super.respawn();
         _direction = Direction.SOUTH;
         try {
-            display.display(_direction,_position);
+            ((DisplayGhost)display).display(_direction,_position,_edible);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +66,6 @@ public class Ghost extends Character{
     }
 
     public void die(){
-        System.out.println("Ghost killed");
         _isDead = true;
     }
 
@@ -72,4 +73,5 @@ public class Ghost extends Character{
     public boolean isActive() {
         return !_isDead;
     }
+
 }

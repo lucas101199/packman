@@ -17,24 +17,15 @@ public abstract class DisplayCharacter {
 
     public void display(Direction dir, Position pos) throws Exception {
         String label;
-        if (dir == null)
+        if (dir == Direction.NONE)
             return;
-        switch (dir) {
-            case EAST:
-                label = imageLabels[1];
-                break;
-            case WEST:
-                label = imageLabels[0];
-                break;
-            case NORTH:
-                label = imageLabels[2];
-                break;
-            case SOUTH:
-                label = imageLabels[3];
-                break;
-            default :
-                label = "";
-        }
+        label = switch (dir) {
+            case EAST -> imageLabels[1];
+            case WEST -> imageLabels[0];
+            case NORTH -> imageLabels[2];
+            case SOUTH -> imageLabels[3];
+            default -> "";
+        };
         hide();
         window.setPositionImage(this.scene, label, pos.x, pos.y, true);
         window.displayObject(this.scene, label);

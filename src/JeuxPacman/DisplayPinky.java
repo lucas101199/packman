@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayPinky extends DisplayCharacter{
+public class DisplayPinky extends DisplayGhost {
 
     public DisplayPinky(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"pinky_left","pinky_right","pinky_up","pinky_down","pinky_edible",

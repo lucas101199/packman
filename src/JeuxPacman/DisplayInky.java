@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayInky extends DisplayCharacter{
+public class DisplayInky extends DisplayGhost{
 
     public DisplayInky(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"inky_left","inky_right","inky_up","inky_down","inky_edible",

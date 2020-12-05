@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayClyde extends DisplayCharacter {
+public class DisplayClyde extends DisplayGhost {
 
     public DisplayClyde(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"clyde_left","clyde_right","clyde_up","clyde_down","clyde_edible",

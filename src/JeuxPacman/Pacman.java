@@ -47,7 +47,7 @@ public class Pacman extends Character{
         if (_lastEatenItem != null) {
             if (_canEatGhost && _lastEatenItem.isFullyConsumed())
                 cancelSpPacGumEffect();
-            if (!_lastEatenItem.isFullyConsumed()) {
+            else if (!_lastEatenItem.isFullyConsumed()) {
                 try {
                     _lastEatenItem.consume();
                 } catch (Exception e) {
