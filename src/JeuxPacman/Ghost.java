@@ -9,16 +9,18 @@ public class Ghost extends Character{
         super(position, height, width, speed, display);
         _direction = Direction.SOUTH;
         _edible = false;
-        display.display(_direction,_position,false);
+        display.display(_direction,_position,false,false);
     }
 
     @Override
     public void move(Direction direction) {
         Position oldpos = _position;
         super.move(_direction);
+        if (_position.equals(get_initialPosition()))
+            _isDead = false;
         try {
             if (!_position.equals(oldpos))
-                ((DisplayGhost)display).display(_direction,_position,_edible);
+                ((DisplayGhost)display).display(_direction,_position,_edible,_isDead);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,7 +36,7 @@ public class Ghost extends Character{
         super.respawn();
         _direction = Direction.SOUTH;
         try {
-            ((DisplayGhost)display).display(_direction,_position,_edible);
+            ((DisplayGhost)display).display(_direction,_position,_edible,_isDead);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +46,7 @@ public class Ghost extends Character{
     public void reactAfterCollision() {
         boolean wall = false;
         for (var e : _collisions){
-            if ( e instanceof Pacman){
+            if ( e instanceof Pacman && !_isDead){
                 var pc = (Pacman)e;
                 if (pc.canEatGhost()) {
                     die();

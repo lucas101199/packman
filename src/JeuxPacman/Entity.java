@@ -14,6 +14,10 @@ public abstract class Entity {
         _width = width;
     }
 
+    public Position get_initialPosition() {
+        return _initialPosition;
+    }
+
     public abstract boolean isActive();
 
     public void respawn(){

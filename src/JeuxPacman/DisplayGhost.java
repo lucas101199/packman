@@ -17,14 +17,20 @@ public abstract class DisplayGhost extends DisplayCharacter{
 
     }
 
-    public void display(Direction dir, Position pos, boolean edible) throws Exception {
+    public void display(Direction dir, Position pos, boolean edible, boolean dead) throws Exception {
         if (edible) {
             hide();
             window.setPositionImage(this.scene, "ghostRun"+ghostid, pos.x, pos.y, true);
             window.displayObject(this.scene, "ghostRun"+ghostid);
 
             imageCurrent = "ghostRun"+ghostid;
-        } else
+        } else if (dead) {
+            hide();
+            window.setPositionImage(this.scene, "ghostDead"+ghostid, pos.x, pos.y, true);
+            window.displayObject(this.scene, "ghostDead"+ghostid);
+
+            imageCurrent = "ghostDead"+ghostid;
+        }
             super.display(dir, pos);
     }
 }
