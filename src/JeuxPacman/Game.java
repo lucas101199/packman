@@ -22,6 +22,9 @@ public class Game implements GameInterface {
     private int scoreLevel;
     private int scoreTotal;
     private final int[] positionScoreMaze = {200,230,260,290};
+    private final int[] positionScoreLost = {258,286,314,342};
+    private final int[] positionScoreVictory = {258,286,314,342};
+
 
     public void init() {
         try {
@@ -287,6 +290,14 @@ public class Game implements GameInterface {
             _graphic.setPositionImage("victory","score",184,215,false);
             _graphic.displayObject("victory","score");
 
+            for (int j = 0; j < 10; j++) {
+                String value = String.valueOf(j);
+                for (int i = 0; i < 4; i++) {
+                    _graphic.addImage("victory",value,"./src/Images/Autres/Chiffres/chiffre_"+j+".png");
+                    _graphic.setPositionImage("victory",value,positionScoreVictory[positionScoreVictory.length-1-i]-43, 275,false);
+                    value = value.concat("0");
+                }
+            }
 
             // NIVEAU
             _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
@@ -328,6 +339,15 @@ public class Game implements GameInterface {
             _graphic.setPositionImage("lost","score",184,215,false);
             _graphic.displayObject("lost","score");
 
+            for (int j = 0; j < 10; j++) {
+                String value = String.valueOf(j);
+                for (int i = 0; i < 4; i++) {
+                    _graphic.addImage("lost",value,"./src/Images/Autres/Chiffres/chiffre_"+j+".png");
+                    _graphic.setPositionImage("lost",value,positionScoreLost[positionScoreLost.length-1-i]-43, 275,false);
+                    value = value.concat("0");
+                }
+            }
+
             // NIVEAU
             _graphic.addImage("lost","niveau","./src/Images/Autres/niveau.png");
             _graphic.setPositionImage("lost","niveau",184,330,false);
@@ -363,7 +383,8 @@ public class Game implements GameInterface {
             _graphic.addImage("maze","score","./src/Images/Autres/score.png");
             _graphic.setPositionImage("maze","score",20,0,false);
             _graphic.resizeImage("maze","score",50,170);
-            resetScore();
+            _graphic.displayObject("maze","score");
+            resetScore("maze");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -389,7 +410,7 @@ public class Game implements GameInterface {
             vie = 3;
             scoreLevel = 0;
             gameStart = false;
-            resetScore();
+            printScore("maze");
 
             for (Character ghost : _ennemies) {
                 ghost.restart();
@@ -400,18 +421,18 @@ public class Game implements GameInterface {
         }
     }
 
-    private void resetScore() throws Exception {
+    private void resetScore(String sceneLabel) throws Exception {
         for (int j = 0; j < 10; j++) {
             String value = String.valueOf(j);
             for (int i = 0; i < 4; i++) {
-                _graphic.hideObject("maze",value);
+                _graphic.hideObject(sceneLabel,value);
                 value = value.concat("0");
             }
         }
-        _graphic.displayObject("maze","0000");
-        _graphic.displayObject("maze","000");
-        _graphic.displayObject("maze","00");
-        _graphic.displayObject("maze","0");
+        _graphic.displayObject(sceneLabel,"0000");
+        _graphic.displayObject(sceneLabel,"000");
+        _graphic.displayObject(sceneLabel,"00");
+        _graphic.displayObject(sceneLabel,"0");
     }
 
     private void updateScore() throws Exception {
@@ -462,6 +483,14 @@ public class Game implements GameInterface {
 
     }
 
+    private void printScore(String sceneLabel) throws Exception {
+        resetScore(sceneLabel);
+        _graphic.displayObject(sceneLabel,String.valueOf(scoreTotal%10000/1000).concat("000"));
+        _graphic.displayObject(sceneLabel,String.valueOf(scoreTotal%1000/100).concat("00"));
+        _graphic.displayObject(sceneLabel,String.valueOf(scoreTotal%100/10).concat("0"));
+        _graphic.displayObject(sceneLabel,String.valueOf(scoreTotal%10));
+    }
+
     public void update() {
         if (!_graphic.currentScene().equals("maze"))
             return;
@@ -496,6 +525,7 @@ public class Game implements GameInterface {
                     _ennemies.add(new Ghost(new Position(273.5,620.5),29,29,2,new DisplayBrown(_graphic,"maze")));
                 }
                 if (level == 6) {
+                    printScore("victory");
                     _graphic.displayScene("victory");
                 }
 
@@ -510,6 +540,7 @@ public class Game implements GameInterface {
             vie--;
             if (vie == 0) {
                 try {
+                    printScore("lost");
                     _graphic.displayScene("lost");
                 } catch (Exception e) {
                     e.printStackTrace();
