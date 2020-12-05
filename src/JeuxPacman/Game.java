@@ -83,10 +83,10 @@ public class Game implements GameInterface {
             }
 
             _pc = new Pacman(new Position(272,504), 29,29,2,new DisplayPacman(_graphic,"maze"));
-            _ennemies.add(new Ghost(new Position(304,334),29,29,2,new DisplayClyde(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(240,334),29,29,2,new DisplayInky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(190,274),29,29,2,new DisplayClyde(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(360,274),29,29,2,new DisplayInky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(272,274),29,29,2,new DisplayBlinky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(272,334),29,29,2,new DisplayPinky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(272,390),29,29,2,new DisplayPinky(_graphic,"maze")));
 
             InputEngine _input = new InputEngine(this);
             _input.addKey("Z");
@@ -191,117 +191,149 @@ public class Game implements GameInterface {
             gamePaused = false;
             vie = 3;
 
-            // Création du Menu
-
+            /* ------ Création Scène MENU ------ */
             _graphic.addScene("menu");
-            _graphic.setSizeScene("menu",544,750);
+            _graphic.setSizeScene("menu",544,700);
 
+            // Background
             _graphic.addImage("menu","background","./src/Images/Menu/menu.png");
-            _graphic.resizeImage("menu","background",800,544);
             _graphic.setPositionImage("menu","background",0,0,false);
             _graphic.displayObject("menu","background");
 
+            // Bouton JOUER
             _graphic.addImageButton("menu","jouer","./src/Images/Menu/bouton_jouer.png");
-            _graphic.resizeImageButton("menu","jouer",60,150);
             _graphic.setPositionImageButton("menu","jouer",197,280,false);
             _graphic.displayObject("menu","jouer");
 
+            // Bouton AIDE
             _graphic.addImageButton("menu","aide","./src/Images/Menu/bouton_aide.png");
-            _graphic.resizeImageButton("menu","aide",60,150);
             _graphic.setPositionImageButton("menu","aide",197,380,false);
             _graphic.displayObject("menu","aide");
 
+            // Bouton QUITTER
             _graphic.addImageButton("menu","quitter","./src/Images/Menu/bouton_quitter.png");
-            _graphic.resizeImageButton("menu","quitter",60,150);
             _graphic.setPositionImageButton("menu","quitter",197,480,false);
             _graphic.displayObject("menu","quitter");
 
-            // Création da la page d'aide
 
+            /* ------ Création Scène AIDE ------ */
             _graphic.addScene("help");
-            _graphic.setSizeScene("help",544,750);
+            _graphic.setSizeScene("help",544,700);
 
+            // Background
             _graphic.addImage("help","background","./src/Images/Aide/aide.png");
-            _graphic.resizeImage("help","background",750,544);
             _graphic.setPositionImage("help","background",0,0,false);
             _graphic.displayObject("help","background");
 
+            // Bouton RETOUR
             _graphic.addImageButton("help","retour","./src/Images/Aide/retour.png");
-            _graphic.resizeImageButton("help","retour",60,150);
-            _graphic.setPositionImageButton("help","retour",197,610,false);
+            _graphic.setPositionImageButton("help","retour",197,630,false);
             _graphic.displayObject("help","retour");
 
-            // Création écran perdu
 
-            _graphic.addScene("lost");
-            _graphic.setSizeScene("lost",544,750);
-            _graphic.addImage("lost","background","./src/Images/Autres/background.png");
-            _graphic.resizeImage("lost","background",750,544);
-            _graphic.setPositionImage("lost","background",0,0,false);
-            _graphic.displayObject("lost","background");
-
-            // Création écran abandon
-
+            /* ------ Création Scène ABANDON ------ */
             _graphic.addScene("forfeit");
             _graphic.setSizeScene("forfeit",544,750);
+
+            // Background
             _graphic.addImage("forfeit","background","./src/Images/Autres/background.png");
-            _graphic.resizeImage("forfeit","background",750,544);
             _graphic.setPositionImage("forfeit","background",0,0,false);
             _graphic.displayObject("forfeit","background");
 
+            // Texte QUESTION
             _graphic.addImage("forfeit","question","./src/Images/Autres/question.png");
-            _graphic.resizeImage("forfeit","question",158,439);
             _graphic.setPositionImage("forfeit","question",52,221,false);
             _graphic.displayObject("forfeit","question");
 
+            // Bouton OUI
             _graphic.addImageButton("forfeit","oui","./src/Images/Autres/reponse_oui.png");
-            _graphic.resizeImageButton("forfeit","oui",20,40);
             _graphic.setPositionImageButton("forfeit","oui",252,295,false);
             _graphic.displayObject("forfeit","oui");
 
+            // Bouton NON
             _graphic.addImageButton("forfeit","non","./src/Images/Autres/reponse_non.png");
-            _graphic.resizeImageButton("forfeit","non",20,40);
             _graphic.setPositionImageButton("forfeit","non",252,325,false);
             _graphic.displayObject("forfeit","non");
 
-            // Création écran victoire
 
+            /* ------ Création Scène VICTOIRE ------ */
             _graphic.addScene("victory");
-            _graphic.setSizeScene("victory",544,750);
+            _graphic.setSizeScene("victory",544,700);
+
+            // Background
             _graphic.addImage("victory","background","./src/Images/Autres/background.png");
-            _graphic.resizeImage("victory","background",750,544);
             _graphic.setPositionImage("victory","background",0,0,false);
             _graphic.displayObject("victory","background");
 
-            _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
-            _graphic.resizeImage("victory","niveau",52,176);
-            _graphic.setPositionImage("victory","niveau",184,310,false);
-            _graphic.displayObject("victory","niveau");
-
-            _graphic.addImage("victory","score","./src/Images/Autres/score.png");
-            _graphic.resizeImage("victory","score",52,176);
-            _graphic.setPositionImage("victory","score",359,245,false);
-            _graphic.displayObject("victory","score");
-
+            // TITRE
             _graphic.addImage("victory","titre","./src/Images/Autres/titre.gif");
-            _graphic.resizeImage("victory","titre",101,483);
             _graphic.setPositionImage("victory","titre",30,65,false);
             _graphic.displayObject("victory","titre");
 
-            _graphic.addImageButton("victory","rejouer","./src/Images/Autres/rejouer.png");
-            _graphic.resizeImageButton("victory","rejouer",60,157);
-            _graphic.setPositionImageButton("victory","rejouer",193,625,false);
-            _graphic.displayObject("victory","rejouer");
+            // SCORE
+            _graphic.addImage("victory","score","./src/Images/Autres/score.png");
+            _graphic.setPositionImage("victory","score",184,215,false);
+            _graphic.displayObject("victory","score");
 
+            // NIVEAU
+            _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
+            _graphic.setPositionImage("victory","niveau",184,330,false);
+            _graphic.displayObject("victory","niveau");
+
+            // Bouton RETOUR MENU
             _graphic.addImageButton("victory","retour_menu","./src/Images/Autres/retour_menu.png");
-            _graphic.resizeImageButton("victory","retour_menu",52,275);
-            _graphic.setPositionImageButton("victory","retour_menu",134,565,false);
+            _graphic.setPositionImageButton("victory","retour_menu",134,505,false);
             _graphic.displayObject("victory","retour_menu");
 
+            // Bouton REJOUER
+            _graphic.addImageButton("victory","rejouer","./src/Images/Autres/rejouer.png");
+            _graphic.setPositionImageButton("victory","rejouer",193,565,false);
+            _graphic.displayObject("victory","rejouer");
+
+            // Bouton QUITTER
             _graphic.addImageButton("victory","quitter","./src/Images/Autres/quitter.png");
-            _graphic.resizeImageButton("victory","quitter",52,156);
-            _graphic.setPositionImageButton("victory","quitter",194,685,false);
+            _graphic.setPositionImageButton("victory","quitter",194,625,false);
             _graphic.displayObject("victory","quitter");
+
+
+            /* ------ Création Scène PERDU ------ */
+            _graphic.addScene("lost");
+            _graphic.setSizeScene("lost",544,700);
+
+            // Background
+            _graphic.addImage("lost","background","./src/Images/Autres/background.png");
+            _graphic.setPositionImage("lost","background",0,0,false);
+            _graphic.displayObject("lost","background");
+
+            // TITRE
+            _graphic.addImage("lost","titre_abandon","./src/Images/Autres/titre_abandon.gif");
+            _graphic.setPositionImage("lost","titre_abandon",55,70,false);
+            _graphic.displayObject("lost","titre_abandon");
+
+            // SCORE
+            _graphic.addImage("lost","score","./src/Images/Autres/score.png");
+            _graphic.setPositionImage("lost","score",184,215,false);
+            _graphic.displayObject("lost","score");
+
+            // NIVEAU
+            _graphic.addImage("lost","niveau","./src/Images/Autres/niveau.png");
+            _graphic.setPositionImage("lost","niveau",184,330,false);
+            _graphic.displayObject("lost","niveau");
+
+            // Bouton RETOUR MENU
+            _graphic.addImageButton("lost","retour_menu","./src/Images/Autres/retour_menu.png");
+            _graphic.setPositionImageButton("lost","retour_menu",134,505,false);
+            _graphic.displayObject("lost","retour_menu");
+
+            // Bouton REJOUER
+            _graphic.addImageButton("lost","rejouer","./src/Images/Autres/rejouer.png");
+            _graphic.setPositionImageButton("lost","rejouer",193,565,false);
+            _graphic.displayObject("lost","rejouer");
+
+            // Bouton QUITTER
+            _graphic.addImageButton("lost","quitter","./src/Images/Autres/quitter.png");
+            _graphic.setPositionImageButton("lost","quitter",194,625,false);
+            _graphic.displayObject("lost","quitter");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -342,9 +374,10 @@ public class Game implements GameInterface {
             return;
         if (_pc._direction == Direction.NONE && !gameStart)
             return;
-        if (_pc.score == 10) {
+        if (_pc.score == 240) {
             try {
                 _graphic.displayScene("victory");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -457,6 +490,7 @@ public class Game implements GameInterface {
                 }
                 break;
             case "victory":
+            case "lost":
                 switch (key) {
                     case "retour_menu":
                         try {
