@@ -6,8 +6,6 @@ import Interfaces.GameInterface;
 
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
-
 public class Game implements GameInterface {
 
     private ArrayList<Entity> _items;

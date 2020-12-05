@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayBrown extends DisplayCharacter {
+public class DisplayBrown extends DisplayGhost {
 
     public DisplayBrown(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"brown_left","brown_right","brown_up","brown_down","brown_edible",

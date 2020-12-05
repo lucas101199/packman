@@ -2,7 +2,7 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-public class DisplayGrey extends DisplayCharacter {
+public class DisplayGrey extends DisplayGhost {
 
     public DisplayGrey(GraphicEngine window, String nameScene) throws Exception {
         super(window,nameScene,new String[]{"grey_left","grey_right","grey_up","grey_down","grey_edible",
