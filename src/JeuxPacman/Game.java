@@ -264,6 +264,45 @@ public class Game implements GameInterface {
             _graphic.setPositionImageButton("forfeit","non",252,325,false);
             _graphic.displayObject("forfeit","non");
 
+            // Création écran victoire
+
+            _graphic.addScene("victory");
+            _graphic.setSizeScene("victory",544,750);
+            _graphic.addImage("victory","background","./src/Images/Autres/background.png");
+            _graphic.resizeImage("victory","background",750,544);
+            _graphic.setPositionImage("victory","background",0,0,false);
+            _graphic.displayObject("victory","background");
+
+            _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
+            _graphic.resizeImage("victory","niveau",52,176);
+            _graphic.setPositionImage("victory","niveau",184,310,false);
+            _graphic.displayObject("victory","niveau");
+
+            _graphic.addImage("victory","score","./src/Images/Autres/score.png");
+            _graphic.resizeImage("victory","score",52,176);
+            _graphic.setPositionImage("victory","score",359,245,false);
+            _graphic.displayObject("victory","score");
+
+            _graphic.addImage("victory","titre","./src/Images/Autres/titre.gif");
+            _graphic.resizeImage("victory","titre",101,483);
+            _graphic.setPositionImage("victory","titre",30,65,false);
+            _graphic.displayObject("victory","titre");
+
+            _graphic.addImageButton("victory","rejouer","./src/Images/Autres/rejouer.png");
+            _graphic.resizeImageButton("victory","rejouer",60,157);
+            _graphic.setPositionImageButton("victory","rejouer",193,625,false);
+            _graphic.displayObject("victory","rejouer");
+
+            _graphic.addImageButton("victory","retour_menu","./src/Images/Autres/retour_menu.png");
+            _graphic.resizeImageButton("victory","retour_menu",52,275);
+            _graphic.setPositionImageButton("victory","retour_menu",134,565,false);
+            _graphic.displayObject("victory","retour_menu");
+
+            _graphic.addImageButton("victory","quitter","./src/Images/Autres/quitter.png");
+            _graphic.resizeImageButton("victory","quitter",52,156);
+            _graphic.setPositionImageButton("victory","quitter",194,685,false);
+            _graphic.displayObject("victory","quitter");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -303,6 +342,14 @@ public class Game implements GameInterface {
             return;
         if (_pc._direction == Direction.NONE && !gameStart)
             return;
+        if (_pc.score == 10) {
+            try {
+                _graphic.displayScene("victory");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         if (_pc.isDead) {
             if (System.currentTimeMillis() - _pc.deathDate < 3900)
                 return;
@@ -373,34 +420,64 @@ public class Game implements GameInterface {
                 }
                 break;
             case "maze":
-                if (key.equals("P")) {
-                    gamePaused = !gamePaused;
-                } else if (key.equals("Ctrl+E")) {
-                    try {
-                        _graphic.displayScene("forfeit");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    lastKey = key;
-                    keyTime = 14;
-                    if (!gameStart && (key.equals("D") || key.equals("Q")))
-                        gameStart = true;
+                switch (key) {
+                    case "P":
+                        gamePaused = !gamePaused;
+                        break;
+                    case "Ctrl+E":
+                        try {
+                            _graphic.displayScene("forfeit");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    default:
+                        lastKey = key;
+                        keyTime = 14;
+                        if (!gameStart && (key.equals("D") || key.equals("Q")))
+                            gameStart = true;
                 }
                 break;
             case "forfeit":
-                if (key.equals("oui"))
-                    try {
-                        _graphic.displayScene("menu");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                else if (key.equals("non"))
-                    try {
-                        _graphic.displayScene("maze");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                switch (key) {
+                    case "oui":
+                        try {
+                            _graphic.displayScene("menu");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "non":
+                        try {
+                            _graphic.displayScene("maze");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                break;
+            case "victory":
+                switch (key) {
+                    case "retour_menu":
+                        try {
+                            _graphic.displayScene("menu");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "rejouer":
+                        restartMaze();
+                        try {
+                            _graphic.displayScene("maze");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "quitter":
+                        _graphic.stop();
+                        break;
+                }
+                break;
         }
     }
 
