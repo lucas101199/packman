@@ -43,6 +43,15 @@ public class Pacman extends Character{
         Position oldpos = _position;
         super.move(direction);
         checkPosition();
+        if (_canEatGhost && _lastEatenItem.isFullyConsumed())
+            cancelSpPacGumEffect();
+        if (!_lastEatenItem.isFullyConsumed()) {
+            try {
+                _lastEatenItem.consume();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         try {
             if (!_position.equals(oldpos))
                 display.display(_direction,_position);
@@ -117,9 +126,15 @@ public class Pacman extends Character{
                 }
             }
             else if(e instanceof SuperPacGum){
-                System.out.println("Oh a super PacGum");
-                _canEatGhost = true;
-                _lastEatenItem = (Bonus)e;
+                if (((SuperPacGum) e)._isActive) {
+                    _canEatGhost = true;
+                    _lastEatenItem = (Bonus) e;
+                    try {
+                        _lastEatenItem.consume();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
         }
         _position = nextPos();
