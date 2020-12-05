@@ -6,6 +6,8 @@ import Interfaces.GameInterface;
 
 import java.util.ArrayList;
 
+import static java.lang.Thread.sleep;
+
 public class Game implements GameInterface {
 
     private ArrayList<Entity> _items;
@@ -18,10 +20,10 @@ public class Game implements GameInterface {
     private boolean gameStart;
     private boolean gamePaused;
     private int vie;
+    private int level = 1;
 
     public void init() {
         try {
-
             //Création du labyrinthe
 
             _graphic.addScene("maze");
@@ -234,7 +236,7 @@ public class Game implements GameInterface {
 
             // Bouton RETOUR
             _graphic.addImageButton("help","retour","./src/Images/Aide/retour.png");
-            _graphic.setPositionImageButton("help","retour",197,630,false);
+            _graphic.setPositionImageButton("help","retour",197,640,false);
             _graphic.displayObject("help","retour");
 
 
@@ -281,6 +283,7 @@ public class Game implements GameInterface {
             _graphic.addImage("victory","score","./src/Images/Autres/score.png");
             _graphic.setPositionImage("victory","score",184,215,false);
             _graphic.displayObject("victory","score");
+
 
             // NIVEAU
             _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
@@ -374,6 +377,7 @@ public class Game implements GameInterface {
         }
     }
 
+
     public void update() {
         if (!_graphic.currentScene().equals("maze"))
             return;
@@ -383,7 +387,28 @@ public class Game implements GameInterface {
             return;
         if (_pc.score == 240) {
             try {
-                _graphic.displayScene("victory");
+
+                restartMaze();
+                level++;
+
+                if (level == 2) {
+                    _ennemies.add(new Ghost(new Position(190,390),29,29,2,new DisplayGreen(_graphic,"maze")));
+                }
+
+                if (level == 3) {
+                    _ennemies.add(new Ghost(new Position(360,390),29,29,2,new DisplayPurple(_graphic,"maze")));
+                }
+
+                if (level == 4) {
+                    _ennemies.add(new Ghost(new Position(273.5,157),29,29,2,new DisplayGrey(_graphic,"maze")));
+                }
+
+                if (level == 5) {
+                    _ennemies.add(new Ghost(new Position(273.5,620.5),29,29,2,new DisplayBrown(_graphic,"maze")));
+                }
+                if (level == 6) {
+                    _graphic.displayScene("victory");
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -427,7 +452,7 @@ public class Game implements GameInterface {
 
     @Override
     public double getSpeed() {
-        return 42;
+        return 60;
     }
 
     public void set_graphic(GraphicEngine _graphic) {
