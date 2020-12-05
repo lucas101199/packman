@@ -82,6 +82,13 @@ public class Game implements GameInterface {
                 yId++;
             }
 
+            int[][] spgCoords = {{30,67},{516,67},{30,455},{516,455}};
+            int spgId = 0;
+            for (int[] coord : spgCoords) {
+                _items.add(new SuperPacGum(new Position(coord[0], coord[1]+50), 8, 8, 50, new DisplaySuperPacGum(_graphic, "maze", spgId)));
+                spgId++;
+            }
+
             _pc = new Pacman(new Position(272,504), 29,29,2,new DisplayPacman(_graphic,"maze"));
             _ennemies.add(new Ghost(new Position(190,274),29,29,2,new DisplayClyde(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(360,274),29,29,2,new DisplayInky(_graphic,"maze")));
