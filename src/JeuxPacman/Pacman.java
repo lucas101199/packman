@@ -13,6 +13,7 @@ public class Pacman extends Character{
     public Pacman(Position position, int height, int width, int speed, DisplayPacman display) throws Exception {
         super(position, height, width, speed, display);
         this.display = display;
+        _lastEatenItem = null;
         _canEatGhost = false;
         _direction = null;
         isDead = false;
@@ -43,13 +44,15 @@ public class Pacman extends Character{
         Position oldpos = _position;
         super.move(direction);
         checkPosition();
-        if (_canEatGhost && _lastEatenItem.isFullyConsumed())
-            cancelSpPacGumEffect();
-        if (!_lastEatenItem.isFullyConsumed()) {
-            try {
-                _lastEatenItem.consume();
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (_lastEatenItem != null) {
+            if (_canEatGhost && _lastEatenItem.isFullyConsumed())
+                cancelSpPacGumEffect();
+            if (!_lastEatenItem.isFullyConsumed()) {
+                try {
+                    _lastEatenItem.consume();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         try {
