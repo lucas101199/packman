@@ -383,7 +383,7 @@ public class Game implements GameInterface {
             return;
         if (_pc._direction == Direction.NONE && !gameStart)
             return;
-        if (_pc.score == 240) {
+        if (_pc.score >= 240) {
             try {
 
                 restartMaze();
@@ -431,13 +431,15 @@ public class Game implements GameInterface {
                 return;
             }
         }
-        if (_pc.canEatGhost() && !_ennemies.get(0)._edible) {
+        if (_pc.canEatGhost()) {
             for (Ghost ghost : _ennemies) {
-                ghost._edible = true;
+                if (ghost.isActive() && !ghost._edible)
+                    ghost._edible = true;
             }
-        } else if (!_pc.canEatGhost() && _ennemies.get(0)._edible) {
+        } else if (!_pc.canEatGhost()) {
             for (Ghost ghost : _ennemies) {
-                ghost._edible = false;
+                if (ghost.isActive() && ghost._edible)
+                    ghost._edible = false;
             }
         }
         handleLastKey();

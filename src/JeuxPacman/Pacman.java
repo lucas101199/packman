@@ -47,11 +47,9 @@ public class Pacman extends Character{
         if (_lastEatenItem != null) {
             if (_canEatGhost && _lastEatenItem.isFullyConsumed()) {
                 cancelSpPacGumEffect();
-                System.out.println("cancel");
             }
             else if (!_lastEatenItem.isFullyConsumed()) {
                 try {
-                    System.out.println("consume");
                     _lastEatenItem.consume();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -110,12 +108,13 @@ public class Pacman extends Character{
     protected void reactAfterCollision() {
         for(var e : _collisions) {
             if (e instanceof Ghost) {
-                if(_canEatGhost) {
-                    ((Ghost) e).die();
-                }
-                else{
-                    die();
-                    return;
+                if (e.isActive()) {
+                    if (_canEatGhost) {
+                        ((Ghost) e).die();
+                    } else {
+                        die();
+                        return;
+                    }
                 }
             }
             else if (e instanceof Wall)

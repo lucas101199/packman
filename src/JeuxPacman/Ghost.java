@@ -9,6 +9,7 @@ public class Ghost extends Character{
         super(position, height, width, speed, display);
         _direction = Direction.SOUTH;
         _edible = false;
+        _isDead = false;
         display.display(_direction,_position,false,false);
     }
 
@@ -34,6 +35,8 @@ public class Ghost extends Character{
     @Override
     public void respawn() {
         super.respawn();
+        _edible = false;
+        _isDead = false;
         _direction = Direction.SOUTH;
         try {
             ((DisplayGhost)display).display(_direction,_position,_edible,_isDead);
@@ -69,6 +72,12 @@ public class Ghost extends Character{
 
     public void die(){
         _isDead = true;
+        _edible = false;
+        try {
+            ((DisplayGhost)display).display(_direction,_position,false,true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
