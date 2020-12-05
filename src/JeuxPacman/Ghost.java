@@ -39,7 +39,7 @@ public class Ghost extends Character{
         _isDead = false;
         _direction = Direction.SOUTH;
         try {
-            ((DisplayGhost)display).display(_direction,_position,_edible,_isDead);
+            ((DisplayGhost)display).display(_direction,_position, false, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
