@@ -556,6 +556,7 @@ public class Game implements GameInterface {
                 if (level == 6) {
                     printScore("victory");
                     _graphic.displayScene("victory");
+                    scoreTotal = 0;
                 }
 
             } catch (Exception e) {
@@ -576,6 +577,7 @@ public class Game implements GameInterface {
                 try {
                     printScore("lost");
                     _graphic.displayScene("lost");
+                    scoreTotal = 0;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
