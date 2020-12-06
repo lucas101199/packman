@@ -256,7 +256,7 @@ public class Game implements GameInterface {
 
             /* ------ Création Scène ABANDON ------ */
             _graphic.addScene("forfeit");
-            _graphic.setSizeScene("forfeit",544,750);
+            _graphic.setSizeScene("forfeit",544,700);
 
             // Background
             _graphic.addImage("forfeit","background","./src/Images/Autres/background.png");
