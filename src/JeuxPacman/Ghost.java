@@ -16,9 +16,12 @@ public class Ghost extends Character{
     @Override
     public void move(Direction direction) {
         Position oldpos = _position;
-        super.move(_direction);
-        if (_position.equals(get_initialPosition()))
-            _isDead = false;
+        if (positionIsCenter()) {
+            _direction = Direction.NORTH;
+            _position = nextPos();
+        } else {
+            super.move(_direction);
+        }
         try {
             if (!_position.equals(oldpos))
                 ((DisplayGhost)display).display(_direction,_position,_edible,_isDead);
@@ -45,6 +48,10 @@ public class Ghost extends Character{
         }
     }
 
+    private boolean positionIsCenter() {
+        return (_position.x >= 272 && _position.x <= 274 && _position.y <= 333 && _position.y >= 331);
+    }
+
     @Override
     public void reactAfterCollision() {
         boolean wall = false;
@@ -59,13 +66,16 @@ public class Ghost extends Character{
                 }
                 return;
             }
-            else if (e instanceof Wall)
-                wall = true;
+            else if (e instanceof Wall) {
+                if (e instanceof Niche)
+                    _isDead = false;
+                else if (!(e instanceof Door))
+                    wall = true;
+            }
         }
         if (wall) {
             _direction = getRandomDir();
-        }
-        else {
+        } else {
             _position = nextPos();
         }
     }

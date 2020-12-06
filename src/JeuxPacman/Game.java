@@ -100,7 +100,7 @@ public class Game implements GameInterface {
             _pc = new Pacman(new Position(272,504), 29,29,2,new DisplayPacman(_graphic,"maze"));
             _ennemies.add(new Ghost(new Position(190,274),29,29,2,new DisplayClyde(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(360,274),29,29,2,new DisplayInky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(272,274),29,29,2,new DisplayBlinky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(242,332),29,29,2,new DisplayBlinky(_graphic,"maze")));
             _ennemies.add(new Ghost(new Position(272,390),29,29,2,new DisplayPinky(_graphic,"maze")));
 
             InputEngine _input = new InputEngine(this);
@@ -157,7 +157,13 @@ public class Game implements GameInterface {
             _items.add(new Wall(new Position(388, 548.5), 57, 28));   // T bas droite
 
 
-            _items.add(new Wall(new Position(273, 332), 84, 142));    // Foyer fantômes
+            _items.add(new Niche(new Position(273, 332), 74, 132));    // Foyer fantômes
+            _items.add(new Wall(new Position(273,361),28,142)); //Mur du bas
+            _items.add(new Wall(new Position(331,332),84,26));  //Mur de Droite
+            _items.add(new Wall(new Position(215,332),84,26));  //Mur de Gauche
+            _items.add(new Wall(new Position(229,303),28,54));  //Mur du Haut Gauche
+            _items.add(new Wall(new Position(317,303),28,54));  //Mur du Haut Droite
+            _items.add(new Door(new Position(273,303),28,30));
 
 
             _items.add(new Wall(new Position(54, 273.5), 85, 115));    // Grand carre haut gauche
