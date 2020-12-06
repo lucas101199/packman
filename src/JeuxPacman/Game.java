@@ -24,6 +24,7 @@ public class Game implements GameInterface {
     private final int[] positionScoreMaze = {200,230,260,290};
     private final int[] positionScoreLost = {258,286,314,342};
     private final int[] positionScoreVictory = {258,286,314,342};
+    private final int[] positionFirstLife = {50,665};
 
 
     public void init() {
@@ -386,6 +387,16 @@ public class Game implements GameInterface {
             _graphic.displayObject("maze","score");
             resetScore("maze");
 
+            /* --- Ajout vies dans le Jeu ---*/
+
+            for (int i = 0; i < vie; i++) {
+                _graphic.addImage("maze","vie"+i,"./src/Images/Autres/vie.png");
+                int x = positionFirstLife[0]+50*i;
+                int y = positionFirstLife[1];
+                _graphic.setPositionImage("maze","vie"+i,x,y,false);
+                _graphic.displayObject("maze","vie"+i);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -503,7 +514,7 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (scoreLevel%240 == 0 && scoreLevel != 0) {
+        if (scoreLevel%100 == 0 && scoreLevel != 0) {
             try {
 
                 restartMaze();
@@ -538,6 +549,11 @@ public class Game implements GameInterface {
             if (System.currentTimeMillis() - _pc.deathDate < 3900)
                 return;
             vie--;
+            try {
+                _graphic.hideObject("maze","vie"+vie);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             if (vie == 0) {
                 try {
                     printScore("lost");
@@ -628,6 +644,8 @@ public class Game implements GameInterface {
                         }
                         break;
                     default:
+                        if (gamePaused)
+                            break;
                         lastKey = key;
                         keyTime = 14;
                         if (!gameStart && (key.equals("D") || key.equals("Q")))

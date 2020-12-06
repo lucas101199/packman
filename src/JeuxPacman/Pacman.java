@@ -85,6 +85,7 @@ public class Pacman extends Character{
         _direction = Direction.NONE;
         _canEatGhost = false;
         score = 0;
+        _lastEatenItem = null;
     }
 
     public void die() {
