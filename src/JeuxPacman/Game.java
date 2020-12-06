@@ -157,13 +157,13 @@ public class Game implements GameInterface {
             _items.add(new Wall(new Position(388, 548.5), 57, 28));   // T bas droite
 
 
-            _items.add(new Niche(new Position(273, 332), 74, 132));    // Foyer fantômes
+            _items.add(new Niche(new Position(273, 332), 76, 132));    // Foyer fantômes
             _items.add(new Wall(new Position(273,361),28,142)); //Mur du bas
             _items.add(new Wall(new Position(331,332),84,26));  //Mur de Droite
             _items.add(new Wall(new Position(215,332),84,26));  //Mur de Gauche
             _items.add(new Wall(new Position(229,303),28,54));  //Mur du Haut Gauche
             _items.add(new Wall(new Position(317,303),28,54));  //Mur du Haut Droite
-            _items.add(new Door(new Position(273,303),28,30));
+            _items.add(new Door(new Position(273,303),28,30));  //Porte
 
 
             _items.add(new Wall(new Position(54, 273.5), 85, 115));    // Grand carre haut gauche
