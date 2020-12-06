@@ -17,6 +17,7 @@ public class Game implements GameInterface {
     private int keyTime;
     private boolean gameStart;
     private boolean gamePaused;
+    private final int nbVie = 3;
     private int vie;
     private int level = 1;
     private int scoreLevel;
@@ -205,7 +206,7 @@ public class Game implements GameInterface {
             gamePaused = false;
             scoreLevel= 0;
             scoreTotal = 0;
-            vie = 3;
+            vie = nbVie;
 
             /* ------ Création Scène MENU ------ */
             _graphic.addScene("menu");
@@ -389,7 +390,7 @@ public class Game implements GameInterface {
 
             /* --- Ajout vies dans le Jeu ---*/
 
-            for (int i = 0; i < vie; i++) {
+            for (int i = 0; i < nbVie; i++) {
                 _graphic.addImage("maze","vie"+i,"./src/Images/Autres/vie.png");
                 int x = positionFirstLife[0]+50*i;
                 int y = positionFirstLife[1];
@@ -418,10 +419,11 @@ public class Game implements GameInterface {
             }
 
             _pc.restart();
-            vie = 3;
+            vie = nbVie;
             scoreLevel = 0;
             gameStart = false;
             printScore("maze");
+            printVie();
 
             for (Character ghost : _ennemies) {
                 ghost.restart();
@@ -429,6 +431,16 @@ public class Game implements GameInterface {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void printVie() {
+        for (int i = 0; i < nbVie; i++) {
+            try {
+                _graphic.displayObject("maze","vie"+i);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -514,7 +526,7 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (scoreLevel%100 == 0 && scoreLevel != 0) {
+        if (scoreLevel%240 == 0 && scoreLevel != 0) {
             try {
 
                 restartMaze();
