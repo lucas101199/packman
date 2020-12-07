@@ -538,7 +538,7 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (scoreLevel%10 == 0 && scoreLevel != 0) {
+        if (scoreLevel%240 == 0 && scoreLevel != 0) {
             try {
                 int oldVie = vie;
                 restartMaze();
