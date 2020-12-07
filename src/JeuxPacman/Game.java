@@ -17,7 +17,6 @@ public class Game implements GameInterface {
     private int keyTime;
     private boolean gameStart;
     private boolean gamePaused;
-    private final int nbVie = 3;
     private int vie;
     private int level = 1;
     private int scoreLevel;
@@ -98,10 +97,10 @@ public class Game implements GameInterface {
             }
 
             _pc = new Pacman(new Position(272,504), 29,29,2,new DisplayPacman(_graphic,"maze"));
-            _ennemies.add(new Ghost(new Position(190,274),29,29,2,new DisplayClyde(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(360,274),29,29,2,new DisplayInky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(242,332),29,29,2,new DisplayBlinky(_graphic,"maze")));
-            _ennemies.add(new Ghost(new Position(272,390),29,29,2,new DisplayPinky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(302,332),29,29,2,new DisplayClyde(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(282,332),29,29,2,new DisplayInky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(262,332),29,29,2,new DisplayBlinky(_graphic,"maze")));
+            _ennemies.add(new Ghost(new Position(242,332),29,29,2,new DisplayPinky(_graphic,"maze")));
 
             InputEngine _input = new InputEngine(this);
             _input.addKey("Z");
@@ -157,7 +156,7 @@ public class Game implements GameInterface {
             _items.add(new Wall(new Position(388, 548.5), 57, 28));   // T bas droite
 
 
-            _items.add(new Niche(new Position(273, 332), 76, 132));    // Foyer fantômes
+            _items.add(new Niche(new Position(273, 332), 84, 142));    // Foyer fantômes
             _items.add(new Wall(new Position(273,361),28,142)); //Mur du bas
             _items.add(new Wall(new Position(331,332),84,26));  //Mur de Droite
             _items.add(new Wall(new Position(215,332),84,26));  //Mur de Gauche
@@ -212,7 +211,7 @@ public class Game implements GameInterface {
             gamePaused = false;
             scoreLevel= 0;
             scoreTotal = 0;
-            vie = nbVie;
+            vie = 1;
 
             /* ------ Création Scène MENU ------ */
             _graphic.addScene("menu");
@@ -396,13 +395,15 @@ public class Game implements GameInterface {
 
             /* --- Ajout vies dans le Jeu ---*/
 
+            int nbVie = 6;
             for (int i = 0; i < nbVie; i++) {
                 _graphic.addImage("maze","vie"+i,"./src/Images/Autres/vie.png");
                 int x = positionFirstLife[0]+50*i;
                 int y = positionFirstLife[1];
                 _graphic.setPositionImage("maze","vie"+i,x,y,false);
-                _graphic.displayObject("maze","vie"+i);
             }
+
+            printVie();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -425,8 +426,8 @@ public class Game implements GameInterface {
             }
 
             _pc.restart();
-            vie = nbVie;
             scoreLevel = 0;
+            vie = 1;
             gameStart = false;
             printScore("maze");
             printVie();
@@ -441,7 +442,7 @@ public class Game implements GameInterface {
     }
 
     private void printVie() {
-        for (int i = 0; i < nbVie; i++) {
+        for (int i = 0; i < vie; i++) {
             try {
                 _graphic.displayObject("maze","vie"+i);
             } catch (Exception e) {
@@ -532,11 +533,14 @@ public class Game implements GameInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (scoreLevel%240 == 0 && scoreLevel != 0) {
+        if (scoreLevel%100 == 0 && scoreLevel != 0) {
             try {
-
+                int oldVie = vie;
                 restartMaze();
+                vie = oldVie;
                 level++;
+                vie++;
+                printVie();
 
                 if (level == 2) {
                     _ennemies.add(new Ghost(new Position(190,390),29,29,2,new DisplayGreen(_graphic,"maze")));

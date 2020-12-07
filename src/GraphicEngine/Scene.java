@@ -366,4 +366,13 @@ public class Scene {
         imageView.setImage(image);
     }
 
+    public void resetRotationObject(String nodeLabel) throws Exception {
+        Node node = getNode(nodeLabel);
+        if (node != null) {
+            node.setRotate((0));
+        } else {
+            throw new Exception("Node named "+nodeLabel+" doesn't exist");
+        }
+    }
+
 }

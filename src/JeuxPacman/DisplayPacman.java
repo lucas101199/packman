@@ -2,8 +2,6 @@ package JeuxPacman;
 
 import GraphicEngine.GraphicEngine;
 
-import java.util.Arrays;
-
 public class DisplayPacman extends DisplayCharacter{
 
     public DisplayPacman(GraphicEngine graphic, String sceneLabel) throws Exception {
@@ -28,11 +26,17 @@ public class DisplayPacman extends DisplayCharacter{
         imageCurrent = imageLabels[5];
     }
 
-    public void displayPacManDeath(Position pos) throws Exception {
+    public void displayPacManDeath(Position pos, Direction _direction) throws Exception {
         window.changeImage(scene, imageLabels[4], "./src/Images/PacMan/pacman_death.gif");
         hide();
         window.setPositionImage(scene, imageLabels[4], pos.x, pos.y, true);
         window.displayObject(scene, imageLabels[4]);
+        window.resetRotationObject(scene,imageLabels[4]);
+        switch (_direction){
+            case EAST -> window.rotateObject(scene,imageLabels[4],90);
+            case SOUTH -> window.rotateObject(scene,imageLabels[4],180);
+            case WEST -> window.rotateObject(scene,imageLabels[4],270);
+        }
         imageCurrent = imageLabels[4];
     }
 

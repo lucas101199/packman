@@ -356,6 +356,15 @@ public class GraphicEngine extends Application {
         }
     }
 
+    public void resetRotationObject(String sceneLabel, String objectLabel) throws Exception {
+        Scene scene = getScene(sceneLabel);
+        if (scene != null) {
+            scene.resetRotationObject(objectLabel);
+        } else {
+            throw new Exception("Scene "+sceneLabel+" doesn't exist");
+        }
+    }
+
     public void stop() {
         Platform.exit();
     }
