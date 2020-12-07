@@ -18,6 +18,7 @@ public class Game implements GameInterface {
     private boolean gameStart;
     private boolean gamePaused;
     private int vie;
+    private final int nbVie = 10;
     private int level = 1;
     private int scoreLevel;
     private int scoreTotal;
@@ -305,12 +306,12 @@ public class Game implements GameInterface {
                     value = value.concat("0");
                 }
             }
-
+            /*
             // NIVEAU
             _graphic.addImage("victory","niveau","./src/Images/Autres/niveau.png");
             _graphic.setPositionImage("victory","niveau",184,330,false);
             _graphic.displayObject("victory","niveau");
-
+             */
             // Bouton RETOUR MENU
             _graphic.addImageButton("victory","retour_menu","./src/Images/Autres/retour_menu.png");
             _graphic.setPositionImageButton("victory","retour_menu",134,505,false);
@@ -354,12 +355,12 @@ public class Game implements GameInterface {
                     value = value.concat("0");
                 }
             }
-
+            /*
             // NIVEAU
             _graphic.addImage("lost","niveau","./src/Images/Autres/niveau.png");
             _graphic.setPositionImage("lost","niveau",184,330,false);
             _graphic.displayObject("lost","niveau");
-
+             */
             // Bouton RETOUR MENU
             _graphic.addImageButton("lost","retour_menu","./src/Images/Autres/retour_menu.png");
             _graphic.setPositionImageButton("lost","retour_menu",134,505,false);
@@ -395,7 +396,7 @@ public class Game implements GameInterface {
 
             /* --- Ajout vies dans le Jeu ---*/
 
-            int nbVie = 6;
+
             for (int i = 0; i < nbVie; i++) {
                 _graphic.addImage("maze","vie"+i,"./src/Images/Autres/vie.png");
                 int x = positionFirstLife[0]+50*i;
@@ -442,9 +443,12 @@ public class Game implements GameInterface {
     }
 
     private void printVie() {
-        for (int i = 0; i < vie; i++) {
+        for (int i = 0; i < nbVie; i++) {
             try {
-                _graphic.displayObject("maze","vie"+i);
+                if (i < vie)
+                    _graphic.displayObject("maze","vie"+i);
+                else
+                    _graphic.hideObject("maze","vie"+i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -529,11 +533,12 @@ public class Game implements GameInterface {
         if (_pc._direction == Direction.NONE && !gameStart)
             return;
         try {
+            printVie();
             updateScore();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (scoreLevel%100 == 0 && scoreLevel != 0) {
+        if (scoreLevel%10 == 0 && scoreLevel != 0) {
             try {
                 int oldVie = vie;
                 restartMaze();
@@ -561,6 +566,7 @@ public class Game implements GameInterface {
                     printScore("victory");
                     _graphic.displayScene("victory");
                     scoreTotal = 0;
+                    vie = 1;
                 }
 
             } catch (Exception e) {
