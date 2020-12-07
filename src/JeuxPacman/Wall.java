@@ -1,4 +1,6 @@
-public class Wall extends Entity{
+package JeuxPacman;
+
+public class Wall extends Entity {
 
     public Wall(Position pos, int height, int width){
         super(pos, height, width);
